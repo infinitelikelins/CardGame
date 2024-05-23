@@ -142,6 +142,9 @@ public class Director implements MediaPlayer.OnCompletionListener {
                     case Video:
                         playVideo(facePlay.getResource());
                         break;
+                    case Frame:
+                        playFrame();
+                        break;
                 }
             });
         }
@@ -163,6 +166,10 @@ public class Director implements MediaPlayer.OnCompletionListener {
                 }
             }
         }
+    }
+
+    private void playFrame() {
+
     }
 
     private void playAction(TimeAction[] actions) {

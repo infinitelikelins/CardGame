@@ -6,4 +6,6 @@ public enum  FaceType {
     Image,
 
     Video,
+
+    Frame,
 }

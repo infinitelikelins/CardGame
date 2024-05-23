@@ -1,22 +1,19 @@
 package com.bearya.robot.fairystory.ui;
 
+import android.os.Bundle;
+
 import com.bearya.robot.R;
-import com.bearya.robot.base.ui.BaseLauncherActivity;
-import com.bearya.robot.base.ui.LauncherData;
+import com.bearya.robot.base.ui.BaseActivity;
 
 /**
  * 启动页面 ， 点点屏幕
  */
-public class LauncherActivity extends BaseLauncherActivity {
+public class LauncherActivity extends BaseActivity {
 
     @Override
-    protected LauncherData getLauncherData() {
-        LauncherData launcherData = new LauncherData();
-        launcherData.jumpToActivity = ThemesActivity.class;
-        launcherData.bg = R.mipmap.bg_splash;
-        launcherData.bgMp3 = "music/zh/touch.mp3";
-        launcherData.tipMp3 = "music/zh/bgm.mp3";
-        return launcherData;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_launch);
     }
 
 }
