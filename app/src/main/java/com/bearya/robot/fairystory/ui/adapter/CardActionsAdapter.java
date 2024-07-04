@@ -58,8 +58,9 @@ public class CardActionsAdapter extends BaseQuickAdapter<CardParentAction, BaseV
             }
             if (item.parentActionId == CardType.ACTION_FORWARD) {
                 boolean isShowChildAction = item.childAction != null;
-                helper.setVisible(R.id.child_action, false);
+                helper.setVisible(R.id.child_action, isShowChildAction);
                 helper.setVisible(R.id.link, isShowChildAction);
+                helper.setImageResource(R.id.child_action, CardResource.childImage(isShowChildAction ? item.childAction.childActionId : CardType.ACTION_DEFAULT));
                 helper.setVisible(R.id.child_action_error, isShowChildAction && !item.childAction.status);
                 if (isShowChildAction) {
                     helper.addOnClickListener(R.id.child_action);

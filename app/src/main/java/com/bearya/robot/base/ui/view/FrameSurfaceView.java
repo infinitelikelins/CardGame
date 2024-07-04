@@ -3,16 +3,23 @@ package com.bearya.robot.base.ui.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 使用SurfaceView去加载帧动画解决OOM的问题
@@ -24,7 +31,7 @@ public class FrameSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private boolean mIsThreadRunning = true; // 线程运行开关
     public static boolean mIsDestroy = false;// 是否已经销毁
 
-    private int[] mBitmapResourceIds;// 用于播放动画的图片资源id数组
+    private String[] mBitmapPaths;// 用于播放动画的图片资源id数组
 
     private int totalCount;//资源总数
     private Canvas mCanvas;
@@ -59,6 +66,7 @@ public class FrameSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         // 白色背景
         setZOrderOnTop(true);
         setZOrderMediaOverlay(true);
+
     }
 
     @Override
@@ -81,11 +89,8 @@ public class FrameSurfaceView extends SurfaceView implements SurfaceHolder.Callb
      */
     private void drawView() {
         // 无资源文件退出
-        if (mBitmapResourceIds == null) {
-            Log.e("frameview", "the bitmapsrcIDs is null");
-
+        if (mBitmapPaths == null || mBitmapPaths.length <= 0) {
             mIsThreadRunning = false;
-
             return;
         }
 
@@ -98,8 +103,16 @@ public class FrameSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
                 mCanvas.drawColor(Color.WHITE);
 
-                if (mBitmapResourceIds != null && mBitmapResourceIds.length > 0)
-                    mBitmap = BitmapFactory.decodeResource(getResources(), mBitmapResourceIds[mCurrentIndext]);
+                if (mBitmapPaths != null && mBitmapPaths.length > 0) {
+                    String bitmapPath = mBitmapPaths[mCurrentIndext];
+                    mBitmap = Glide.with(getContext())
+                            .setDefaultRequestOptions(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).sizeMultiplier(0.2f))
+                            .asBitmap()
+                            .load(bitmapPath)
+                            .submit()
+                            .get();
+                }
+
                 Paint paint = new Paint();
                 paint.setAntiAlias(true);
                 paint.setStyle(Paint.Style.STROKE);
@@ -122,6 +135,7 @@ public class FrameSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             }
         } catch (Exception e) {
             e.printStackTrace();
+            mBitmapPaths = null;
         } finally {
 
             mCurrentIndext++;
@@ -162,6 +176,7 @@ public class FrameSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         }
 
         if (mOnFrameFinishedListener != null) {
+            mBitmapPaths = null;
             mOnFrameFinishedListener.onFrameFinish();
         }
     }
@@ -193,12 +208,19 @@ public class FrameSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     /**
      * 设置动画播放素材的id
-     *
-     * @param bitmapResourceIds 图片资源id
      */
-    public void setBitmapResoursID(int[] bitmapResourceIds) {
-        this.mBitmapResourceIds = bitmapResourceIds;
-        totalCount = bitmapResourceIds.length;
+    public void setBitmapPaths(String bitmapPath) {
+        File[] files = new File(bitmapPath).listFiles();
+        List<String> fileList = new LinkedList<>();
+        if (files == null || files.length == 0) {
+            return;
+        }
+        for (File file : files) {
+            fileList.add(file.getAbsolutePath());
+        }
+        Collections.sort(fileList);
+        mBitmapPaths = fileList.toArray(new String[files.length]);
+        totalCount = mBitmapPaths.length;
     }
 
     /**

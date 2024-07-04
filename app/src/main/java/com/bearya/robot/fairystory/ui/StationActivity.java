@@ -16,12 +16,12 @@ import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.databinding.ActivityStationBinding;
 import com.bearya.robot.fairystory.ui.popup.impl.DeleteConfirmPopup;
 import com.bearya.robot.fairystory.ui.station.ContentActivity;
-import com.bearya.robot.fairystory.walk.load.StationBlueLoad;
-import com.bearya.robot.fairystory.walk.load.StationGreenLoad;
-import com.bearya.robot.fairystory.walk.load.StationPinkLoad;
-import com.bearya.robot.fairystory.walk.load.StationPurpleLoad;
-import com.bearya.robot.fairystory.walk.load.StationRedLoad;
-import com.bearya.robot.fairystory.walk.load.StationYellowLoad;
+import com.bearya.robot.fairystory.walk.load.station.StationBlueLoad;
+import com.bearya.robot.fairystory.walk.load.station.StationGreenLoad;
+import com.bearya.robot.fairystory.walk.load.station.StationPinkLoad;
+import com.bearya.robot.fairystory.walk.load.station.StationPurpleLoad;
+import com.bearya.robot.fairystory.walk.load.station.StationRedLoad;
+import com.bearya.robot.fairystory.walk.load.station.StationYellowLoad;
 
 public class StationActivity extends BaseActivity implements View.OnClickListener, View.OnLongClickListener {
 

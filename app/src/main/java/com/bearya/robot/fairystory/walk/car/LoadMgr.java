@@ -4,37 +4,15 @@ import com.bearya.robot.base.load.BaseLoad;
 import com.bearya.robot.base.load.ILoadMgr;
 import com.bearya.robot.base.util.DebugUtil;
 import com.bearya.robot.base.walk.LoadEntrance;
-import com.bearya.robot.fairystory.ui.res.ThemeConfig;
-import com.bearya.robot.fairystory.walk.load.ArmorLoad;
-import com.bearya.robot.fairystory.walk.load.CastleEndLoad;
-import com.bearya.robot.fairystory.walk.load.CompassLoad;
-import com.bearya.robot.fairystory.walk.load.CrystalShoesLoad;
-import com.bearya.robot.fairystory.walk.load.DanceSkirtLoad;
-import com.bearya.robot.fairystory.walk.load.DragonEndLoad;
 import com.bearya.robot.fairystory.walk.load.EndLoad;
 import com.bearya.robot.fairystory.walk.load.EquipmentLoad;
-import com.bearya.robot.fairystory.walk.load.FatTonnyLoad;
-import com.bearya.robot.fairystory.walk.load.FreeEndLoad;
-import com.bearya.robot.fairystory.walk.load.GrasslandLoad;
-import com.bearya.robot.fairystory.walk.load.IdeaEndLoad;
-import com.bearya.robot.fairystory.walk.load.KeyLoad;
-import com.bearya.robot.fairystory.walk.load.MineEndLoad;
-import com.bearya.robot.fairystory.walk.load.PegasusLoad;
-import com.bearya.robot.fairystory.walk.load.RocketLaunchLoad;
-import com.bearya.robot.fairystory.walk.load.RocketPrincipleLoad;
-import com.bearya.robot.fairystory.walk.load.RocketUnderstandLoad;
-import com.bearya.robot.fairystory.walk.load.StartLoad;
-import com.bearya.robot.fairystory.walk.load.StationBlueLoad;
-import com.bearya.robot.fairystory.walk.load.StationGreenLoad;
-import com.bearya.robot.fairystory.walk.load.StationPinkLoad;
-import com.bearya.robot.fairystory.walk.load.StationPurpleLoad;
-import com.bearya.robot.fairystory.walk.load.StationRedLoad;
-import com.bearya.robot.fairystory.walk.load.StationYellowLoad;
-import com.bearya.robot.fairystory.walk.load.SwordLoad;
-import com.bearya.robot.fairystory.walk.load.TreasureMapLoad;
+import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
+import com.bearya.robot.fairystory.walk.themes.AbsTheme;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +22,8 @@ public class LoadMgr implements ILoadMgr {
     private final Map<String, BaseLoad> loads = new HashMap<>();
     private final List<String> equipmentLoads = new ArrayList<>();//设备经过的装备地垫
     private final List<String> lostEquipmentLoads = new ArrayList<>();//到达终点还缺失的地垫
-    private EndLoad themeEndLoad;
+    private AbsTheme theme;
+    private AbsSubject currentSubject;
 
     /**
      * 当前路况:包括小贝从哪进来从哪出去
@@ -61,61 +40,29 @@ public class LoadMgr implements ILoadMgr {
     }
 
     private LoadMgr() {
-        loads.put(StartLoad.NAME, new StartLoad());
-
-        loads.put(GrasslandLoad.NAME, new GrasslandLoad());
-
-        loads.put(MineEndLoad.NAME, new MineEndLoad());
-        loads.put(DragonEndLoad.NAME, new DragonEndLoad());
-        loads.put(CastleEndLoad.NAME, new CastleEndLoad());
-        loads.put(IdeaEndLoad.NAME, new IdeaEndLoad());
-        loads.put(FreeEndLoad.NAME , new FreeEndLoad());
-
-        loads.put(CompassLoad.NAME, new CompassLoad());
-        loads.put(TreasureMapLoad.NAME, new TreasureMapLoad());
-        loads.put(KeyLoad.NAME, new KeyLoad());
-
-        loads.put(PegasusLoad.NAME, new PegasusLoad());
-        loads.put(ArmorLoad.NAME, new ArmorLoad());
-        loads.put(SwordLoad.NAME, new SwordLoad());
-
-        loads.put(FatTonnyLoad.NAME, new FatTonnyLoad());
-        loads.put(DanceSkirtLoad.NAME, new DanceSkirtLoad());
-        loads.put(CrystalShoesLoad.NAME, new CrystalShoesLoad());
-
-        loads.put(RocketPrincipleLoad.NAME, new RocketPrincipleLoad());
-        loads.put(RocketLaunchLoad.NAME, new RocketLaunchLoad());
-        loads.put(RocketUnderstandLoad.NAME, new RocketUnderstandLoad());
-
-        loads.put(StationBlueLoad.NAME, new StationBlueLoad());
-        loads.put(StationGreenLoad.NAME, new StationGreenLoad());
-        loads.put(StationPinkLoad.NAME, new StationPinkLoad());
-        loads.put(StationPurpleLoad.NAME, new StationPurpleLoad());
-        loads.put(StationRedLoad.NAME, new StationRedLoad());
-        loads.put(StationYellowLoad.NAME, new StationYellowLoad());
 
     }
 
-    public EndLoad getThemeEndLoad() {
-        return themeEndLoad;
+    public void setTheme(AbsTheme type) {
+        theme = type;
+        loads.clear();
+        loads.putAll(type.loads());
+    }
+
+    public void setCurrentSubject(AbsSubject subject) {
+        currentSubject = subject;
+    }
+
+    public List<AbsSubject> getSubjects() {
+        return theme != null && theme.subjects().length > 0 ? Arrays.asList(theme.subjects()) : Collections.emptyList();
+    }
+
+    public AbsSubject getCurrentSubject() {
+        return currentSubject;
     }
 
     public List<String> getLostEquipmentLoads() {
         return lostEquipmentLoads;
-    }
-
-    public void setThemeEndLoad(String type) {
-        if (ThemeConfig.THEME_MHWH.equals(type)) { // 梦幻舞会
-            themeEndLoad = (EndLoad) getLoad(CastleEndLoad.NAME);
-        } else if (ThemeConfig.THEME_QHXB.equals(type)) { // 奇幻寻宝
-            themeEndLoad = (EndLoad) getLoad(MineEndLoad.NAME);
-        } else if (ThemeConfig.THEME_YXWH.equals(type)) {// 英雄无敌
-            themeEndLoad = (EndLoad) getLoad(DragonEndLoad.NAME);
-        } else if (ThemeConfig.THEME_CXTD.equals(type)) {// 创想天地
-            themeEndLoad = (EndLoad) getLoad(IdeaEndLoad.NAME);
-        } else if (ThemeConfig.THEME_FREE.equals(type)) {
-            themeEndLoad = (EndLoad) getLoad(FreeEndLoad.NAME);//通用终点
-        }
     }
 
     public boolean inLoad(int oid) {
@@ -144,6 +91,8 @@ public class LoadMgr implements ILoadMgr {
     public void release() {
         clear();
         loads.clear();
+        theme = null;
+        currentSubject = null;
     }
 
     public void addHistory(LoadEntrance newInstance) {
@@ -159,6 +108,9 @@ public class LoadMgr implements ILoadMgr {
     }
 
     public List<String> getLostEquipmentLoadList(EndLoad endLoad) {
+
+        EndLoad themeEndLoad = currentSubject.end();
+
         lostEquipmentLoads.clear();
         if (endLoad != themeEndLoad) {
             return null;

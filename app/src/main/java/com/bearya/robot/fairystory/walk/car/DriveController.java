@@ -23,7 +23,6 @@ import com.bearya.robot.base.walk.Travel;
 import com.bearya.robot.base.walk.TravelCrossOver;
 import com.bearya.robot.base.walk.action.ForwardAction;
 import com.bearya.robot.base.walk.action.MoveAndDirectAction;
-import com.bearya.robot.fairystory.ui.res.ThemeConfig;
 import com.bearya.robot.fairystory.walk.action.RobotCarAction;
 import com.bearya.robot.fairystory.walk.car.drive.BaseDriveState;
 import com.bearya.robot.fairystory.walk.car.drive.IState;
@@ -314,7 +313,7 @@ public class DriveController {
 
     private void setComputeExitPathState() {
         if (!isMoving) {
-            moveing();
+            moving();
         }
         setState(computeExitPathState);
     }
@@ -339,12 +338,12 @@ public class DriveController {
                     List<String> loastEquipmentLoads = LoadMgr.getInstance().getLostEquipmentLoadList((EndLoad) baseLoad);
                     if (loastEquipmentLoads == null) {//走到与之不匹配的终点
                         Director.getInstance().director(BaseLoad.ON_END_LOAD_FAIL, () ->
-                                mListener.onDriveResult(DriveResult.FailEndLoadUnMatch, robotCarAction.getActionId(), baseLoad, LoadMgr.getInstance().getThemeEndLoad().getName()));
+                                mListener.onDriveResult(DriveResult.FailEndLoadUnMatch, robotCarAction.getActionId(), baseLoad, LoadMgr.getInstance().getCurrentSubject().end().getName()));
                         return;
                     }
                     if (loastEquipmentLoads.size() > 0) {
                         Director.getInstance().director(BaseLoad.ON_END_LOAD_FAIL, () ->
-                                mListener.onDriveResult(DriveResult.FailLostEquipmentLoads, robotCarAction.getActionId(), baseLoad, LoadMgr.getInstance().getLostEquipmentLoads()));
+                                mListener.onDriveResult(DriveResult.FailLostEquipmentLoads, robotCarAction.getActionId(), baseLoad, null));
                     } else {
                         Director.getInstance().director(BaseLoad.ON_END_LOAD_SUCCESS, () ->
                                 mListener.onDriveResult(DriveResult.Success, 0, baseLoad, null));
@@ -355,10 +354,8 @@ public class DriveController {
                 }
                 break;
             case OutOfLoad:
-                Director.getInstance().director(BaseLoad.ON_END_LOAD_FAIL, () -> {
-                    mListener.onDriveResult(DriveResult.FailMoreAction,
-                            robotCarAction != null ? robotCarAction.getActionId() + 1 : 0, baseLoad, null);
-                });
+                Director.getInstance().director(BaseLoad.ON_END_LOAD_FAIL, () -> mListener.onDriveResult(DriveResult.FailMoreAction,
+                        robotCarAction != null ? robotCarAction.getActionId() + 1 : 0, baseLoad, null));
                 break;
             case NoEntry:
                 Director.getInstance().director(BaseLoad.ON_END_LOAD_FAIL, () ->
@@ -709,21 +706,17 @@ public class DriveController {
             doPerform();
             final BaseLoad currentLoad = LoadMgr.getInstance().getCurrentLoadEntrance().getLoad();
             DebugUtil.debug("%s-执行解锁", currentLoad.getName());
-            final ILock lock = currentLoad.getLock();
-            Key key = null;
+            ILock lock = currentLoad.getLock();
             switch (lock.getType()) {
                 case Additional:
-                    key = unAdditionalLock((AdditionalLock) lock, currentLoad);
+                    mKey = unAdditionalLock((AdditionalLock) lock, currentLoad);
+                    mKey.autoUnlock(lock.getValues());
                     break;
                 case DirectorPlay:
-                    key = unlockDirectorPlay(currentLoad);
+                    mKey = unlockDirectorPlay(currentLoad);
                     break;
-            }
-
-            mKey = key;
-
-            if (key != null) {
-                key.autoUnlock(lock.getValues());
+                default:
+                    mKey = null;
             }
 
         }
@@ -750,7 +743,7 @@ public class DriveController {
                 }
             };
             if (action != null) {
-                lock.unLock(key, new LockListener<Additional>() {
+                lock.unLock(key, new LockListener<>() {
                     @Override
                     public void onLocking() {
 
@@ -974,16 +967,15 @@ public class DriveController {
         }
     }
 
-
     public BaseLoad getCurrentLoad() {
         return LoadMgr.getInstance().getCurrentLoadEntrance().getLoad();
     }
 
-    private void moveing() {
-        DebugUtil.error("moveing");
+    private void moving() {
+        DebugUtil.error("moving");
         isMoving = true;
-        Director.getInstance().playMovingEmotion("hg");
-        MusicUtil.playTravelBgMusic(ThemeConfig.travelBgm());
+        Director.getInstance().playMovingEmotion();
+        MusicUtil.playTravelBgMusic(LoadMgr.getInstance().getCurrentSubject().travel());
         RobotActionManager.handShake(80);
     }
 

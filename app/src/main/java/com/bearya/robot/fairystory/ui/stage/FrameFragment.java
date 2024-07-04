@@ -14,9 +14,12 @@ import com.bearya.robot.databinding.StageFrameBinding;
 
 public class FrameFragment extends Fragment {
 
-    public static FrameFragment newInstance(int resId) {
+    private FrameSurfaceView.OnFrameFinishedListener onFrameFinishedListener;
+
+    public static FrameFragment newInstance(String fileName, int gapTime) {
         Bundle args = new Bundle();
-        args.putInt("frame", resId);
+        args.putString("framePath", fileName);
+        args.putInt("gapTime", gapTime);
         FrameFragment fragment = new FrameFragment();
         fragment.setArguments(args);
         return fragment;
@@ -27,33 +30,36 @@ public class FrameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        bindView = StageFrameBinding.inflate(inflater,container ,false);
+        bindView = StageFrameBinding.inflate(inflater, container, false);
         return bindView.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            bindView.frameSurface.setBitmapPaths(getArguments().getString("framePath", null));
+            bindView.frameSurface.setGapTime(getArguments().getInt("gapTime", 10));
+        }
         bindView.frameSurface.setIsRepeat(false);
-        bindView.frameSurface.setGapTime(10);
-        bindView.frameSurface.setOnFrameFinishedListener(new FrameSurfaceView.OnFrameFinishedListener() {
-            @Override
-            public void onFrameStart() {
+        if (onFrameFinishedListener != null) {
+            bindView.frameSurface.setOnFrameFinishedListener(onFrameFinishedListener);
+        }
+    }
 
-            }
+    @Override
+    public void onResume() {
+        super.onResume();
+        bindView.frameSurface.start();
+    }
 
-            @Override
-            public void onFrameFinish() {
-
-            }
-        });
-        bindView.frameSurface.setOnClickListener(v -> {
-
-        });
+    public void setOnFrameFinishedListener(FrameSurfaceView.OnFrameFinishedListener listener) {
+        onFrameFinishedListener = listener;
     }
 
 }

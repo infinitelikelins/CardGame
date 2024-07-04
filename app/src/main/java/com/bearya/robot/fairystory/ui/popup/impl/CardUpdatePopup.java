@@ -29,6 +29,7 @@ public class CardUpdatePopup extends CardPopup {
         withClick(R.id.backward, v -> popupWithClick(CardType.ACTION_BACKWARD));
         withClick(R.id.loop, v -> popupWithClick(CardType.ACTION_LOOP));
         withClick(R.id.closure, v -> popupWithClick(CardType.ACTION_CLOSURE));
+        withClick(R.id.other, v -> popupWithClick(CardType.ACTION_PARALLEL));
         withClick(R.id.left_add, v -> popupWithClick(CardType.ACTION_INSERT_LEFT));
         withClick(R.id.right_add, v -> popupWithClick(CardType.ACTION_INSERT_RIGHT));
         setWidth(1024);

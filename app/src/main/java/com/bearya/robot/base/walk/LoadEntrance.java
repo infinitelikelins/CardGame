@@ -4,6 +4,7 @@ import com.bearya.robot.base.BaseApplication;
 import com.bearya.robot.base.load.BaseLoad;
 import com.bearya.robot.base.walk.action.MoveAndDirectAction;
 import com.bearya.robot.base.car.TravelPath;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
 
 public class LoadEntrance {
     private String loadName;
@@ -30,7 +31,7 @@ public class LoadEntrance {
     }
 
     public BaseLoad getLoad() {
-        return BaseApplication.getInstance().getLoadMgr().getLoad(loadName);
+        return LoadMgr.getInstance().getLoad(loadName);
     }
 
     @Override

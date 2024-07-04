@@ -18,9 +18,9 @@ public class VideoFragment extends Fragment {
 
     private MediaPlayer.OnCompletionListener completedListener;
 
-    public static VideoFragment newInstance(int fileName) {
+    public static VideoFragment newInstance(String fileName) {
         Bundle args = new Bundle();
-        args.putInt("video", fileName);
+        args.putString("video", fileName);
         VideoFragment fragment = new VideoFragment();
         fragment.setArguments(args);
         return fragment;
@@ -37,8 +37,8 @@ public class VideoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         assert getArguments() != null;
-        int videoPath = getArguments().getInt("video", 0);
-        bindView.video.setVideoPath("android.resource://" + requireContext().getPackageName() + "/" + videoPath);
+        String videoPath = getArguments().getString("video", "");
+        bindView.video.setVideoPath(videoPath);
         bindView.video.setOnCompletionListener(completedListener);
     }
 

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bearya.actionlib.utils.RobotActionManager;
-import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.R;
 import com.bearya.robot.base.BaseApplication;
 import com.bearya.robot.base.can.Body;
@@ -29,6 +28,9 @@ import com.bearya.robot.fairystory.ui.popup.impl.CardUpdatePopup;
 import com.bearya.robot.fairystory.ui.popup.impl.CountPopup;
 import com.bearya.robot.fairystory.ui.popup.impl.DeleteConfirmPopup;
 import com.bearya.robot.fairystory.ui.popup.impl.EmptyActionPopup;
+import com.bearya.robot.fairystory.ui.popup.impl.ErrorParallelCardPopup;
+import com.bearya.robot.fairystory.ui.popup.impl.ErrorPropCardPopup;
+import com.bearya.robot.fairystory.ui.popup.impl.PropCardPopup;
 import com.bearya.robot.fairystory.ui.popup.impl.PutCenterPopup;
 import com.bearya.robot.fairystory.ui.res.CardChildAction;
 import com.bearya.robot.fairystory.ui.res.CardParentAction;
@@ -36,6 +38,7 @@ import com.bearya.robot.fairystory.ui.res.CardResource;
 import com.bearya.robot.fairystory.ui.res.CardType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tencent.mmkv.MMKV;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -50,11 +53,12 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
     private CardActionsAdapter adapter;
     private Animator animator; // 尾部添加+的属性动画
     private long lastOidUpdateTime = System.currentTimeMillis(); // 最新一次读取oid的时间
+    private boolean isInStartLoad = false; // 是否在起点位置
     private final Runnable repeatRefreshCardAudioRunnable = new Runnable() {
         @Override
         public void run() {
             // 每30秒提示一次小朋友刷卡或者点击添加行动指令，有行动指令不提示
-            if (adapter.getData().size() == 0) {
+            if (adapter.getData().isEmpty()) {
                 MusicUtil.playAssetsAudio("card/zh/p_guide.mp3");
             }
             repeatRefreshCardAudio();
@@ -92,6 +96,8 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
                 showPopupParent(position);
             } else if (view.getId() == R.id.step) {// 步数指令
                 showPopupStep(position);
+            } else if (view.getId() == R.id.child_action) {// 道具指令
+                showPopupProp(position);
             }
         });
         adapter.setOnItemChildLongClickListener((baseQuickAdapter, view, position) -> {
@@ -127,9 +133,10 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
         withClick(R.id.doRun, view -> {
             List<CardParentAction> data = adapter.getData();
             String lastCommand = new Gson().toJson(data);
-            KVManager.getInstance().put("lastCommand", lastCommand);
+            MMKV.defaultMMKV().encode("lastCommand", lastCommand);
             checkStartLoadToRun();
         });
+
         // 导入上一次编程的指令
         withClick(R.id.load_command, v -> loadLastCommand());
 
@@ -159,7 +166,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
      */
     private void checkStartLoadToRun() {
         final List<CardParentAction> data = adapter.getData();
-        if (data.size() == 0) {
+        if (data.isEmpty()) {
             new EmptyActionPopup(this).showPopupWindow();
             return;
         }
@@ -193,6 +200,8 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
             showLoopUnclosed(errorIndex);
         } else if (loopCloseable == 1) {
             showLoopUnclosed(actionIndex);
+        } else if (isInStartLoad) {
+            doRun();
         } else {
             PutCenterPopup putCenterPopup = new PutCenterPopup(this);
             putCenterPopup.setInCenterListener(this::doRun);
@@ -216,7 +225,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
     }
 
     private void loadLastCommand() {
-        String lastCommand = KVManager.getInstance().getString("lastCommand");
+        String lastCommand = MMKV.defaultMMKV().decodeString("lastCommand");
         Type type = new TypeToken<List<CardParentAction>>() {
         }.getType();
         adapter.setNewData(new Gson().fromJson(lastCommand, type));
@@ -312,11 +321,30 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
         if (item != null) {
             if (item.parentActionId != -1) {
                 CardUpdatePopup popup = new CardUpdatePopup(this);
+                if (item.parentActionId != CardType.ACTION_FORWARD) {
+                    popup.hideParallelCard();
+                }
                 popup.setPopupViewClickListener(cardType -> updateCardAction(position, cardType));
                 popup.showPopupWindow();
             } else {
                 showPopupCardActions(position, true);
             }
+        }
+    }
+
+    /**
+     * 弹出框 ，选择附属卡
+     */
+    private void showPopupProp(final int position) {
+        final CardParentAction parentAction = adapter.getItem(position);
+        if (parentAction != null) {
+            PropCardPopup propCardPopup = new PropCardPopup(this);
+            propCardPopup.setPopupViewClickListener(cardType -> {
+                parentAction.childAction = new CardChildAction(cardType);
+                parentAction.childAction.status = true;
+                adapter.notifyItemChanged(position);
+            });
+            propCardPopup.showPopupWindow();
         }
     }
 
@@ -371,6 +399,8 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
                 item.childAction = new CardChildAction(CardType.ACTION_DEFAULT);
                 item.status = true;
                 adapter.notifyItemChanged(position);
+            } else {
+                new ErrorParallelCardPopup(this).showPopupWindow();
             }
         } else if (cardType == CardType.ACTION_INSERT_LEFT) {
             showPopupCardActions(position, false);
@@ -383,6 +413,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onFrontOid(final int oid) {
+        isInStartLoad = oid >= 26476 && oid <= 27375;
         runOnUiThread(() -> appendCardAction(oid));
     }
 
@@ -405,6 +436,47 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
                 adapter.addData(new CardParentAction(cardType));
                 cardActionRecyclerView.smoothScrollToPosition(adapter.getData().size());
                 MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+                break;
+            case CardType.ACTION_PARALLEL:
+                List<CardParentAction> data = adapter.getData();
+                if (data.isEmpty()) {
+                    new ErrorParallelCardPopup(this).showPopupWindow();
+                    break;
+                }
+                int position = data.size() - 1;
+                CardParentAction cardParentAction = data.get(position);
+                if (cardParentAction != null && cardParentAction.parentActionId == CardType.ACTION_FORWARD) {
+                    cardParentAction.childAction = new CardChildAction(CardType.ACTION_DEFAULT);
+                    cardParentAction.status = true;
+                    adapter.notifyItemChanged(position);
+                    MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+                } else {
+                    new ErrorParallelCardPopup(this).showPopupWindow();
+                }
+                break;
+            case CardType.ACTION_BOAT:
+            case CardType.ACTION_MAGIC:
+            case CardType.ACTION_SOLDIER:
+            case CardType.ACTION_NEEDLES:
+            case CardType.ACTION_WATER:
+            case CardType.ACTION_FLUTE:
+            case CardType.ACTION_BULLET:
+            case CardType.ACTION_STICK:
+                List<CardParentAction> data2 = adapter.getData();
+                if (data2.isEmpty()) {
+                    new ErrorPropCardPopup(this).showPopupWindow();
+                } else {
+                    int position2 = data2.size() - 1;
+                    CardParentAction cardParentAction2 = data2.get(position2);
+                    if (cardParentAction2 != null && cardParentAction2.parentActionId == CardType.ACTION_FORWARD && cardParentAction2.childAction != null) {
+                        cardParentAction2.childAction = new CardChildAction(cardType);
+                        cardParentAction2.status = true;
+                        adapter.notifyItemChanged(position2);
+                        MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+                    } else {
+                        new ErrorPropCardPopup(this).showPopupWindow();
+                    }
+                }
                 break;
         }
     }

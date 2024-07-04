@@ -2,19 +2,20 @@ package com.bearya.robot.base.play;
 
 import static com.bearya.robot.base.play.PlayData.ONLY_ACTION;
 
-import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
-import android.widget.FrameLayout;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.IdRes;
 import androidx.fragment.app.FragmentManager;
 
 import com.bearya.actionlib.utils.RobotActionManager;
-import com.bearya.robot.R;
 import com.bearya.robot.base.BaseApplication;
+import com.bearya.robot.base.ui.view.FrameSurfaceView;
 import com.bearya.robot.base.util.CodeUtils;
 import com.bearya.robot.base.util.DebugUtil;
 import com.bearya.robot.base.util.MusicUtil;
+import com.bearya.robot.fairystory.ui.stage.FrameFragment;
 import com.bearya.robot.fairystory.ui.stage.LottieFragment;
 import com.bearya.robot.fairystory.ui.stage.PictureFragment;
 import com.bearya.robot.fairystory.ui.stage.VideoFragment;
@@ -24,8 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Director implements MediaPlayer.OnCompletionListener {
-    private FrameLayout view;
+public class Director  {
+    private Handler handler;
     private FragmentManager supportFragmentManager;
     private LoadPlay loadPlay;
     private PlayData playData;
@@ -36,9 +37,10 @@ public class Director implements MediaPlayer.OnCompletionListener {
 
     private static Director instance;
     private String soundParam;
+    private int containerId;
 
     private Director() {
-
+        handler = new Handler(Looper.getMainLooper());
     }
 
     public static Director getInstance() {
@@ -91,40 +93,40 @@ public class Director implements MediaPlayer.OnCompletionListener {
         }
     }
 
-    public void setContainer(FragmentManager supportFragmentManager, FrameLayout view) {
-        this.view = view;
+    public void setContainer(FragmentManager supportFragmentManager , @IdRes int containerId) {
         this.supportFragmentManager = supportFragmentManager;
+        this.containerId = containerId;
     }
 
     private void playLottie(String fileName) {
 
-        Fragment fragment = LottieFragment.newInstance(fileName);
+        LottieFragment fragment = LottieFragment.newInstance(fileName);
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(containerId, fragment)
                 .commitNowAllowingStateLoss();
 
-        view.postDelayed(() -> complete(PlayData.ONLY_IMAGE), 3000);
+        handler.postDelayed(() -> complete(PlayData.ONLY_IMAGE), 3000);
     }
 
-    private void playImage(int fileName) {
-        Fragment fragment = PictureFragment.newInstance(fileName);
+    private void playImage(String fileName) {
+        PictureFragment fragment = PictureFragment.newInstance(fileName);
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(containerId, fragment)
                 .commitNowAllowingStateLoss();
 
-        view.postDelayed(() -> complete(PlayData.ONLY_IMAGE), 3000);
+        handler.postDelayed(() -> complete(PlayData.ONLY_IMAGE), 3000);
     }
 
-    private void playVideo(int fileName) {
+    private void playVideo(String fileName) {
 
         VideoFragment fragment = VideoFragment.newInstance(fileName);
 
-        fragment.setOnVideoCompletedListener(mp -> view.postDelayed(() -> complete(PlayData.ONLY_VIDEO), 3000));
+        fragment.setOnVideoCompletedListener(mp -> complete(PlayData.ONLY_VIDEO));
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(containerId, fragment)
                 .commitNowAllowingStateLoss();
     }
 
@@ -137,13 +139,13 @@ public class Director implements MediaPlayer.OnCompletionListener {
                         playLottie(facePlay.getFace());
                         break;
                     case Image:
-                        playImage(facePlay.getResource());
+                        playImage(facePlay.getFace());
                         break;
                     case Video:
-                        playVideo(facePlay.getResource());
+                        playVideo(facePlay.getFace());
                         break;
                     case Frame:
-                        playFrame();
+                        playFrame(facePlay.getFace(), facePlay.getTime());
                         break;
                 }
             });
@@ -160,16 +162,32 @@ public class Director implements MediaPlayer.OnCompletionListener {
 
             if (!TextUtils.isEmpty(file)) {
                 if (file.startsWith("/storage/")) {
-                    MusicUtil.play(file, this);
+                    MusicUtil.play(file, mp -> complete(PlayData.ONLY_SOUND));
                 } else {
-                    MusicUtil.playAssetsAudio(file, this);
+                    MusicUtil.playAssetsAudio(file, mp -> complete(PlayData.ONLY_SOUND));
                 }
             }
         }
     }
 
-    private void playFrame() {
+    private void playFrame(String fileName, int gapTime) {
+        FrameFragment fragment = FrameFragment.newInstance(fileName, gapTime);
 
+        fragment.setOnFrameFinishedListener(new FrameSurfaceView.OnFrameFinishedListener() {
+            @Override
+            public void onFrameStart() {
+
+            }
+
+            @Override
+            public void onFrameFinish() {
+                complete(PlayData.ONLY_FRAME);
+            }
+        });
+
+        supportFragmentManager.beginTransaction()
+                .replace(containerId, fragment)
+                .commitNowAllowingStateLoss();
     }
 
     private void playAction(TimeAction[] actions) {
@@ -201,11 +219,6 @@ public class Director implements MediaPlayer.OnCompletionListener {
         }
     }
 
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        complete(PlayData.ONLY_SOUND);
-    }
-
     private void complete(int contidion) {
         if (playData != null) {
             playData.complete(contidion);
@@ -226,12 +239,12 @@ public class Director implements MediaPlayer.OnCompletionListener {
 
     public void release() {
         loadPlayMap.clear();
-        view = null;
+        handler = null;
+        supportFragmentManager = null;
     }
 
     public void stop() {
         MusicUtil.stopMusic();
-        removeActionRunnable();
         RobotActionManager.reset();
         removeActionRunnable();
     }
@@ -275,7 +288,8 @@ public class Director implements MediaPlayer.OnCompletionListener {
         }
     }
 
-    public void playMovingEmotion(String emotion) {
+    public void playMovingEmotion() {
+        String emotion = CodeUtils.oneOf("sq", "ja", "axy", "kx", "hs");
         playFace(new FacePlay(emotion, FaceType.Lottie));
     }
 

@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 
 import com.bearya.robot.base.can.CanDataListener;
 import com.bearya.robot.base.can.CanManager;
-import com.bearya.robot.base.util.DebugUtil;
 
 import razerdp.basepopup.BasePopupWindow;
 import razerdp.util.animation.AlphaConfig;
@@ -75,7 +74,6 @@ public abstract class AbsBasePopup extends BasePopupWindow {
     @CallSuper
     protected void onPopupShow() {
         if (getContext() instanceof CanDataListener) {
-            DebugUtil.debug("AbsBasePopup 是 CanDataListener 的子类 ，移除监听");
             CanManager.getInstance().removeListener((CanDataListener) getContext());
         }
     }
@@ -83,7 +81,6 @@ public abstract class AbsBasePopup extends BasePopupWindow {
     @CallSuper
     protected void onPopupDismiss() {
         if (getContext() instanceof CanDataListener) {
-            DebugUtil.debug("AbsBasePopup 是 CanDataListener 的子类 ，重新添加监听");
             CanManager.getInstance().addListener((CanDataListener) getContext());
         }
     }

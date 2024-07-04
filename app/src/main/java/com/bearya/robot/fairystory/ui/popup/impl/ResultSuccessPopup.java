@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import com.bearya.robot.R;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.fairystory.ui.popup.AbsBasePopup;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 
 public class ResultSuccessPopup extends AbsBasePopup {
 
@@ -35,7 +36,7 @@ public class ResultSuccessPopup extends AbsBasePopup {
     @Override
     protected void onPopupShow() {
         super.onPopupShow();
-        MusicUtil.playAssetsAudio("tts/zh/gold_effect.mp3", mediaPlayer -> {
+        MusicUtil.playAssetsAudio(MusicResource.GOLD_EFFECT, mediaPlayer -> {
             showResultData();
             setPerformMode();
         });

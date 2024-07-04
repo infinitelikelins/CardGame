@@ -16,19 +16,13 @@ public abstract class EndLoad extends XLoad {
 
     @Override
     public void registerPlay() {
-        LoadPlay loadPlay = new LoadPlay();
-        Director.getInstance().register(ON_NEW_LOAD, loadPlay);
+        LoadPlay unlockSuccessPlay = new LoadPlay();
+        Director.getInstance().register(ON_NEW_LOAD, unlockSuccessPlay);
 
-        LoadPlay successPlay = new LoadPlay();
-        PlayData successData = new PlayData(new FacePlay(loadSuccessFacePlay(), defineType()));
-        successData.sound = playSound();
-        successPlay.addLoad(successData);
+        LoadPlay successPlay = new LoadPlay(new PlayData(playSuccessSound(), new FacePlay(loadSuccessFacePlay(), defineType(), successGapTime())));
         Director.getInstance().register(ON_END_LOAD_SUCCESS, successPlay);
 
-        LoadPlay failPlay = new LoadPlay();
-        PlayData failData = new PlayData(new FacePlay(loadSuccessFacePlay(), defineType()));
-        failData.sound = "music/zh/end_fail.mp3";
-        failPlay.addLoad(failData);
+        LoadPlay failPlay = new LoadPlay(new PlayData(playFailSound(), new FacePlay(loadFailFacePlay(), defineType(), failGapTime())));
         Director.getInstance().register(ON_END_LOAD_FAIL, failPlay);
     }
 
@@ -37,12 +31,17 @@ public abstract class EndLoad extends XLoad {
      */
     public abstract String[] getEquipmentLoads();
 
-    protected abstract int loadSuccessFacePlay();
+    protected abstract String loadSuccessFacePlay();
+
+    protected abstract String loadFailFacePlay();
+
+    protected abstract int successGapTime();
 
     protected abstract FaceType defineType();
 
-    protected String playSound() {
-        return "";
-    }
+    protected abstract String playSuccessSound();
 
+    protected abstract String playFailSound();
+
+    protected abstract int failGapTime();
 }

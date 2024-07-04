@@ -24,7 +24,7 @@ public class ActionSet {
     public void clear() {
         if (actionQueue == null) {
             actionQueue = new ArrayList<>();
-        } else if (actionQueue.size() > 0) {
+        } else if (!actionQueue.isEmpty()) {
             actionQueue.clear();
         }
     }

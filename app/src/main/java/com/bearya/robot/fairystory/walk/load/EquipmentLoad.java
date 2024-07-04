@@ -5,6 +5,7 @@ import com.bearya.robot.base.play.FacePlay;
 import com.bearya.robot.base.play.FaceType;
 import com.bearya.robot.base.play.LoadPlay;
 import com.bearya.robot.base.play.PlayData;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 import com.bearya.robot.fairystory.walk.load.lock.DirectorPlayLock;
 
 /**
@@ -19,24 +20,25 @@ public abstract class EquipmentLoad extends XLoad {
 
     @Override
     public void registerPlay() {
-        LoadPlay loadPlay = new LoadPlay();
-        PlayData playData = new PlayData(new FacePlay(loadFacePlay(), defineType()));
-        playData.sound = playSound();
-        loadPlay.addLoad(playData);
+        LoadPlay loadPlay = new LoadPlay(new PlayData(playSound(), new FacePlay(loadFacePlay(), defineType(), loadFacePlayTime())));
         Director.getInstance().register(ON_NEW_LOAD, loadPlay);
 
-        LoadPlay failPlay = new LoadPlay();
-        PlayData failData = new PlayData("music/zh/end_fail.mp3");
-        failPlay.addLoad(failData);
+        LoadPlay failPlay = new LoadPlay(new PlayData(MusicResource.THEME_END_FAIL));
         Director.getInstance().register(ON_END_LOAD_FAIL, failPlay);
     }
 
-    protected abstract int loadFacePlay();
+    protected abstract String loadFacePlay();
 
-    protected abstract FaceType defineType();
+    protected FaceType defineType() {
+        return FaceType.Frame;
+    }
+
+    protected int loadFacePlayTime() {
+        return 0;
+    }
 
     protected String playSound() {
-        return "";
+        return null;
     }
 
 }

@@ -1,9 +1,6 @@
 package com.bearya.robot.fairystory.walk.load;
 
 import com.bearya.robot.base.car.TravelPath;
-import com.bearya.robot.base.play.Director;
-import com.bearya.robot.base.play.LoadPlay;
-import com.bearya.robot.base.play.PlayData;
 import com.bearya.robot.base.walk.Travel;
 import com.bearya.robot.base.walk.TravelCrossOver;
 import com.bearya.robot.base.walk.TravelFace;
@@ -23,10 +20,7 @@ public class StartLoad extends XLoad {
 
     @Override
     public void registerPlay() {
-        LoadPlay failPlay = new LoadPlay();
-        PlayData failData = new PlayData("music/zh/end_fail.mp3");
-        failPlay.addLoad(failData);
-        Director.getInstance().register(ON_END_LOAD_FAIL, failPlay);
+
     }
 
     public TravelPath<Travel> getInitTravelPath(int strategy) {

@@ -12,7 +12,6 @@ import com.bearya.actionlib.utils.RobotActionManager;
 import com.bearya.robot.BuildConfig;
 import com.bearya.robot.base.can.CanManager;
 import com.bearya.robot.base.can.Messager;
-import com.bearya.robot.base.load.ILoadMgr;
 import com.bearya.robot.base.play.Director;
 import com.bearya.robot.base.ui.BaseActivity;
 import com.bearya.robot.base.util.ActionDefine;
@@ -27,7 +26,6 @@ public abstract class BaseApplication extends Application {
     private static BaseApplication mInstance;
     private final Handler handler = new Handler();
     private long lastMoveTimeStamp = 0;
-    private ILoadMgr mLoadMgr;
 
     public static BaseApplication getInstance() {
         return mInstance;
@@ -61,7 +59,6 @@ public abstract class BaseApplication extends Application {
         CrashReport.initCrashReport(this, "9857a3fbe3", BuildConfig.DEBUG, strategy);
         CrashReport.setUserId(DeviceUtil.getRKBroadProductCode());
         registerReceiver(receiver, new IntentFilter("bearya.intent.action.KILL_APP"));
-        mLoadMgr = createLoadMgr();
         getHandler().postDelayed(() -> CanManager.getInstance().startScan(), 3000);
         ActionDefine.sendMessagerToServices(getInstance(), new Messager(Messager.APP_RESUME));
 
@@ -96,11 +93,5 @@ public abstract class BaseApplication extends Application {
         MusicUtil.stopMusic();
         MusicUtil.stopBgMusic();
     }
-
-    public ILoadMgr getLoadMgr() {
-        return mLoadMgr;
-    }
-
-    protected abstract ILoadMgr createLoadMgr();
 
 }

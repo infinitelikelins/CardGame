@@ -1,0 +1,44 @@
+package com.bearya.robot.fairystory.walk.subjects;
+
+import com.bearya.robot.R;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
+import com.bearya.robot.fairystory.walk.load.EndLoad;
+import com.bearya.robot.fairystory.walk.load.story.CastleEndLoad;
+import com.bearya.robot.fairystory.walk.start.AbsStart;
+import com.bearya.robot.fairystory.walk.start.DanceStart;
+
+public class CastleSubject implements AbsSubject {
+
+    public static final String NAME = "梦幻城堡";
+
+    @Override
+    public String name() {
+        return NAME;
+    }
+
+    @Override
+    public String type() {
+        return "Castle";
+    }
+
+    @Override
+    public int res() {
+        return R.mipmap.view_c;
+    }
+
+    @Override
+    public String travel() {
+        return "music/zh/ball_walk.mp3";
+    }
+
+    @Override
+    public AbsStart start() {
+        return new DanceStart();
+    }
+
+    @Override
+    public EndLoad end() {
+        return (EndLoad) LoadMgr.getInstance().getLoad(CastleEndLoad.NAME);
+    }
+
+}

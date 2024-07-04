@@ -10,6 +10,7 @@ public class PlayData {
     public static final int ONLY_VIDEO = 2;
     public static final int ONLY_ACTION = 4;
     public static final int ONLY_IMAGE = 8;
+    public static final int ONLY_FRAME = 16;
     public String sound;
 
     public long soundLongTime;
@@ -21,7 +22,6 @@ public class PlayData {
 
     private int completeCondition;
     private int alreadyCompleteCondition;
-    public String playAction = null;
 
     public PlayData() {
     }
@@ -46,7 +46,6 @@ public class PlayData {
         mode = playData.mode;
         color = playData.color;
         actions = playData.actions;
-        playAction = playData.playAction;
         completeCondition = playData.completeCondition;
         alreadyCompleteCondition = playData.alreadyCompleteCondition;
     }
@@ -61,6 +60,8 @@ public class PlayData {
                 completeCondition += ONLY_VIDEO;
             } else if (facePlay.getFaceType() == FaceType.Image || facePlay.getFaceType() == FaceType.Lottie) {
                 completeCondition += ONLY_IMAGE;
+            } else if (facePlay.getFaceType() == FaceType.Frame) {
+                completeCondition += ONLY_FRAME;
             }
         }
         if (actions != null && actions.size() > 0) {
@@ -74,14 +75,6 @@ public class PlayData {
 
     public boolean isComplete() {
         return alreadyCompleteCondition >= completeCondition;
-    }
-
-    public String getPlayAction() {
-        return playAction;
-    }
-
-    public void setPlayAction(String playAction) {
-        this.playAction = playAction;
     }
 
     public String getSound() {

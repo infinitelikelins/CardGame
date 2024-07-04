@@ -68,13 +68,13 @@ public class MusicUtil {
         playAssetsBgMusic(mp3);
     }
 
-    public static void playAssetsBgMusic(String mp3) {
-        if (TextUtils.isEmpty(mp3)) {
+    public static void playAssetsBgMusic(String name) {
+        if (TextUtils.isEmpty(name)) {
             return;
         }
         try {
             localMusicPlayerBg.stop();
-            localMusicPlayerBg.play(String.format("android_asset/%s", mp3));
+            localMusicPlayerBg.play(name != null && !name.startsWith("/storage/emulated") ? String.format("android_asset/%s", name) : name);
         } catch (Exception e) {
             e.printStackTrace();
         }

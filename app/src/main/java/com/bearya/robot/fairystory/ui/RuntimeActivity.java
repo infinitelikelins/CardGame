@@ -3,7 +3,6 @@ package com.bearya.robot.fairystory.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 
@@ -27,8 +26,8 @@ import com.bearya.robot.fairystory.ui.popup.impl.ResultFailPopup;
 import com.bearya.robot.fairystory.ui.popup.impl.ResultSuccessPopup;
 import com.bearya.robot.fairystory.ui.res.CardChildAction;
 import com.bearya.robot.fairystory.ui.res.CardParentAction;
+import com.bearya.robot.fairystory.ui.res.CardResource;
 import com.bearya.robot.fairystory.ui.res.CardType;
-import com.bearya.robot.fairystory.ui.res.ThemeConfig;
 import com.bearya.robot.fairystory.walk.action.RobotCarAction;
 import com.bearya.robot.fairystory.walk.car.ICar;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
@@ -66,8 +65,7 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_runtime);
 
-        FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
-        Director.getInstance().setContainer(getSupportFragmentManager(), fragmentContainer);
+        Director.getInstance().setContainer(getSupportFragmentManager(), R.id.fragment_container);
 
         try {
             // 执行行动的数据
@@ -107,21 +105,11 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
     }
 
     private void prepare() {
-        // 显示出哼歌的表情后开始行走
-        if (ThemeConfig.CURRENT_THEME.equals(ThemeConfig.THEME_YXWH)) {
-            Director.getInstance().playMovingEmotion("sq");
-        } else if (ThemeConfig.CURRENT_THEME.equals(ThemeConfig.THEME_QHXB)) {
-            Director.getInstance().playMovingEmotion("ja");
-        } else if (ThemeConfig.CURRENT_THEME.equals(ThemeConfig.THEME_MHWH)) {
-            Director.getInstance().playMovingEmotion("axy");
-        } else if (ThemeConfig.CURRENT_THEME.equals(ThemeConfig.THEME_CXTD)) {
-            Director.getInstance().playMovingEmotion("kx");
-        } else if (ThemeConfig.CURRENT_THEME.equals(ThemeConfig.THEME_FREE)) {
-            Director.getInstance().playMovingEmotion("hs");
-        }
 
+        // 显示出哼歌的表情后开始行走
+        Director.getInstance().playMovingEmotion();
         // 出发了
-        MusicUtil.playAssetsAudio("music/zh/w_ready_treasure3.mp3", mediaPlayer -> runOnUiThread(this::doRun));
+        MusicUtil.playAssetsAudio(LoadMgr.getInstance().getCurrentSubject().start().travelReady(), mediaPlayer -> runOnUiThread(this::doRun));
 
     }
 
@@ -132,7 +120,6 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
         // 这是行动指令对接集合
         RobotCarAction robotCarAction = new RobotCarAction();
         ActionSet actionSet = new ActionSet();
-        actionSet.clear();
         int loopIndex = -1;
         int loopCount = -1;
         for (int i = 0; i < data.size(); i++) {
@@ -186,13 +173,12 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
                 int id = action.idSection.getStart();
                 // 根据前进指令步数，直接转化成步数为1的前进指令告诉RobotCar
                 for (int i = 0; i < action.stepCount; i++) {
-                    actions.add(new ForwardAction(id++, 1, null));
+                    actions.add(new ForwardAction(id++, 1, CardResource.createChildAction(action.childAction)));
                 }
                 break;
             case CardType.ACTION_LEFT: //  左转
                 actions.add(new LeftAction(1));
                 break;
-
             case CardType.ACTION_RIGHT: // 右转
                 actions.add(new RightAction(1));
                 break;
@@ -201,7 +187,6 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
         }
         return actions;
     }
-
 
     /**
      * 运行的时候 ， 发生的一些异常情况
@@ -213,7 +198,7 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
     public void onException(final ICar.DriveException exception, Object param) {
         runOnUiThread(() -> {
             if (exception == ICar.DriveException.OutOfLoad) { // 小贝不在地垫上,可能是行走过程中走出去的或者是人为的抱离地垫
-                showResultErrorPopup(getApplicationContext());
+                showResultErrorPopup();
             }
         });
     }
@@ -243,70 +228,41 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
                     // TODO: 2020/6/18 根据当前最新需要 ， 将 终点地点的逻辑 设置为 主题对应的终点地点才算到达
                     DebugUtil.debug("FailLessAction");
                     onLoadAnimation(stepIndex, load, param);
-                    showResultErrorPopup(getApplicationContext());
+                    showResultErrorPopup();
                     break;
 
                 case FailMoreAction:
                     DebugUtil.debug("FailMoreAction");
                     onLoadAnimation(stepIndex, load, param);
-                    showResultErrorPopup(getApplicationContext());
+                    showResultErrorPopup();
                     break;
 
                 case FailObstacleAdditionalLost:
                     DebugUtil.debug("FailObstacleAdditionalLost");
                     onLoadAnimation(stepIndex, load, new Object());
-                    showResultErrorPopup(getApplicationContext());
+                    showResultErrorPopup();
                     break;
 
                 case FailObstacleAdditionalUnMatch:
                     DebugUtil.debug("FailObstacleAdditionalUnMatch");
                     onLoadAnimation(stepIndex, load, param);
-                    showResultErrorPopup(getApplicationContext());
+                    showResultErrorPopup();
                     break;
 
                 case FailNoEntry:
                     DebugUtil.debug("FailNoEntry");
                     onLoadAnimation(stepIndex, load, param);
-                    showResultErrorPopup(getApplicationContext());
+                    showResultErrorPopup();
                     break;
 
                 case FailEndLoadUnMatch:
-                    if (param instanceof String) {
-                        DebugUtil.debug("FailEndLoadUnMatch -- 3");
-                        showResultErrorPopup(getApplicationContext());
-                    }
-
-                    if (load != null) {
-                        String wrongEndLoad = load.getName();// 当前走到的不匹配道路的名称
-                        DebugUtil.debug("wrongEndLoad = %s", wrongEndLoad);
-                    }
-
+                    DebugUtil.debug("FailEndLoadUnMatch -- wrongEndLoad = %s", load != null ? load.getName() : "null");// 当前走到的不匹配道路的名称
+                    showResultErrorPopup();
                     break;
 
                 case FailLostEquipmentLoads: // 到达终点但缺少装备地垫
                     DebugUtil.debug("FailLostEquipmentLoads");
-                    List<String> lostEquipmentLoads = new ArrayList<>(); // 缺少的装备地垫列表
-                    if (param instanceof List) {
-                        // 实际在运行的时候收到与主题匹配终点但还缺少的装备地垫列表
-                        List params = (List) param;
-                        if (params.size() > 0) {
-                            for (int i = 0; i < params.size(); i++) {
-                                Object paramObj = params.get(i);
-                                if (paramObj instanceof String) {
-                                    String lostEquipmentLoad = (String) paramObj;
-                                    lostEquipmentLoads.add(lostEquipmentLoad);
-                                }
-                            }
-                        }
-                    }
-                    // 当丢失/未收集的装备为0时，就是正确的
-                    if (lostEquipmentLoads.size() == 0) {
-                        //发现终点地垫所需的装备都收集完成，显示正确的动画
-                        showResultSuccessPopup(getApplicationContext());
-                    } else {
-                        // 发现未收集的装备大于0,那么应该就是显示错误的未收集齐装备的动画
-                        showResultErrorPopup(getApplicationContext());
-                    }
+                    showResultErrorPopup();
                     break;
             }
         });
@@ -367,14 +323,12 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
 
     /**
      * 结果页面，显示错误结果
-     *
-     * @param context 上下文
      */
-    private void showResultErrorPopup(final Context context) {
+    private void showResultErrorPopup() {
         // 先取消Lottie动画置空
         ResultFailPopup popup = new ResultFailPopup(this, "真遗憾，\n\n我没有完成任务。", null);
         popup.withEvent(v -> {
-            CardControllerActivity.start(context, new Gson().toJson(data));
+            CardControllerActivity.start(RuntimeActivity.this, new Gson().toJson(data));
             MusicUtil.stopMusic();
             // 返回刷卡指令页面需清除本次记录的信息
             LoadMgr.getInstance().clear();
@@ -408,7 +362,7 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Director.getInstance().setContainer(null, null);
+        Director.getInstance().setContainer(null, 0);
         robotCar.release();
     }
 

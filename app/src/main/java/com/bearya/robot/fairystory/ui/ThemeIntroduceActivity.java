@@ -4,21 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+
 import com.bearya.robot.R;
 import com.bearya.robot.base.ui.BaseActivity;
+import com.bearya.robot.base.ui.view.FrameSurfaceView;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.databinding.ActivityThemeIntroduceBinding;
-import com.bearya.robot.fairystory.ui.res.IntroduceAudio;
-import com.bearya.robot.fairystory.ui.res.ThemeConfig;
+import com.bearya.robot.fairystory.ui.stage.FrameFragment;
+import com.bearya.robot.fairystory.ui.stage.PictureFragment;
+import com.bearya.robot.fairystory.ui.stage.VideoFragment;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
+import com.bearya.robot.fairystory.walk.start.AbsStart;
 
 /**
  * 场景动画 起始背景介绍
  */
 public class ThemeIntroduceActivity extends BaseActivity {
+
     private ActivityThemeIntroduceBinding bindView;
 
-    public static void start(Context context, String type) {
-        context.startActivity(new Intent(context, ThemeIntroduceActivity.class).putExtra("type", type));
+    public static void start(Context context) {
+        context.startActivity(new Intent(context, ThemeIntroduceActivity.class));
     }
 
     @Override
@@ -27,20 +34,21 @@ public class ThemeIntroduceActivity extends BaseActivity {
         bindView = ActivityThemeIntroduceBinding.inflate(getLayoutInflater());
         setContentView(bindView.getRoot());
 
-        // 获取播放主题的资源类型
-        String types = getIntent().getStringExtra("type");
-        assert types != null;
+        AbsStart start = LoadMgr.getInstance().getCurrentSubject().start();
 
-        bindView.introduceView.setBackgroundResource(playStartImageArrays(types));
+        Fragment fragment = replaceScreen(start);
 
-        // 音频的播放事件
-        MusicUtil.playAssetsAudio(playStartAudioRes(types), mediaPlayer -> {
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_introduce, fragment)
+                    .commitNowAllowingStateLoss();
+        } else {
             CardControllerActivity.start(ThemeIntroduceActivity.this, null);
             finish();
-        });
+        }
 
         // 跳过场景介绍动画
-        withClick(bindView.introduceView, view -> {
+        withClick(bindView.fragmentIntroduce, view -> {
             CardControllerActivity.start(ThemeIntroduceActivity.this, null);
             finish();
         });
@@ -53,42 +61,51 @@ public class ThemeIntroduceActivity extends BaseActivity {
         MusicUtil.stopMusic();
     }
 
-    /**
-     * 点击屏幕上的游戏关卡，选择播放的动画
-     *
-     * @param type 点击游戏关卡类型
-     */
-    private int playStartImageArrays(String type) {
-        switch (type) {
-            case ThemeConfig.THEME_QHXB:
-                return R.mipmap.introduce_a;
-            case ThemeConfig.THEME_YXWH:
-                return R.mipmap.introduce_c;
-            case ThemeConfig.THEME_MHWH:
-                return R.mipmap.introduce_b;
-            case ThemeConfig.THEME_CXTD:
-            default:
-                return R.mipmap.introduce_d;
-        }
-    }
+    private Fragment replaceScreen(AbsStart start) {
+        switch (start.defineType()) {
+            case Image:
+                // 音频的播放事件
+                MusicUtil.playAssetsAudio(start.playSound(), mediaPlayer -> {
+                    CardControllerActivity.start(ThemeIntroduceActivity.this, null);
+                    finish();
+                });
+                return PictureFragment.newInstance(start.facePath());
+            case Frame:
+                FrameFragment frameFragment = FrameFragment.newInstance(start.facePath(), start.gapTime());
+                frameFragment.setOnFrameFinishedListener(new FrameSurfaceView.OnFrameFinishedListener() {
+                    private boolean isMusicFinishedFlag = false;
+                    private boolean isFrameFinishedFlag = false;
 
-    /**
-     * 播放的背景配音
-     *
-     * @param type 点击游戏关卡类型
-     */
-    private String playStartAudioRes(String type) {
-        switch (type) {
-            case ThemeConfig.THEME_YXWH:
-                return IntroduceAudio.hero;
-            case ThemeConfig.THEME_QHXB:
-                return IntroduceAudio.treasure;
-            case ThemeConfig.THEME_MHWH:
-                return IntroduceAudio.ball;
-            case ThemeConfig.THEME_CXTD:
-                return IntroduceAudio.station;
+                    @Override
+                    public void onFrameStart() {
+                        MusicUtil.playAssetsAudio(start.playSound(), mediaPlayer -> {
+                            isMusicFinishedFlag = true;
+                            if (isFrameFinishedFlag) {
+                                CardControllerActivity.start(ThemeIntroduceActivity.this, null);
+                                finish();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFrameFinish() {
+                        isFrameFinishedFlag = true;
+                        if (isMusicFinishedFlag) {
+                            CardControllerActivity.start(ThemeIntroduceActivity.this, null);
+                            finish();
+                        }
+                    }
+                });
+                return frameFragment;
+            case Video:
+                VideoFragment videoFragment = VideoFragment.newInstance(start.facePath());
+                videoFragment.setOnVideoCompletedListener(mp -> {
+                    CardControllerActivity.start(ThemeIntroduceActivity.this, null);
+                    finish();
+                });
+                return videoFragment;
             default:
-                return "";
+                return null;
         }
     }
 
