@@ -4,7 +4,9 @@ import android.os.Environment;
 
 public interface VideoResource {
 
-    String UNIVERSE_VIDEO_BASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/fairy/universe/video/";
+    String ROOT = Environment.getExternalStorageDirectory().getPath();
+
+    String UNIVERSE_VIDEO_BASE_PATH = ROOT + "/fairy/universe/video/";
 
     String RocketUnderstand = UNIVERSE_VIDEO_BASE_PATH + "RocketUnderstand.mp4";
     String RocketPrinciple = UNIVERSE_VIDEO_BASE_PATH + "RocketPrinciple.mp4";

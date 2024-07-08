@@ -4,8 +4,10 @@ import android.os.Environment;
 
 public interface FileResource {
 
-    String BASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/fairy/";
+    String ROOT = Environment.getExternalStorageDirectory().getPath();
 
-    String BASE_STORY_ENDING_PATH = Environment.getExternalStorageDirectory().getPath() + "/fairy/story/ending/";
+    String BASE_PATH = ROOT + "/fairy/";
+
+    String BASE_STORY_ENDING_PATH = ROOT + "/fairy/story/ending/";
 
 }

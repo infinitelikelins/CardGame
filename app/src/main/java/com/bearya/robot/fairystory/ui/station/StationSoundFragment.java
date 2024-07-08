@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.bearya.robot.databinding.FragmentStationConfigSoundBinding;
+import com.bearya.robot.databinding.FragmentStationSoundBinding;
 import com.bearya.robot.fairystory.ui.adapter.SoundAdapter;
+import com.bearya.robot.fairystory.ui.res.FileResource;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.Objects;
 
 public class StationSoundFragment extends Fragment {
 
@@ -26,19 +26,20 @@ public class StationSoundFragment extends Fragment {
         soundFragment.setArguments(bundle);
         return soundFragment;
     }
+
     private String type;
-    private FragmentStationConfigSoundBinding bindView;
+    private FragmentStationSoundBinding bindView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        type = Objects.requireNonNull(getArguments()).getString("type", "station_");
+        type = requireArguments().getString("type", "station_");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        bindView = FragmentStationConfigSoundBinding.inflate(inflater, container, false);
+        bindView = FragmentStationSoundBinding.inflate(inflater, container, false);
         return bindView.getRoot();
     }
 
@@ -51,36 +52,39 @@ public class StationSoundFragment extends Fragment {
         adapter.setOnItemClickListener((adapter1, view1, position) -> adapter.setSelectedIndex(position));
         bindView.recyclerView.setAdapter(adapter);
 
-        StationLib lib = StationLib.getLibsFromAssets(requireContext());
-        assert lib != null;
-        for (Lib soundlib : lib.soundLibs.libList) {
-            TabLayout.Tab tab = bindView.tabs.newTab().setText(soundlib.name);
-            bindView.tabs.addTab(tab);
-            if (tab.isSelected()) {
-                adapter.setNewData(soundlib.items);
-            }
-        }
-        bindView.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                for (Lib soundLib : lib.soundLibs.libList) {
-                    if (TextUtils.equals(tab.getText(), soundLib.name)) {
-                        adapter.setNewData(soundLib.items);
-                        break;
-                    }
+        String filePath = FileResource.BASE_PATH + LoadMgr.getInstance().getTheme().theme().toLowerCase() + "/station/station_libs.json";
+        StationLib lib = StationLib.getLibsFromJSON(filePath);
+        if (lib != null) {
+            for (Lib soundlib : lib.soundLibs.libList) {
+                TabLayout.Tab tab = bindView.tabs.newTab().setText(soundlib.name);
+                bindView.tabs.addTab(tab);
+                if (tab.isSelected()) {
+                    adapter.setNewData(soundlib.items);
                 }
             }
+            bindView.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    for (Lib soundLib : lib.soundLibs.libList) {
+                        if (TextUtils.equals(tab.getText(), soundLib.name)) {
+                            adapter.setNewData(soundLib.items);
+                            break;
+                        }
+                    }
+                }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
 
-            }
+                }
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
 }

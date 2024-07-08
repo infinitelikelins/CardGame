@@ -32,7 +32,7 @@
             android:layout_height="96dp"
             android:layout_gravity="center"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_magic" />
+            app:srcCompat="@drawable/ic_magic" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/prop_water"
@@ -41,7 +41,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_water" />
+            app:srcCompat="@drawable/ic_water" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/prop_needles"
@@ -50,7 +50,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_needles" />
+            app:srcCompat="@drawable/ic_needles" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/prop_flute"
@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_flute" />
+            app:srcCompat="@drawable/ic_flute" />
 
     </LinearLayout>
 
@@ -76,7 +76,7 @@
             android:layout_height="96dp"
             android:layout_gravity="center"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_stick" />
+            app:srcCompat="@drawable/ic_stick" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/prop_soldier"
@@ -85,7 +85,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_soldie" />
+            app:srcCompat="@drawable/ic_soldie" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/prop_bullet"
@@ -94,7 +94,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_bullet" />
+            app:srcCompat="@drawable/ic_bullet" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/prop_boat"
@@ -103,7 +103,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            app:srcCompat="@mipmap/ic_boat" />
+            app:srcCompat="@drawable/ic_boat" />
 
     </LinearLayout>
 

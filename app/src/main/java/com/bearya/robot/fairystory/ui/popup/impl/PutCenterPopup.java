@@ -63,7 +63,7 @@ public class PutCenterPopup extends AbsBasePopup {
     protected void onPopupShow() {
         super.onPopupShow();
         CanManager.getInstance().addListener(dataListener);
-        MusicUtil.playAssetsAudio("card/zh/put_me_center.mp3");
+        MusicUtil.playMusic("card/put_me_center.mp3");
         BaseApplication.getInstance().moveALittle(true);
     }
 

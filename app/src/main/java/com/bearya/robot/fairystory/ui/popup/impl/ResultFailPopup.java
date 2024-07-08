@@ -5,9 +5,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.R;
+import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.fairystory.ui.popup.AbsBasePopup;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 
 public class ResultFailPopup extends AbsBasePopup {
 
@@ -29,7 +30,7 @@ public class ResultFailPopup extends AbsBasePopup {
     protected void onPopupShow() {
         super.onPopupShow();
         if (!TextUtils.isEmpty(errorMp3) && errorMp3.endsWith(".mp3")) {
-            MusicUtil.playAssetsAudio(errorMp3);
+            MusicUtil.playMusic(errorMp3, mp -> MusicUtil.playBGM(MusicResource.BASE_MAIN_PATH + "game_fail.mp3"));
         }
     }
 

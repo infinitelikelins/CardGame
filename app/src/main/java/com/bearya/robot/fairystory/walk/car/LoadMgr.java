@@ -49,6 +49,10 @@ public class LoadMgr implements ILoadMgr {
         loads.putAll(type.loads());
     }
 
+    public AbsTheme getTheme() {
+        return theme;
+    }
+
     public void setCurrentSubject(AbsSubject subject) {
         currentSubject = subject;
     }
@@ -57,12 +61,13 @@ public class LoadMgr implements ILoadMgr {
         return theme != null && theme.subjects().length > 0 ? Arrays.asList(theme.subjects()) : Collections.emptyList();
     }
 
-    public AbsSubject getCurrentSubject() {
-        return currentSubject;
+    // 获取当前theme下的创想天地
+    public AbsSubject getCurrentThemeDreamSubject() {
+        return theme != null ? theme.dreamSubject() : null;
     }
 
-    public List<String> getLostEquipmentLoads() {
-        return lostEquipmentLoads;
+    public AbsSubject getCurrentSubject() {
+        return currentSubject;
     }
 
     public boolean inLoad(int oid) {

@@ -99,6 +99,7 @@ public class LocalMusicPlayer implements IPlayer, MediaPlayer.OnPreparedListener
             stop();
             setDataSource(ds);
             mp.prepareAsync();
+            mp.setVolume(1.0f , 1.0f);
             mp.setOnPreparedListener(this);
         }
     }
@@ -117,6 +118,15 @@ public class LocalMusicPlayer implements IPlayer, MediaPlayer.OnPreparedListener
             mp = null;
         }
     }
+
+    @Override
+    public boolean isPlaying() {
+        if(mp!=null){
+            return mp.isPlaying();
+        }
+        return false;
+    }
+
 //
     public void pause() {
         if (mp != null && mp.isPlaying()) {

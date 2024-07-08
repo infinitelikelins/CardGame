@@ -26,7 +26,7 @@ public class ErrorPropCardPopup extends AbsBasePopup {
     @Override
     protected void onPopupShow() {
         super.onPopupShow();
-        MusicUtil.playAssetsAudio("card/zh/p_warning2.mp3");
+        MusicUtil.playMusic("card/p_warning2.mp3");
     }
 
     @Override

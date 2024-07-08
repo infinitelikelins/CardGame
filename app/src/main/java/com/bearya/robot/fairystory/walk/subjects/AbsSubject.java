@@ -12,7 +12,7 @@ public interface AbsSubject {
 
     String type();
 
-    int res();
+    String tabImage();
 
     String travel();
 

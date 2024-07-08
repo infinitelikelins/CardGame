@@ -29,14 +29,10 @@ public class ResultSuccessPopup extends AbsBasePopup {
     }
 
     @Override
-    protected void onViewInflated() {
-
-    }
-
-    @Override
     protected void onPopupShow() {
         super.onPopupShow();
-        MusicUtil.playAssetsAudio(MusicResource.GOLD_EFFECT, mediaPlayer -> {
+        MusicUtil.playMusic(MusicResource.GOLD_EFFECT, mediaPlayer -> {
+            MusicUtil.playBGM(MusicResource.BASE_MAIN_PATH + "game_success.mp3");
             showResultData();
             setPerformMode();
         });

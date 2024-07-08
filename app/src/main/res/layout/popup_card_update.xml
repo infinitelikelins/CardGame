@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/tips"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/right"
-        app:srcCompat="@mipmap/ic_link" />
+        app:srcCompat="@drawable/ic_link" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/forward"

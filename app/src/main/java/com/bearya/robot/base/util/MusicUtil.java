@@ -22,28 +22,22 @@ public class MusicUtil {
 
     private static List<String> audios = null;
 
-    private static void playAudios() {
+    private static void playMusic() {
         if (audios != null && audios.size() > 0) {
-            playAssetsAudio(audios.remove(0), mediaPlayer -> playAudios());
+            playMusic(audios.remove(0), mediaPlayer -> playMusic());
         }
     }
 
-    public static void playAssetsAudio(String name) {
-        playAssetsAudio(name, null);
+    public static void playMusic(String name) {
+        playMusic(name, null);
     }
 
-    public static void playAssetsAudios(String... names) {
+    public static void playMusic(String... names) {
         audios = new ArrayList<>(Arrays.asList(names));
-        playAudios();
+        playMusic();
     }
 
-    public static void stopMusic() {
-        if (localMusicPlayer != null) {
-            localMusicPlayer.stop();
-        }
-    }
-
-    public static void playAssetsAudio(String name, final MediaPlayer.OnCompletionListener listener) {
+    public static void playMusic(String name, final MediaPlayer.OnCompletionListener listener) {
         if (TextUtils.isEmpty(name)) {
             if (listener != null) {
                 listener.onCompletion(null);
@@ -55,50 +49,39 @@ public class MusicUtil {
             stopMusic();
             localMusicPlayer.setOnCompletionListener(listener);
             localMusicPlayer.setLoop(false);
-            localMusicPlayer.play(name != null && !name.startsWith("/storage/emulated") ? String.format("android_asset/%s", name) : name);
+            localMusicPlayer.play(!name.startsWith("/storage/emulated") ? String.format("android_asset/%s", name) : name);
         } catch (Exception e) {
-            e.printStackTrace();
             if (listener != null) {
                 listener.onCompletion(null);
             }
         }
     }
 
-    public static void playTravelBgMusic(String mp3) {
-        playAssetsBgMusic(mp3);
+    public static void stopMusic() {
+        if (localMusicPlayer != null) {
+            localMusicPlayer.stop();
+        }
     }
 
-    public static void playAssetsBgMusic(String name) {
+    public static void playBGM(String name) {
         if (TextUtils.isEmpty(name)) {
             return;
         }
         try {
             localMusicPlayerBg.stop();
-            localMusicPlayerBg.play(name != null && !name.startsWith("/storage/emulated") ? String.format("android_asset/%s", name) : name);
+            localMusicPlayerBg.setLoop(true);
+            localMusicPlayerBg.play(!name.startsWith("/storage/emulated") ? String.format("android_asset/%s", name) : name);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void stopBgMusic() {
+    public static void stopBGM() {
         localMusicPlayerBg.stop();
     }
 
-    public static void play(String file, final MediaPlayer.OnCompletionListener listener) {
-        if (TextUtils.isEmpty(file)) {
-            if (listener != null) {
-                listener.onCompletion(null);
-            }
-            return;
-        }
-        try {
-            stopMusic();
-            localMusicPlayer.setOnCompletionListener(listener);
-            localMusicPlayer.play(file);
-        } catch (Exception e) {
-            if (listener != null) {
-                listener.onCompletion(null);
-            }
-        }
+    public static boolean isPlaying() {
+        return (localMusicPlayer != null && localMusicPlayer.isPlaying()) ||
+                (localMusicPlayerBg != null && localMusicPlayerBg.isPlaying());
     }
 }

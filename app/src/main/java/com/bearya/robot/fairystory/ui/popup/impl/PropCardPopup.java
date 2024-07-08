@@ -20,7 +20,7 @@ public class PropCardPopup extends CardPopup {
     @Override
     protected void onPopupShow() {
         super.onPopupShow();
-        MusicUtil.playAssetsAudio("card/zh/p_edit.mp3");
+        MusicUtil.playMusic("card/p_edit.mp3");
     }
 
     @Override

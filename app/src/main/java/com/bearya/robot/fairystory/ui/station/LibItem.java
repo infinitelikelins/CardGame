@@ -48,10 +48,7 @@ public class LibItem implements Parcelable {
     };
 
     public FaceType getFaceType() {
-        if("lottie".equals(type)){
-            return FaceType.Lottie;
-        }
-        return FaceType.Image;
+        return "lottie".equals(type) ? FaceType.Lottie : FaceType.Image;
     }
 
     public String getName() {
@@ -85,6 +82,5 @@ public class LibItem implements Parcelable {
     public void setMp3(String mp3) {
         this.mp3 = mp3;
     }
-
 
 }

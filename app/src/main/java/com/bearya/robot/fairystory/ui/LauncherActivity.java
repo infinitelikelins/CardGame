@@ -55,7 +55,7 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MusicUtil.playAssetsAudio(MusicResource.TOUCH, mp -> MusicUtil.playAssetsBgMusic(MusicResource.BGM));
+        MusicUtil.playMusic(MusicResource.TOUCH, mp -> MusicUtil.playBGM(MusicResource.BGM));
     }
 
 }

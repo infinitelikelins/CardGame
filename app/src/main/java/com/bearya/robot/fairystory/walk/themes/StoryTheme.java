@@ -34,6 +34,7 @@ import com.bearya.robot.fairystory.walk.load.story.ZombieLoad;
 import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
 import com.bearya.robot.fairystory.walk.subjects.CastleSubject;
 import com.bearya.robot.fairystory.walk.subjects.DragonSubject;
+import com.bearya.robot.fairystory.walk.subjects.StoryDreamSubject;
 import com.bearya.robot.fairystory.walk.subjects.TreasureSubject;
 
 import java.util.HashMap;
@@ -103,5 +104,10 @@ public class StoryTheme implements AbsTheme {
         loads.put(StationYellowLoad.NAME, new StationYellowLoad());
 
         return loads;
+    }
+
+    @Override
+    public AbsSubject dreamSubject() {
+        return new StoryDreamSubject();
     }
 }

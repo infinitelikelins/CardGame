@@ -1,7 +1,5 @@
 package com.bearya.robot.fairystory.walk.themes;
 
-import android.util.Pair;
-
 import com.bearya.robot.base.load.BaseLoad;
 import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
 
@@ -16,5 +14,7 @@ public interface AbsTheme {
     AbsSubject[] subjects();
 
     Map<String , BaseLoad> loads();
+
+    AbsSubject dreamSubject();
 
 }

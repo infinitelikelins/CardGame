@@ -14,10 +14,6 @@ public class Libs {
         libList.add(lib);
     }
 
-    public int getCount(){
-        return libList.size();
-    }
-
     public Lib get(int position) {
         return libList.get(position);
     }

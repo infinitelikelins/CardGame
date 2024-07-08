@@ -18,7 +18,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/doRun"
-        android:layout_width="128dp"
+        android:layout_width="152dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
@@ -30,7 +30,7 @@
         android:textColor="#333333"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:drawableStartCompat="@drawable/ic_right"
+        app:drawableStartCompat="@drawable/ic_do_run"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -59,7 +59,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
         public void run() {
             // 每30秒提示一次小朋友刷卡或者点击添加行动指令，有行动指令不提示
             if (adapter.getData().isEmpty()) {
-                MusicUtil.playAssetsAudio("card/zh/p_guide.mp3");
+                MusicUtil.playMusic("card/p_guide.mp3");
             }
             repeatRefreshCardAudio();
         }
@@ -219,7 +219,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.card_add) {
-            MusicUtil.playAssetsAudio("card/zh/p_add.mp3");
+            MusicUtil.playMusic("card/p_add.mp3");
             showPopupCardActions(-1, false);
         }
     }
@@ -247,7 +247,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
         CardParentAction cardParentAction = adapter.getItem(cardIndex);
         if (cardParentAction != null) cardParentAction.status = false;
         adapter.notifyItemChanged(cardIndex);
-        MusicUtil.playAssetsAudio("card/zh/p_warning10.mp3");
+        MusicUtil.playMusic("card/p_warning10.mp3");
     }
 
     /**
@@ -273,10 +273,10 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
                 case CardType.ACTION_FLUTE:
                 case CardType.ACTION_BULLET:
                 case CardType.ACTION_STICK:
-                    MusicUtil.playAssetsAudio("card/zh/p_warning2.mp3");
+                    MusicUtil.playMusic("card/p_warning2.mp3");
                     break;
                 case CardType.ACTION_PARALLEL:
-                    MusicUtil.playAssetsAudio("card/zh/p_warning1.mp3");
+                    MusicUtil.playMusic("card/p_warning1.mp3");
                     break;
             }
         });
@@ -304,7 +304,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
                 cardActionRecyclerView.smoothScrollToPosition(insertPosition);
             }
         }
-        MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+        MusicUtil.playMusic(CardResource.cardVoice(cardType));
     }
 
     @Override
@@ -370,7 +370,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
      */
     private void showPopupDeleteParent(final int position) {
         DeleteConfirmPopup deleteConfirmPopup = new DeleteConfirmPopup(this);
-        deleteConfirmPopup.applyShowAudio("card/zh/p_delete_certain.mp3");
+        deleteConfirmPopup.applyShowAudio("card/p_delete_certain.mp3");
         deleteConfirmPopup.withConfirm(v -> adapter.remove(position), v -> MusicUtil.stopMusic());
         deleteConfirmPopup.showPopupWindow();
     }
@@ -382,7 +382,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
      */
     private void showPopupDeleteChild(final int position, final CardParentAction cardParentAction) {
         DeleteConfirmPopup deleteConfirmPopup = new DeleteConfirmPopup(this);
-        deleteConfirmPopup.applyShowAudio("card/zh/p_delete_certain.mp3");
+        deleteConfirmPopup.applyShowAudio("card/p_delete_certain.mp3");
         deleteConfirmPopup.withConfirm(v -> {
             if (cardParentAction != null) {
                 cardParentAction.childAction = null;
@@ -435,7 +435,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
             case CardType.ACTION_RIGHT:
                 adapter.addData(new CardParentAction(cardType));
                 cardActionRecyclerView.smoothScrollToPosition(adapter.getData().size());
-                MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+                MusicUtil.playMusic(CardResource.cardVoice(cardType));
                 break;
             case CardType.ACTION_PARALLEL:
                 List<CardParentAction> data = adapter.getData();
@@ -449,7 +449,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
                     cardParentAction.childAction = new CardChildAction(CardType.ACTION_DEFAULT);
                     cardParentAction.status = true;
                     adapter.notifyItemChanged(position);
-                    MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+                    MusicUtil.playMusic(CardResource.cardVoice(cardType));
                 } else {
                     new ErrorParallelCardPopup(this).showPopupWindow();
                 }
@@ -472,7 +472,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
                         cardParentAction2.childAction = new CardChildAction(cardType);
                         cardParentAction2.status = true;
                         adapter.notifyItemChanged(position2);
-                        MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+                        MusicUtil.playMusic(CardResource.cardVoice(cardType));
                     } else {
                         new ErrorPropCardPopup(this).showPopupWindow();
                     }

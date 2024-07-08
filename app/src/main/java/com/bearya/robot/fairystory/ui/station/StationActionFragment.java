@@ -15,13 +15,12 @@ import androidx.fragment.app.Fragment;
 import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.R;
 import com.bearya.robot.base.play.TimeAction;
-import com.bearya.robot.databinding.FragmentStationConfigActionBinding;
+import com.bearya.robot.databinding.FragmentStationActionBinding;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class StationActionFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
-
 
     private static final Map<Integer, Integer> ACTION_IMAGE_MAP = new ArrayMap<>();
 
@@ -47,14 +46,14 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        type = Objects.requireNonNull(getArguments()).getString("type", "station_");
+        type = requireArguments().getString("type", "station_");
     }
 
-    private FragmentStationConfigActionBinding bindView;
+    private FragmentStationActionBinding bindView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        bindView = FragmentStationConfigActionBinding.inflate(inflater, container, false);
+        bindView = FragmentStationActionBinding.inflate(inflater, container, false);
         return bindView.getRoot();
     }
 
@@ -69,9 +68,10 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
         bindView.box2.setOnLongClickListener(this);
         bindView.box3.setOnLongClickListener(this);
 
-        int action1 = KVManager.getInstance().getInt("action_" + type + "1", 0);
-        int action2 = KVManager.getInstance().getInt("action_" + type + "2", 0);
-        int action3 = KVManager.getInstance().getInt("action_" + type + "3", 0);
+        int action1 = KVManager.getInstance().getInt(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "1", 0);
+        int action2 = KVManager.getInstance().getInt(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "2", 0);
+        int action3 = KVManager.getInstance().getInt(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "3", 0);
+
         setActionToView(new TimeAction(action1, 3), bindView.box1, bindView.tvSecond1);
         setActionToView(new TimeAction(action2, 3), bindView.box2, bindView.tvSecond2);
         setActionToView(new TimeAction(action3, 3), bindView.box3, bindView.tvSecond3);
@@ -83,13 +83,13 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
         dialog.setListener(action -> {
             TimeAction timeAction = new TimeAction(action, 3);
             if (view.getId() == bindView.box1.getId()) {
-                KVManager.getInstance().put("action_" + type + "1", action);
+                KVManager.getInstance().put(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "1", action);
                 setActionToView(timeAction, bindView.box1, bindView.tvSecond1);
             } else if (view.getId() == bindView.box2.getId()) {
-                KVManager.getInstance().put("action_" + type + "2", action);
+                KVManager.getInstance().put(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "2", action);
                 setActionToView(timeAction, bindView.box2, bindView.tvSecond2);
             } else if (view.getId() == bindView.box3.getId()) {
-                KVManager.getInstance().put("action_" + type + "3", action);
+                KVManager.getInstance().put(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "3", action);
                 setActionToView(timeAction, bindView.box3, bindView.tvSecond3);
             }
         });
@@ -106,15 +106,15 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
     @Override
     public boolean onLongClick(View view) {
         if (view.getId() == bindView.box1.getId()) {
-            KVManager.getInstance().remove("action_" + type + "1");
+            KVManager.getInstance().remove(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "1");
             bindView.box1.setImageResource(R.mipmap.ic_add_action);
             bindView.tvSecond1.setVisibility(View.INVISIBLE);
         } else if (view.getId() == bindView.box2.getId()) {
-            KVManager.getInstance().remove("action_" + type + "2");
+            KVManager.getInstance().remove(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "2");
             bindView.box2.setImageResource(R.mipmap.ic_add_action);
             bindView.tvSecond2.setVisibility(View.INVISIBLE);
         } else if (view.getId() == bindView.box3.getId()) {
-            KVManager.getInstance().remove("action_" + type + "3");
+            KVManager.getInstance().remove(LoadMgr.getInstance().getTheme().theme() + "_action_" + type + "3");
             bindView.box3.setImageResource(R.mipmap.ic_add_action);
             bindView.tvSecond3.setVisibility(View.INVISIBLE);
         }

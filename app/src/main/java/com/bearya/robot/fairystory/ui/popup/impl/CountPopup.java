@@ -2,8 +2,8 @@ package com.bearya.robot.fairystory.ui.popup.impl;
 
 import android.content.Context;
 
-import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.R;
+import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.fairystory.ui.popup.AbsBasePopup;
 
 public class CountPopup extends AbsBasePopup {
@@ -37,13 +37,13 @@ public class CountPopup extends AbsBasePopup {
     @Override
     protected void onPopupShow() {
         super.onPopupShow();
-        MusicUtil.playAssetsAudio("card/zh/p_edit.mp3");
+        MusicUtil.playMusic("card/p_edit.mp3");
     }
 
     protected final void countClick(int count) {
         if (popupCountClickListener != null) {
             popupCountClickListener.onCountClick(count);
-            MusicUtil.playAssetsAudio("card/zh/" + count + ".mp3");
+            MusicUtil.playMusic("card/" + count + ".mp3");
         }
     }
 

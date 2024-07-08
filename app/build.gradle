@@ -9,8 +9,8 @@ android {
         applicationId "com.bearya.robot.fairystory"
         minSdk 24
         targetSdk 33
-        versionCode 60020
-        versionName "6.0.20"
+        versionCode 70100
+        versionName "7.1.0"
         multiDexEnabled true
     }
 
@@ -60,14 +60,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
 
     implementation 'com.github.razerdp:BasePopup:2.2.20'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    implementation 'com.github.zhang-hai:Mp3Recorder:1.1.4'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
 
     implementation 'com.airbnb.android:lottie:2.1.0'
-
-    //noinspection GradleDependency
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
     implementation 'org.adw.library:discrete-seekbar:1.0.1'
-    //noinspection GradleDependency
-    implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     implementation "com.tencent.bugly:crashreport:4.1.9.3"
     implementation project(':actionlib')

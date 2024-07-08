@@ -40,7 +40,7 @@ public class RocketEndLoad extends EndLoad {
 
     @Override
     protected String loadFailFacePlay() {
-        return "";
+        return PictureResource.BASE_UNIVERSE_PATH + "Spaceship/Spaceship.webp";
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RocketEndLoad extends EndLoad {
 
     @Override
     protected String playFailSound() {
-        return MusicResource.THEME_END_FAIL;
+        return MusicResource.BASE_UNIVERSE_THEME_PATH + "Spaceship/SpaceshipEnd.mp3";
     }
 
     @Override

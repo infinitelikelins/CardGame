@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.bearya.robot.R;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.base.util.ResourceUtil;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 
 import java.util.Locale;
 
@@ -30,14 +31,14 @@ public class ActionTimeDialog extends Dialog implements View.OnClickListener {
             }
             view.setOnClickListener(this);
         }
-        MusicUtil.playAssetsAudio("station/zh/station_action_select_time.mp3");
+        MusicUtil.playMusic(MusicResource.BASE_STATION_PATH + "station_action_select_time.mp3");
 
     }
 
     @Override
     public void onClick(View view) {
         String section = (String) view.getTag();
-        MusicUtil.playAssetsAudio(String.format(Locale.CHINA,"station/zh/station_action_time_%s.mp3", section));
+        MusicUtil.playMusic(String.format(Locale.CHINA,MusicResource.BASE_STATION_PATH + "station_action_time_%s.mp3", section));
         if (listener != null) {
             listener.onActionTime(Integer.parseInt(section));
         }
@@ -50,6 +51,6 @@ public class ActionTimeDialog extends Dialog implements View.OnClickListener {
 
     public interface ActionTimeListener {
         void onActionTime(int second);
-
     }
+
 }

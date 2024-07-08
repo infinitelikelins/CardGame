@@ -28,6 +28,6 @@ public class AstronautStart implements AbsStart {
 
     @Override
     public String travelReady() {
-        return "music/zh/w_ready_treasure3.mp3";
+        return MusicResource.BASE_MAIN_PATH + "w_ready_treasure3.mp3";
     }
 }

@@ -25,14 +25,14 @@ public class CardResource {
     public static int childImage(int cardType) {
 
         switch (cardType) {
-            case CardType.ACTION_BOAT: return R.mipmap.ic_boat;
-            case CardType.ACTION_MAGIC: return R.mipmap.ic_magic;
-            case CardType.ACTION_SOLDIER: return R.mipmap.ic_soldie;
-            case CardType.ACTION_NEEDLES: return R.mipmap.ic_needles;
-            case CardType.ACTION_WATER: return R.mipmap.ic_water;
-            case CardType.ACTION_FLUTE: return R.mipmap.ic_flute;
-            case CardType.ACTION_BULLET: return R.mipmap.ic_bullet;
-            case CardType.ACTION_STICK: return R.mipmap.ic_stick;
+            case CardType.ACTION_BOAT: return R.drawable.ic_boat;
+            case CardType.ACTION_MAGIC: return R.drawable.ic_magic;
+            case CardType.ACTION_SOLDIER: return R.drawable.ic_soldie;
+            case CardType.ACTION_NEEDLES: return R.drawable.ic_needles;
+            case CardType.ACTION_WATER: return R.drawable.ic_water;
+            case CardType.ACTION_FLUTE: return R.drawable.ic_flute;
+            case CardType.ACTION_BULLET: return R.drawable.ic_bullet;
+            case CardType.ACTION_STICK: return R.drawable.ic_stick;
             default: return R.mipmap.ic_add_no_focus_2;
         }
     }
@@ -42,23 +42,23 @@ public class CardResource {
      */
     public static String cardVoice(int cardType) {
         switch (cardType) {
-            case CardType.ACTION_FORWARD: return "card/zh/p_forward.mp3";
-            case CardType.ACTION_BACKWARD: return "card/zh/p_turn_back.mp3";
-            case CardType.ACTION_LEFT: return "card/zh/p_turn_left.mp3";
-            case CardType.ACTION_RIGHT: return "card/zh/p_turn_right.mp3";
-            case CardType.ACTION_PARALLEL: return "card/zh/p_Juxtaposition.mp3";
-            case CardType.ACTION_BOAT: return "card/zh/p_boat.mp3";
-            case CardType.ACTION_MAGIC: return "card/zh/p_wand.mp3";
-            case CardType.ACTION_SOLDIER: return "card/zh/p_sunflower.mp3";
-            case CardType.ACTION_NEEDLES: return "card/zh/p_needles.mp3";
-            case CardType.ACTION_WATER: return "card/zh/p_water.mp3";
-            case CardType.ACTION_FLUTE: return "card/zh/p_flute.mp3";
-            case CardType.ACTION_BULLET: return "card/zh/p_bomb.mp3";
-            case CardType.ACTION_STICK: return "card/zh/p_sticks.mp3";
-            case CardType.ACTION_LOOP: return "card/zh/p_loop.mp3";
-            case CardType.ACTION_CLOSURE: return "card/zh/p_closure.mp3";
+            case CardType.ACTION_FORWARD: return "card/p_forward.mp3";
+            case CardType.ACTION_BACKWARD: return "card/p_turn_back.mp3";
+            case CardType.ACTION_LEFT: return "card/p_turn_left.mp3";
+            case CardType.ACTION_RIGHT: return "card/p_turn_right.mp3";
+            case CardType.ACTION_PARALLEL: return "card/p_Juxtaposition.mp3";
+            case CardType.ACTION_BOAT: return "card/p_boat.mp3";
+            case CardType.ACTION_MAGIC: return "card/p_wand.mp3";
+            case CardType.ACTION_SOLDIER: return "card/p_sunflower.mp3";
+            case CardType.ACTION_NEEDLES: return "card/p_needles.mp3";
+            case CardType.ACTION_WATER: return "card/p_water.mp3";
+            case CardType.ACTION_FLUTE: return "card/p_flute.mp3";
+            case CardType.ACTION_BULLET: return "card/p_bomb.mp3";
+            case CardType.ACTION_STICK: return "card/p_sticks.mp3";
+            case CardType.ACTION_LOOP: return "card/p_loop.mp3";
+            case CardType.ACTION_CLOSURE: return "card/p_closure.mp3";
             case CardType.ACTION_INSERT_LEFT:
-            case CardType.ACTION_INSERT_RIGHT: return "card/zh/p_insert.mp3";
+            case CardType.ACTION_INSERT_RIGHT: return "card/p_insert.mp3";
             default: return "";
         }
     }
@@ -70,10 +70,10 @@ public class CardResource {
     @DrawableRes
     public static int parentImage(int cardType) {
         switch (cardType) {
-            case CardType.ACTION_FORWARD: return R.mipmap.ic_forward;
-            case CardType.ACTION_BACKWARD: return R.mipmap.ic_backward;
-            case CardType.ACTION_LEFT: return R.mipmap.ic_left;
-            case CardType.ACTION_RIGHT: return R.mipmap.ic_right;
+            case CardType.ACTION_FORWARD: return R.drawable.ic_forward;
+            case CardType.ACTION_BACKWARD: return R.drawable.ic_backward;
+            case CardType.ACTION_LEFT: return R.drawable.ic_left;
+            case CardType.ACTION_RIGHT: return R.drawable.ic_do_run;
             case CardType.ACTION_LOOP: return R.drawable.ic_loop;
             case CardType.ACTION_CLOSURE: return R.drawable.ic_closure;
             default: return R.mipmap.ic_add_no_focus_2;

@@ -6,9 +6,10 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import com.bearya.robot.R;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.base.util.ResourceUtil;
-import com.bearya.robot.R;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 
 import java.util.Locale;
 
@@ -34,7 +35,7 @@ public class ActionSetDialog extends Dialog implements View.OnClickListener {
             view.setTag(i);
             view.setOnClickListener(this);
         }
-        MusicUtil.playAssetsAudio("station/zh/station_select_action.mp3");
+        MusicUtil.playMusic(MusicResource.BASE_STATION_PATH + "station_select_action.mp3");
         setOnDismissListener(dialog -> {
             if (!isSelect) {
                 MusicUtil.stopMusic();
@@ -45,7 +46,7 @@ public class ActionSetDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         int action = (int) view.getTag();
-        MusicUtil.playAssetsAudio(String.format(Locale.CHINA, "station/zh/station_action_%d.mp3", action));
+        MusicUtil.playMusic(String.format(Locale.CHINA, MusicResource.BASE_STATION_PATH + "station_action_%d.mp3", action));
         isSelect = true;
         if (listener != null) {
             listener.onActionSelected(action);

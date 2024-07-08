@@ -3,8 +3,7 @@ package com.bearya.robot.fairystory.walk.load.station;
 public class StationPinkLoad extends StationLoad {
 
     public static final int START_OID = 51600;
-    public static final String NAME = "粉色站点";
-    public static final int STATION_INDEX = 2;
+    public static final String NAME = "pink";
 
     public StationPinkLoad() {
         super(START_OID);
@@ -13,11 +12,6 @@ public class StationPinkLoad extends StationLoad {
     @Override
     public String getName() {
         return NAME;
-    }
-
-    @Override
-    public int getStationIndex() {
-        return STATION_INDEX;
     }
 
 }

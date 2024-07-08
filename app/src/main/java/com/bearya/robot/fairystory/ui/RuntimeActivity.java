@@ -28,6 +28,7 @@ import com.bearya.robot.fairystory.ui.res.CardChildAction;
 import com.bearya.robot.fairystory.ui.res.CardParentAction;
 import com.bearya.robot.fairystory.ui.res.CardResource;
 import com.bearya.robot.fairystory.ui.res.CardType;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 import com.bearya.robot.fairystory.walk.action.RobotCarAction;
 import com.bearya.robot.fairystory.walk.car.ICar;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
@@ -109,7 +110,7 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
         // 显示出哼歌的表情后开始行走
         Director.getInstance().playMovingEmotion();
         // 出发了
-        MusicUtil.playAssetsAudio(LoadMgr.getInstance().getCurrentSubject().start().travelReady(), mediaPlayer -> runOnUiThread(this::doRun));
+        MusicUtil.playMusic(LoadMgr.getInstance().getCurrentSubject().start().travelReady(), mediaPlayer -> runOnUiThread(this::doRun));
 
     }
 
@@ -326,10 +327,11 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
      */
     private void showResultErrorPopup() {
         // 先取消Lottie动画置空
-        ResultFailPopup popup = new ResultFailPopup(this, "真遗憾，\n\n我没有完成任务。", null);
+        ResultFailPopup popup = new ResultFailPopup(this, "真遗憾，\n\n我没有完成任务。", MusicResource.THEME_END_FAIL);
         popup.withEvent(v -> {
             CardControllerActivity.start(RuntimeActivity.this, new Gson().toJson(data));
             MusicUtil.stopMusic();
+            MusicUtil.stopBGM();
             // 返回刷卡指令页面需清除本次记录的信息
             LoadMgr.getInstance().clear();
             finish();

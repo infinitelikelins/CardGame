@@ -30,7 +30,7 @@ public class HeroStart implements AbsStart {
 
     @Override
     public String travelReady() {
-        return CodeUtils.oneOf("music/zh/w_ready_hero1.mp3", "music/zh/w_ready_hero2.mp3", "music/zh/w_ready_hero3.mp3");
+        return MusicResource.BASE_MAIN_PATH + CodeUtils.oneOf("w_ready_hero1.mp3", "w_ready_hero2.mp3", "w_ready_hero3.mp3");
     }
 
 }

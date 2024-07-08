@@ -11,11 +11,14 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.R;
+import com.bearya.robot.base.musicplayer.AudioRecorderManager;
 import com.bearya.robot.base.ui.BaseActivity;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.databinding.ActivityStationBinding;
 import com.bearya.robot.fairystory.ui.popup.impl.DeleteConfirmPopup;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 import com.bearya.robot.fairystory.ui.station.ContentActivity;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.bearya.robot.fairystory.walk.load.station.StationBlueLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationGreenLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationPinkLoad;
@@ -54,8 +57,6 @@ public class StationActivity extends BaseActivity implements View.OnClickListene
 
         withClick(bindView.perform, this);
         withClick(bindView.clear, this);
-
-        MusicUtil.playAssetsAudio("station/zh/station_init.mp3");
     }
 
     @Override
@@ -96,27 +97,34 @@ public class StationActivity extends BaseActivity implements View.OnClickListene
         stationSelectedStatus(StationYellowLoad.NAME, bindView.stationYellow);
         stationSelectedStatus(StationPinkLoad.NAME, bindView.stationPink);
         stationSelectedStatus(StationPurpleLoad.NAME, bindView.stationPurple);
+
+        MusicUtil.playMusic(MusicResource.BASE_STATION_PATH + "station_init.mp3", mp -> MusicUtil.playBGM(MusicResource.BGM));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         singleClickLock = false;
+        MusicUtil.stopBGM();
     }
 
     private void stationSelectedStatus(String type, AppCompatImageView imageView) {
-        boolean status = !TextUtils.isEmpty(KVManager.getInstance().getString("image_" + type)) ||
-                !TextUtils.isEmpty(KVManager.getInstance().getString("sound_" + type)) ||
-                KVManager.getInstance().getInt("action_" + type + "1", -1) > 0 ||
-                KVManager.getInstance().getInt("action_" + type + "2", -1) > 0 ||
-                KVManager.getInstance().getInt("action_" + type + "3", -1) > 0;
+        String theme = LoadMgr.getInstance().getTheme().theme();
+        boolean status = !TextUtils.isEmpty(KVManager.getInstance().getString(theme + "_image_" + type)) ||
+                !TextUtils.isEmpty(KVManager.getInstance().getString(theme + "_sound_" + type)) ||
+                !TextUtils.isEmpty(KVManager.getInstance().getString(theme + "_record_" + type)) ||
+                !TextUtils.isEmpty(KVManager.getInstance().getString(theme + "_video_" + type)) ||
+                !TextUtils.isEmpty(KVManager.getInstance().getString(theme + "_photo_" + type)) ||
+                KVManager.getInstance().getInt(theme + "_action_" + type + "1", -1) > 0 ||
+                KVManager.getInstance().getInt(theme + "_action_" + type + "2", -1) > 0 ||
+                KVManager.getInstance().getInt(theme + "_action_" + type + "3", -1) > 0;
         imageView.setSelected(status);
     }
 
     private void stationClearAll() {
         DeleteConfirmPopup popup = new DeleteConfirmPopup(this);
         popup.applyShowTips(getString(R.string.clear_all_station_config));
-        popup.applyShowAudio("card/zh/p_delete_station.mp3");
+        popup.applyShowAudio("card/p_delete_station.mp3");
         popup.withConfirm(v -> {
             stationClear(StationBlueLoad.NAME, bindView.stationBlue);
             stationClear(StationGreenLoad.NAME, bindView.stationGreen);
@@ -132,11 +140,15 @@ public class StationActivity extends BaseActivity implements View.OnClickListene
 
     private void stationClear(String type, AppCompatImageView imageView) {
 
-        KVManager.getInstance().remove("image_" + type);
-        KVManager.getInstance().remove("sound_" + type);
-        KVManager.getInstance().remove("action_" + type + "1");
-        KVManager.getInstance().remove("action_" + type + "2");
-        KVManager.getInstance().remove("action_" + type + "3");
+        String theme = LoadMgr.getInstance().getTheme().theme();
+        KVManager.getInstance().remove(theme + "_image_" + type);
+        KVManager.getInstance().remove(theme + "_sound_" + type);
+        KVManager.getInstance().remove(theme + "_record_" + type);
+        KVManager.getInstance().remove(theme + "_video_" + type);
+        KVManager.getInstance().remove(theme + "_photo_" + type);
+        KVManager.getInstance().remove(theme + "_action_" + type + "1");
+        KVManager.getInstance().remove(theme + "_action_" + type + "2");
+        KVManager.getInstance().remove(theme + "_action_" + type + "3");
 
         imageView.setSelected(false);
     }
@@ -157,6 +169,12 @@ public class StationActivity extends BaseActivity implements View.OnClickListene
             stationClear(StationPurpleLoad.NAME, bindView.stationPurple);
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AudioRecorderManager.getInstance().release();
     }
 
 }

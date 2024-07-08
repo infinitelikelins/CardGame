@@ -65,7 +65,7 @@ public class ThemeIntroduceActivity extends BaseActivity {
         switch (start.defineType()) {
             case Image:
                 // 音频的播放事件
-                MusicUtil.playAssetsAudio(start.playSound(), mediaPlayer -> {
+                MusicUtil.playMusic(start.playSound(), mediaPlayer -> {
                     CardControllerActivity.start(ThemeIntroduceActivity.this, null);
                     finish();
                 });
@@ -78,7 +78,7 @@ public class ThemeIntroduceActivity extends BaseActivity {
 
                     @Override
                     public void onFrameStart() {
-                        MusicUtil.playAssetsAudio(start.playSound(), mediaPlayer -> {
+                        MusicUtil.playMusic(start.playSound(), mediaPlayer -> {
                             isMusicFinishedFlag = true;
                             if (isFrameFinishedFlag) {
                                 CardControllerActivity.start(ThemeIntroduceActivity.this, null);

@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@mipmap/ic_forward" />
+        tools:srcCompat="@drawable/ic_forward" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/step_bg"
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="@id/parent_action"
         app:layout_constraintStart_toStartOf="@id/parent_action"
         app:layout_constraintTop_toBottomOf="@id/link"
-        tools:srcCompat="@mipmap/ic_soldie"
+        tools:srcCompat="@drawable/ic_soldie"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,8 +6,8 @@ import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.R;
 import com.bearya.robot.base.ui.view.NiceImageView;
 import com.bearya.robot.base.util.DebugUtil;
-import com.bearya.robot.base.util.ResourceUtil;
 import com.bearya.robot.fairystory.ui.station.LibItem;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -25,7 +25,7 @@ public class SoundAdapter extends BaseQuickAdapter<LibItem, BaseViewHolder> {
 
     public void setSelectedIndex(int index) {
         String mp3 = Objects.requireNonNull(getItem(index)).getMp3();
-        String key = "sound_" + type;
+        String key = LoadMgr.getInstance().getTheme().theme() + "_sound_" + type;
 
         DebugUtil.debug("key = " + key + " , mp3 = " + mp3);
         KVManager.getInstance().put(key, mp3);
@@ -36,15 +36,16 @@ public class SoundAdapter extends BaseQuickAdapter<LibItem, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, LibItem item) {
         NiceImageView view = helper.getView(R.id.iconView);
-        Glide.with(mContext).load(ResourceUtil.getMipmapId(item.getImage()))
-                .thumbnail(0.1f)
-                .into(view);
 
-        boolean isSelected = TextUtils.equals(KVManager.getInstance().getString("sound_" + type), item.getMp3());
+        Glide.with(mContext).load(item.getImage())
+                .thumbnail(0.8f)
+                .into(view);
+        helper.setText(R.id.nameView, item.getName());
+
+        boolean isSelected = TextUtils.equals(KVManager.getInstance().getString(LoadMgr.getInstance().getTheme().theme() + "_sound_" + type), item.getMp3());
         view.setBorderColor(view.getContext().getResources().getColor(R.color.colorRed));
         view.setBorderWidth(isSelected ? 6 : 0);
 
-        helper.setText(R.id.nameView, item.getName());
     }
 
 }

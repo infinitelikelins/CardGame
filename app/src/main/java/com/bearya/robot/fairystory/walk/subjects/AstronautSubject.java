@@ -1,8 +1,10 @@
 package com.bearya.robot.fairystory.walk.subjects;
 
-import com.bearya.robot.R;
 import com.bearya.robot.fairystory.ui.res.MusicResource;
+import com.bearya.robot.fairystory.ui.res.PictureResource;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.bearya.robot.fairystory.walk.load.EndLoad;
+import com.bearya.robot.fairystory.walk.load.universe.AstronautEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.AstronautStart;
 
@@ -20,9 +22,10 @@ public class AstronautSubject implements AbsSubject {
         return "Astronaut";
     }
 
+
     @Override
-    public int res() {
-        return R.mipmap.view_c;
+    public String tabImage() {
+        return PictureResource.BASE_UNIVERSE_PATH +  "Astronaut/AstronautTab.webp";
     }
 
     @Override
@@ -37,6 +40,6 @@ public class AstronautSubject implements AbsSubject {
 
     @Override
     public EndLoad end() {
-        return null;
+        return (EndLoad) LoadMgr.getInstance().getLoad(AstronautEndLoad.NAME);
     }
 }

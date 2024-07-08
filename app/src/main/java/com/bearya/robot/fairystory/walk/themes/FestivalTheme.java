@@ -30,4 +30,9 @@ public class FestivalTheme implements AbsTheme {
     public Map<String, BaseLoad> loads() {
         return Collections.emptyMap();
     }
+
+    @Override
+    public AbsSubject dreamSubject() {
+        return null;
+    }
 }

@@ -58,6 +58,7 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
         singleClickLock = true;
         if (v.getId() == bindView.viewS.getId()) {
             singleClickLock = false;
+            LoadMgr.getInstance().setCurrentSubject(LoadMgr.getInstance().getCurrentThemeDreamSubject());
             StationActivity.start(this); // 创想模块
         }
     }
@@ -66,9 +67,9 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
     protected void onResume() {
         super.onResume();
 
-        MusicUtil.playAssetsAudio(MusicResource.WELCOME, mediaPlayer -> {
-            MusicUtil.playAssetsAudio(MusicResource.DELAY);
-            MusicUtil.playAssetsBgMusic(MusicResource.THEME);
+        MusicUtil.playMusic(MusicResource.WELCOME, mediaPlayer -> {
+            MusicUtil.playMusic(MusicResource.DELAY);
+            MusicUtil.playBGM(MusicResource.THEME);
         });
 
     }
@@ -87,7 +88,7 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
         subscribe = rx.Observable.interval(20, 20, TimeUnit.SECONDS)
                 .subscribeOn(rx.schedulers.Schedulers.newThread())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(aLong -> MusicUtil.playAssetsAudio(MusicResource.DELAY));
+                .subscribe(aLong -> MusicUtil.playMusic(MusicResource.DELAY));
 
     }
 
@@ -100,7 +101,7 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStop() {
         super.onStop();
-        MusicUtil.stopBgMusic();
+        MusicUtil.stopBGM();
         if (subscribe != null && !subscribe.isUnsubscribed()) {
             subscribe.unsubscribe();
             subscribe = null;

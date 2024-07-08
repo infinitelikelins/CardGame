@@ -26,7 +26,7 @@ public class EmptyActionPopup extends AbsBasePopup {
     @Override
     protected void onPopupShow() {
         super.onPopupShow();
-        MusicUtil.playAssetsAudio("card/zh/p_warning4.mp3");
+        MusicUtil.playMusic("card/p_warning4.mp3");
     }
 
     @Override

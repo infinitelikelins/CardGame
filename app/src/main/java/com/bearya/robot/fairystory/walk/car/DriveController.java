@@ -341,7 +341,7 @@ public class DriveController {
                                 mListener.onDriveResult(DriveResult.FailEndLoadUnMatch, robotCarAction.getActionId(), baseLoad, LoadMgr.getInstance().getCurrentSubject().end().getName()));
                         return;
                     }
-                    if (loastEquipmentLoads.size() > 0) {
+                    if (!loastEquipmentLoads.isEmpty()) {
                         Director.getInstance().director(BaseLoad.ON_END_LOAD_FAIL, () ->
                                 mListener.onDriveResult(DriveResult.FailLostEquipmentLoads, robotCarAction.getActionId(), baseLoad, null));
                     } else {
@@ -975,7 +975,7 @@ public class DriveController {
         DebugUtil.error("moving");
         isMoving = true;
         Director.getInstance().playMovingEmotion();
-        MusicUtil.playTravelBgMusic(LoadMgr.getInstance().getCurrentSubject().travel());
+        MusicUtil.playBGM(LoadMgr.getInstance().getCurrentSubject().travel());
         RobotActionManager.handShake(80);
     }
 
@@ -987,7 +987,7 @@ public class DriveController {
     }
 
     private void stopBgMusic() {
-        MusicUtil.stopBgMusic();
+        MusicUtil.stopBGM();
     }
 
     private void exception(ICar.DriveException exception, Object param) {

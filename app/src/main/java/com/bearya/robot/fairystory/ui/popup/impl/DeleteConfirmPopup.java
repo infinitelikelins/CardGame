@@ -26,7 +26,7 @@ public class DeleteConfirmPopup extends AbsBasePopup {
     protected void onPopupShow() {
         super.onPopupShow();
         if (!TextUtils.isEmpty(popupShowAudio)) {
-            MusicUtil.playAssetsAudio(popupShowAudio);
+            MusicUtil.playMusic(popupShowAudio);
         }
     }
 
@@ -50,7 +50,7 @@ public class DeleteConfirmPopup extends AbsBasePopup {
         withClick(R.id.delete, v -> {
             if (deleteListener != null) {
                 deleteListener.onClick(v);
-                MusicUtil.playAssetsAudio("card/zh/p_delete.mp3");
+                MusicUtil.playMusic("card/p_delete.mp3");
             }
         });
     }

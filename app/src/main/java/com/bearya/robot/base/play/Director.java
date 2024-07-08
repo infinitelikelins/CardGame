@@ -161,11 +161,7 @@ public class Director  {
             DebugUtil.debug("playSound=%s", file);
 
             if (!TextUtils.isEmpty(file)) {
-                if (file.startsWith("/storage/")) {
-                    MusicUtil.play(file, mp -> complete(PlayData.ONLY_SOUND));
-                } else {
-                    MusicUtil.playAssetsAudio(file, mp -> complete(PlayData.ONLY_SOUND));
-                }
+                MusicUtil.playMusic(file, mp -> complete(PlayData.ONLY_SOUND));
             }
         }
     }

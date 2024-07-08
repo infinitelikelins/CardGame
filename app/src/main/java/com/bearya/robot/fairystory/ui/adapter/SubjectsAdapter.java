@@ -1,9 +1,11 @@
 package com.bearya.robot.fairystory.ui.adapter;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bearya.robot.R;
 import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -17,7 +19,9 @@ public class SubjectsAdapter extends BaseQuickAdapter<AbsSubject, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, AbsSubject item) {
-        helper.setImageResource(R.id.item_image, item.res());
+        Glide.with(mContext).load(item.tabImage())
+                .error(R.mipmap.fairy_body)
+                .into((AppCompatImageView) helper.getView(R.id.item_image));
     }
 
 }

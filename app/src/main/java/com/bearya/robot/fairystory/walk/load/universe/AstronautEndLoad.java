@@ -33,7 +33,6 @@ public class AstronautEndLoad extends EndLoad {
         return FaceType.Image;
     }
 
-
     @Override
     protected String loadSuccessFacePlay() {
         return  PictureResource.BASE_UNIVERSE_PATH + "Astronaut/Astronaut.webp";
@@ -56,7 +55,7 @@ public class AstronautEndLoad extends EndLoad {
 
     @Override
     protected String playFailSound() {
-        return MusicResource.THEME_END_FAIL;
+        return MusicResource.BASE_UNIVERSE_THEME_PATH + "Astronaut/AstronautEnd.mp3";
     }
 
     @Override

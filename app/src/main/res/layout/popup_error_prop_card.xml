@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tips"
-        app:srcCompat="@mipmap/ic_forward" />
+        app:srcCompat="@drawable/ic_forward" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/link"
@@ -76,6 +76,6 @@
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@mipmap/ic_boat" />
+        app:srcCompat="@drawable/ic_boat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

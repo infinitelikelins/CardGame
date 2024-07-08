@@ -5,31 +5,32 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.bearya.robot.R;
+
 public class ContentAdapter extends FragmentStatePagerAdapter {
 
-    private final Fragment imageFragment;
-    private final Fragment actionFragment;
-    private final Fragment soundFragment;
+    private final String type;
 
     public ContentAdapter(FragmentManager fm, String type) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        soundFragment = StationSoundFragment.newInstance(type);
-        actionFragment = StationActionFragment.newInstance(type);
-        imageFragment = StationImageFragment.newInstance(type);
+        this.type = type;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 6;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: return imageFragment;
-            case 1: return actionFragment;
-            case 2: return soundFragment;
-            default: return null;
+            case 0: return StationImageFragment.newInstance(type);
+            case 1: return StationActionFragment.newInstance(type);
+            case 2: return StationSoundFragment.newInstance(type);
+            case 3: return StationVideoFragment.newInstance(type);
+            case 4: return StationRecordFragment.newInstance(type);
+            case 5: return StationPhotoFragment.newInstance(type);
+            default: return new Fragment();
         }
     }
 
@@ -40,7 +41,23 @@ public class ContentAdapter extends FragmentStatePagerAdapter {
             case 0: return "图片";
             case 1: return "动作";
             case 2: return "声音";
+            case 3: return "视频";
+            case 4: return "录音";
+            case 5: return "拍照";
             default: return "";
         }
     }
+
+    public int getIcon(int index) {
+        switch (index) {
+            case 0: return R.drawable.station_tab_image_selector;
+            case 1: return R.drawable.station_tab_action_selector;
+            case 2: return R.drawable.station_tab_sound_selector;
+            case 3: return R.drawable.station_tab_image_selector;
+            case 4: return R.drawable.station_tab_image_selector;
+            case 5: return R.drawable.station_tab_image_selector;
+            default: return R.drawable.station_tab_image_selector;
+        }
+    }
+
 }

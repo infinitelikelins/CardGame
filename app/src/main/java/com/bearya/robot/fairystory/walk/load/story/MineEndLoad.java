@@ -76,7 +76,7 @@ public class MineEndLoad extends EndLoad {
 
     @Override
     protected String playFailSound() {
-        List<String> lostEquipments = LoadMgr.getInstance().getLostEquipmentLoads();
+        List<String> lostEquipments = LoadMgr.getInstance().getLostEquipmentLoadList(this);
         if (lostEquipments.size() == 3) {
             return MusicResource.BASE_ENDING_MUSIC_PATH + "treasure_fail7.mp3";
         } else if (lostEquipments.size() == 2) {

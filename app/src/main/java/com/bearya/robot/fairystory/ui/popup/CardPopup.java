@@ -61,7 +61,7 @@ public abstract class CardPopup extends AbsBasePopup {
     protected final void popupWithClick(int cardType) {
         if (popupViewClickListener != null) {
             popupViewClickListener.onPopupChildViewClick(cardType);
-            MusicUtil.playAssetsAudio(CardResource.cardVoice(cardType));
+            MusicUtil.playMusic(CardResource.cardVoice(cardType));
         }
     }
 

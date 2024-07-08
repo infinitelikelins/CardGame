@@ -13,4 +13,5 @@ public interface IPlayer {
     void play(String dataSource) throws Exception;
     void stop();
     void release();
+    boolean isPlaying();
 }

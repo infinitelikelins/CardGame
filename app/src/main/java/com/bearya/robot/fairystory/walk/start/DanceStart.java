@@ -30,7 +30,7 @@ public class DanceStart implements AbsStart {
 
     @Override
     public String travelReady() {
-        return CodeUtils.oneOf("music/zh/w_ready_ball1.mp3", "music/zh/w_ready_ball2.mp3", "music/zh/w_ready_ball3.mp3");
+        return MusicResource.BASE_MAIN_PATH + CodeUtils.oneOf("w_ready_ball1.mp3", "w_ready_ball2.mp3", "w_ready_ball3.mp3");
     }
 
 }

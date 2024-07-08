@@ -55,7 +55,7 @@ public class PlanetSecretEndLoad extends EndLoad {
 
     @Override
     protected String playFailSound() {
-        return MusicResource.THEME_END_FAIL;
+        return MusicResource.BASE_UNIVERSE_THEME_PATH + "PlanetSecret/PlanetSecretEnd.mp3";
     }
 
     @Override

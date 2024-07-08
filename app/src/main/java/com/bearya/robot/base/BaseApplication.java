@@ -91,7 +91,7 @@ public abstract class BaseApplication extends Application {
         CanManager.getInstance().release();
         BaseActivity.finishAllActivity();
         MusicUtil.stopMusic();
-        MusicUtil.stopBgMusic();
+        MusicUtil.stopBGM();
     }
 
 }

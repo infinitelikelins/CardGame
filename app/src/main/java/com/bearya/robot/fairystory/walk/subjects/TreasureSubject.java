@@ -1,6 +1,6 @@
 package com.bearya.robot.fairystory.walk.subjects;
 
-import com.bearya.robot.R;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.bearya.robot.fairystory.walk.load.EndLoad;
 import com.bearya.robot.fairystory.walk.load.story.MineEndLoad;
@@ -22,13 +22,13 @@ public class TreasureSubject implements AbsSubject {
     }
 
     @Override
-    public int res() {
-        return R.mipmap.view_b;
+    public String tabImage() {
+        return "";
     }
 
     @Override
     public String travel() {
-        return "music/zh/treasure_walk.mp3";
+        return MusicResource.BASE_MAIN_PATH + "treasure_walk.mp3";
     }
 
     @Override

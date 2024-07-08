@@ -41,7 +41,7 @@ public class SpaceStationEndLoad extends EndLoad {
 
     @Override
     protected String playFailSound() {
-        return MusicResource.THEME_END_FAIL;
+        return MusicResource.BASE_UNIVERSE_THEME_PATH + "SpaceStation/SpaceStationEnd.mp3";
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SpaceStationEndLoad extends EndLoad {
 
     @Override
     protected String loadFailFacePlay() {
-        return "";
+        return PictureResource.BASE_UNIVERSE_PATH + "SpaceStation/SpaceStation.webp";
     }
 
     @Override

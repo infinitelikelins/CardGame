@@ -31,6 +31,7 @@ import com.bearya.robot.fairystory.walk.subjects.AstronautSubject;
 import com.bearya.robot.fairystory.walk.subjects.PlanetSecretSubject;
 import com.bearya.robot.fairystory.walk.subjects.SpaceStationSubject;
 import com.bearya.robot.fairystory.walk.subjects.SpaceshipSubject;
+import com.bearya.robot.fairystory.walk.subjects.UniverseDreamSubject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,4 +98,10 @@ public class UniverseTheme implements AbsTheme {
 
         return loads;
     }
+
+    @Override
+    public AbsSubject dreamSubject() {
+        return new UniverseDreamSubject();
+    }
+
 }

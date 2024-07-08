@@ -60,7 +60,7 @@ public class CastleEndLoad extends EndLoad {
 
     @Override
     protected String playFailSound() {
-        List<String> lostEquipments = LoadMgr.getInstance().getLostEquipmentLoads();
+        List<String> lostEquipments = LoadMgr.getInstance().getLostEquipmentLoadList(this);
         switch (lostEquipments.size()) {
             case 3:
                 return MusicResource.BASE_ENDING_MUSIC_PATH +"ball_fail7.mp3";
