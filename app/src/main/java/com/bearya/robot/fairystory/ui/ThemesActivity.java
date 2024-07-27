@@ -35,6 +35,9 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
         bindView = ActivityThemesBinding.inflate(getLayoutInflater());
         setContentView(bindView.getRoot());
 
+        bindView.themeRoot.setBackgroundResource(LoadMgr.getInstance().getTheme().backgroundPath());
+        bindView.stations.setBackgroundResource(LoadMgr.getInstance().getTheme().stationEnterImage());
+
         bindView.subjects.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         SubjectsAdapter subjectsAdapter = new SubjectsAdapter(LoadMgr.getInstance().getSubjects());
@@ -47,7 +50,7 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
 
         bindView.subjects.setAdapter(subjectsAdapter);
 
-        withClick(bindView.viewS, this);
+        withClick(bindView.stations, this);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
             return;
         }
         singleClickLock = true;
-        if (v.getId() == bindView.viewS.getId()) {
+        if (v.getId() == bindView.stations.getId()) {
             singleClickLock = false;
             LoadMgr.getInstance().setCurrentSubject(LoadMgr.getInstance().getCurrentThemeDreamSubject());
             StationActivity.start(this); // 创想模块

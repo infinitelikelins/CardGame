@@ -1,5 +1,6 @@
 package com.bearya.robot.fairystory.walk.themes;
 
+import com.bearya.robot.R;
 import com.bearya.robot.base.load.BaseLoad;
 import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
 
@@ -16,7 +17,7 @@ public class FestivalTheme implements AbsTheme {
 
     @Override
     public int res() {
-        return 0;
+        return R.mipmap.theme_festival;
     }
 
     @Override
@@ -35,4 +36,15 @@ public class FestivalTheme implements AbsTheme {
     public AbsSubject dreamSubject() {
         return null;
     }
+
+    @Override
+    public int backgroundPath() {
+        return 0;
+    }
+
+    @Override
+    public int stationEnterImage() {
+        return 0;
+    }
+
 }

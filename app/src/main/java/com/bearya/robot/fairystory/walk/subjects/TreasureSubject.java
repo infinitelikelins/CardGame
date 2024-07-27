@@ -1,6 +1,7 @@
 package com.bearya.robot.fairystory.walk.subjects;
 
 import com.bearya.robot.fairystory.ui.res.MusicResource;
+import com.bearya.robot.fairystory.ui.res.PictureResource;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.bearya.robot.fairystory.walk.load.EndLoad;
 import com.bearya.robot.fairystory.walk.load.story.MineEndLoad;
@@ -9,7 +10,7 @@ import com.bearya.robot.fairystory.walk.start.SeafloorStart;
 
 public class TreasureSubject implements AbsSubject {
 
-    public static final String NAME = "宝藏岛";
+    public static final String NAME = "奇幻寻宝";
 
     @Override
     public String name() {
@@ -23,7 +24,7 @@ public class TreasureSubject implements AbsSubject {
 
     @Override
     public String tabImage() {
-        return "";
+        return PictureResource.BASE_STORY_PATH + "Treasure/TreasureTab.webp";
     }
 
     @Override

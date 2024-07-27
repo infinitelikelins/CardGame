@@ -1,5 +1,6 @@
 package com.bearya.robot.fairystory.walk.themes;
 
+import com.bearya.robot.R;
 import com.bearya.robot.base.load.BaseLoad;
 import com.bearya.robot.fairystory.walk.load.StartLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationBlueLoad;
@@ -51,7 +52,7 @@ public class StoryTheme implements AbsTheme {
 
     @Override
     public int res() {
-        return 0;
+        return R.mipmap.theme_story;
     }
 
     @Override
@@ -110,4 +111,15 @@ public class StoryTheme implements AbsTheme {
     public AbsSubject dreamSubject() {
         return new StoryDreamSubject();
     }
+
+    @Override
+    public int backgroundPath() {
+        return R.mipmap.background_story;
+    }
+
+    @Override
+    public int stationEnterImage() {
+        return R.mipmap.stations_story;
+    }
+
 }

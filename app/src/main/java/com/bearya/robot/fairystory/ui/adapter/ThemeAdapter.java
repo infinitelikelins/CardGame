@@ -13,8 +13,7 @@ public class ThemeAdapter extends BaseQuickAdapter<AbsTheme, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, AbsTheme item) {
-        helper.setBackgroundRes(R.id.name, item.res() > 0 ? item.res() : R.color.colorBlueBackground);
-        helper.setText(R.id.name, item.theme());
+        helper.setBackgroundRes(R.id.name, item.res());
     }
 
 }

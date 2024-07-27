@@ -17,4 +17,8 @@ public interface AbsTheme {
 
     AbsSubject dreamSubject();
 
+    int backgroundPath();
+
+    int stationEnterImage();
+
 }

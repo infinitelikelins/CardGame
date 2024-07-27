@@ -1,5 +1,6 @@
 package com.bearya.robot.fairystory.walk.themes;
 
+import com.bearya.robot.R;
 import com.bearya.robot.base.load.BaseLoad;
 import com.bearya.robot.fairystory.walk.load.StartLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationBlueLoad;
@@ -9,6 +10,7 @@ import com.bearya.robot.fairystory.walk.load.station.StationPurpleLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationRedLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationYellowLoad;
 import com.bearya.robot.fairystory.walk.load.universe.AstronautEndLoad;
+import com.bearya.robot.fairystory.walk.load.universe.AstronautLifeLoad;
 import com.bearya.robot.fairystory.walk.load.universe.AstronautLoad;
 import com.bearya.robot.fairystory.walk.load.universe.AstronautTrainLoad;
 import com.bearya.robot.fairystory.walk.load.universe.FreeEndLoad;
@@ -16,6 +18,7 @@ import com.bearya.robot.fairystory.walk.load.universe.PlanetCharacteristicsLoad;
 import com.bearya.robot.fairystory.walk.load.universe.PlanetLoad;
 import com.bearya.robot.fairystory.walk.load.universe.PlanetMotionLoad;
 import com.bearya.robot.fairystory.walk.load.universe.PlanetSecretEndLoad;
+import com.bearya.robot.fairystory.walk.load.universe.RocketEndLoad;
 import com.bearya.robot.fairystory.walk.load.universe.RocketLaunchLoad;
 import com.bearya.robot.fairystory.walk.load.universe.RocketPrincipleLoad;
 import com.bearya.robot.fairystory.walk.load.universe.RocketUnderstandLoad;
@@ -24,8 +27,6 @@ import com.bearya.robot.fairystory.walk.load.universe.SpaceStationBuildLoad;
 import com.bearya.robot.fairystory.walk.load.universe.SpaceStationCompositionLoad;
 import com.bearya.robot.fairystory.walk.load.universe.SpaceStationEndLoad;
 import com.bearya.robot.fairystory.walk.load.universe.SpaceStationRoleLoad;
-import com.bearya.robot.fairystory.walk.load.universe.AstronautLifeLoad;
-import com.bearya.robot.fairystory.walk.load.universe.RocketEndLoad;
 import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
 import com.bearya.robot.fairystory.walk.subjects.AstronautSubject;
 import com.bearya.robot.fairystory.walk.subjects.PlanetSecretSubject;
@@ -50,7 +51,7 @@ public class UniverseTheme implements AbsTheme {
 
     @Override
     public int res() {
-        return 0;
+        return R.mipmap.theme_universe;
     }
 
     @Override
@@ -102,6 +103,16 @@ public class UniverseTheme implements AbsTheme {
     @Override
     public AbsSubject dreamSubject() {
         return new UniverseDreamSubject();
+    }
+
+    @Override
+    public int backgroundPath() {
+        return R.mipmap.background_universe;
+    }
+
+    @Override
+    public int stationEnterImage() {
+        return R.mipmap.stations_universe;
     }
 
 }

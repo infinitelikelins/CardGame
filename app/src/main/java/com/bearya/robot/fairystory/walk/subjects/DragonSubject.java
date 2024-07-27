@@ -1,6 +1,7 @@
 package com.bearya.robot.fairystory.walk.subjects;
 
 import com.bearya.robot.fairystory.ui.res.MusicResource;
+import com.bearya.robot.fairystory.ui.res.PictureResource;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.bearya.robot.fairystory.walk.load.EndLoad;
 import com.bearya.robot.fairystory.walk.load.story.DragonEndLoad;
@@ -9,7 +10,7 @@ import com.bearya.robot.fairystory.walk.start.HeroStart;
 
 public class DragonSubject implements AbsSubject{
 
-    public static final String NAME = "恶龙谷";
+    public static final String NAME = "英雄无敌";
 
     @Override
     public String name() {
@@ -23,7 +24,7 @@ public class DragonSubject implements AbsSubject{
 
     @Override
     public String tabImage() {
-        return "";
+        return PictureResource.BASE_STORY_PATH + "Dragon/DragonTab.webp";
     }
 
     @Override
