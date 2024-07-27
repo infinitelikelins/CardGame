@@ -73,7 +73,7 @@ public class CardResource {
             case CardType.ACTION_FORWARD: return R.drawable.ic_forward;
             case CardType.ACTION_BACKWARD: return R.drawable.ic_backward;
             case CardType.ACTION_LEFT: return R.drawable.ic_left;
-            case CardType.ACTION_RIGHT: return R.drawable.ic_do_run;
+            case CardType.ACTION_RIGHT: return R.drawable.ic_right;
             case CardType.ACTION_LOOP: return R.drawable.ic_loop;
             case CardType.ACTION_CLOSURE: return R.drawable.ic_closure;
             default: return R.mipmap.ic_add_no_focus_2;
