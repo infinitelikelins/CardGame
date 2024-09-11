@@ -20,18 +20,20 @@ public abstract class EquipmentLoad extends XLoad {
 
     @Override
     public void registerPlay() {
-        LoadPlay loadPlay = new LoadPlay(new PlayData(playSound(), new FacePlay(loadFacePlay(), defineType(), loadFacePlayTime())));
+        LoadPlay loadPlay = new LoadPlay(onNewLoadPlayData());
         Director.getInstance().register(ON_NEW_LOAD, loadPlay);
 
         LoadPlay failPlay = new LoadPlay(new PlayData(MusicResource.THEME_END_FAIL));
         Director.getInstance().register(ON_END_LOAD_FAIL, failPlay);
     }
 
+    protected PlayData onNewLoadPlayData() {
+        return new PlayData(playSound(), new FacePlay(loadFacePlay(), defineType(), loadFacePlayTime()));
+    }
+
     protected abstract String loadFacePlay();
 
-    protected FaceType defineType() {
-        return FaceType.Frame;
-    }
+    protected abstract FaceType defineType();
 
     protected int loadFacePlayTime() {
         return 0;

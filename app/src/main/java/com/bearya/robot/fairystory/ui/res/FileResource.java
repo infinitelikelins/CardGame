@@ -9,5 +9,7 @@ public interface FileResource {
     String BASE_PATH = ROOT + "/fairy/";
 
     String BASE_STORY_ENDING_PATH = ROOT + "/fairy/story/ending/";
+    String themeConfigPath = BASE_PATH + "/main/launcher/theme.txt";
+
 
 }

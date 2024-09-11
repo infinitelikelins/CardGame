@@ -105,15 +105,19 @@ public class StationPhotoFragment extends Fragment {
             bindView.ivPreView.setImageResource(0);
         } else if (photoPath.contains("storage")) {
             bindView.ivPreView.setVisibility(View.VISIBLE);
-            Glide.with(this).load(photoPath).apply(
+            Glide.with(this).setDefaultRequestOptions(
                     new RequestOptions()
                             .circleCrop()
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true)
-            ).into(bindView.ivPreView);
+            ).load(photoPath).into(bindView.ivPreView);
         } else if (!TextUtils.isEmpty(photoPath)) {
             bindView.ivPreView.setVisibility(View.VISIBLE);
-            Glide.with(this).load(ResourceUtil.getMipmapId(photoPath)).centerCrop().into(bindView.ivPreView);
+            Glide.with(this).setDefaultRequestOptions(
+                    new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+            ).load(ResourceUtil.getMipmapId(photoPath)).centerCrop().into(bindView.ivPreView);
         }
     }
 

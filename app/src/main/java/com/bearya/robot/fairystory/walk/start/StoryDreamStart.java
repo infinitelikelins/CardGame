@@ -29,4 +29,5 @@ public class StoryDreamStart implements AbsStart{
     public String travelReady() {
         return MusicResource.BASE_MAIN_PATH + "w_ready_treasure3.mp3";
     }
+
 }

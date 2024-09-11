@@ -22,7 +22,6 @@ public class AstronautSubject implements AbsSubject {
         return "Astronaut";
     }
 
-
     @Override
     public String tabImage() {
         return PictureResource.BASE_UNIVERSE_PATH +  "Astronaut/AstronautTab.webp";
@@ -42,4 +41,5 @@ public class AstronautSubject implements AbsSubject {
     public EndLoad end() {
         return (EndLoad) LoadMgr.getInstance().getLoad(AstronautEndLoad.NAME);
     }
+
 }

@@ -41,4 +41,5 @@ public class PlanetSecretSubject implements AbsSubject {
     public EndLoad end() {
         return (EndLoad) LoadMgr.getInstance().getLoad(PlanetSecretEndLoad.NAME);
     }
+
 }

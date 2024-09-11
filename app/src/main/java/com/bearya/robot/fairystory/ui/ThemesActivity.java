@@ -70,7 +70,7 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
     protected void onResume() {
         super.onResume();
 
-        MusicUtil.playMusic(MusicResource.WELCOME, mediaPlayer -> {
+        MusicUtil.playMusic(LoadMgr.getInstance().getTheme().welcomeSound(), mediaPlayer -> {
             MusicUtil.playMusic(MusicResource.DELAY);
             MusicUtil.playBGM(MusicResource.THEME);
         });

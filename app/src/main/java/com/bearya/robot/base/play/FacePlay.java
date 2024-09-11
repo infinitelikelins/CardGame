@@ -29,7 +29,6 @@ public class FacePlay {
         resId = -1;
     }
 
-
     public String getFace() {
         return face;
     }

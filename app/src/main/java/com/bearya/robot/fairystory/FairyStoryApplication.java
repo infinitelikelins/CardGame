@@ -1,7 +1,6 @@
 package com.bearya.robot.fairystory;
 
 import com.bearya.robot.base.BaseApplication;
-import com.bearya.robot.base.util.CodeUtils;
 import com.bearya.robot.base.util.DebugUtil;
 
 public class FairyStoryApplication extends BaseApplication {

@@ -1,5 +1,6 @@
 package com.bearya.robot.fairystory.walk.load.story;
 
+import com.bearya.robot.base.play.FaceType;
 import com.bearya.robot.fairystory.ui.res.FileResource;
 import com.bearya.robot.fairystory.ui.res.IntroduceTime;
 import com.bearya.robot.fairystory.ui.res.MusicResource;
@@ -31,6 +32,10 @@ public class CrystalShoesLoad extends EquipmentLoad {
     @Override
     protected int loadFacePlayTime() {
         return IntroduceTime.crystalShoesPlayTime;
+    }
+
+    protected FaceType defineType() {
+        return FaceType.Frame;
     }
 
 }

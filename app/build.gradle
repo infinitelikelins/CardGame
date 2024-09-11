@@ -9,8 +9,8 @@ android {
         applicationId "com.bearya.robot.fairystory"
         minSdk 24
         targetSdk 33
-        versionCode 70101
-        versionName "7.1.1"
+        versionCode 70200
+        versionName "7.2.0"
         multiDexEnabled true
     }
 

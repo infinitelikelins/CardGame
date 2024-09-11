@@ -2,6 +2,7 @@ package com.bearya.robot.fairystory.walk.themes;
 
 import com.bearya.robot.R;
 import com.bearya.robot.base.load.BaseLoad;
+import com.bearya.robot.fairystory.ui.res.MusicResource;
 import com.bearya.robot.fairystory.walk.load.StartLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationBlueLoad;
 import com.bearya.robot.fairystory.walk.load.station.StationGreenLoad;
@@ -43,6 +44,7 @@ public class UniverseTheme implements AbsTheme {
      * 太空宇宙主题
      */
     public static final String UNIVERSE = "Universe";
+    public static final String KEY = "U2FsdGVkX19coTMOQkyOjOGejk4LSQGO+WFSuK+uADE=";
 
     @Override
     public String theme() {
@@ -113,6 +115,21 @@ public class UniverseTheme implements AbsTheme {
     @Override
     public int stationEnterImage() {
         return R.mipmap.stations_universe;
+    }
+
+    @Override
+    public String welcomeSound() {
+        return MusicResource.WELCOME_TO_UNIVERSE;
+    }
+
+    @Override
+    public String themeNameSound() {
+        return MusicResource.UNIVERSE;
+    }
+
+    @Override
+    public String key() {
+        return KEY;
     }
 
 }

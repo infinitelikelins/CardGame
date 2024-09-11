@@ -13,12 +13,18 @@ public interface AbsTheme {
 
     AbsSubject[] subjects();
 
-    Map<String , BaseLoad> loads();
+    Map<String, BaseLoad> loads();
 
     AbsSubject dreamSubject();
 
     int backgroundPath();
 
     int stationEnterImage();
+
+    String welcomeSound();
+
+    String themeNameSound();
+
+    String key();
 
 }
