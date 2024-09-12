@@ -46,6 +46,7 @@ import com.bearya.robot.fairystory.walk.load.station.StationYellowLoad;
 import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
 import com.bearya.robot.fairystory.walk.subjects.DoubleNinthSubject;
 import com.bearya.robot.fairystory.walk.subjects.DragonBoatSubject;
+import com.bearya.robot.fairystory.walk.subjects.FestivalDreamSubject;
 import com.bearya.robot.fairystory.walk.subjects.LanternSubject;
 import com.bearya.robot.fairystory.walk.subjects.MidAutumnSubject;
 import com.bearya.robot.fairystory.walk.subjects.SpringSubject;
@@ -142,7 +143,7 @@ public class FestivalTheme implements AbsTheme {
 
     @Override
     public AbsSubject dreamSubject() {
-        return null;
+        return new FestivalDreamSubject();
     }
 
     @Override
@@ -152,7 +153,7 @@ public class FestivalTheme implements AbsTheme {
 
     @Override
     public int stationEnterImage() {
-        return 0;
+        return R.mipmap.stations_festival;
     }
 
     @Override

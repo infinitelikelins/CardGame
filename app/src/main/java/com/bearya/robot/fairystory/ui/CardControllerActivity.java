@@ -36,6 +36,8 @@ import com.bearya.robot.fairystory.ui.res.CardChildAction;
 import com.bearya.robot.fairystory.ui.res.CardParentAction;
 import com.bearya.robot.fairystory.ui.res.CardResource;
 import com.bearya.robot.fairystory.ui.res.CardType;
+import com.bearya.robot.fairystory.walk.car.LoadMgr;
+import com.bearya.robot.fairystory.walk.themes.StoryTheme;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.mmkv.MMKV;
@@ -321,7 +323,7 @@ public class CardControllerActivity extends BaseActivity implements View.OnClick
         if (item != null) {
             if (item.parentActionId != -1) {
                 CardUpdatePopup popup = new CardUpdatePopup(this);
-                if (item.parentActionId != CardType.ACTION_FORWARD) {
+                if (!(LoadMgr.getInstance().getTheme() instanceof StoryTheme) || item.parentActionId != CardType.ACTION_FORWARD) {
                     popup.hideParallelCard();
                 }
                 popup.setPopupViewClickListener(cardType -> updateCardAction(position, cardType));

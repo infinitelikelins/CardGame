@@ -6,6 +6,7 @@ import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.R;
 import com.bearya.robot.base.ui.view.NiceImageView;
 import com.bearya.robot.base.util.DebugUtil;
+import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.fairystory.ui.station.LibItem;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.bumptech.glide.Glide;
@@ -31,6 +32,7 @@ public class SoundAdapter extends BaseQuickAdapter<LibItem, BaseViewHolder> {
 
         DebugUtil.debug("key = " + key + " , mp3 = " + mp3);
         KVManager.getInstance().put(key, mp3);
+        MusicUtil.playMusic(mp3);
 
         notifyItemRangeChanged(0, getItemCount());
     }

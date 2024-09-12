@@ -50,8 +50,16 @@ public class ContentActivity extends BaseActivity {
                         MusicUtil.playMusic(MusicResource.BASE_STATION_PATH + "station_sound.mp3");
                         break;
                     case 3:
-                        bindView.contentBackground.setBackgroundResource(R.mipmap.station_bg3);
+                        bindView.contentBackground.setBackgroundResource(R.mipmap.station_bg1);
+                        MusicUtil.stopMusic();
                         break;
+                    case 4:
+                        bindView.contentBackground.setBackgroundResource(R.mipmap.station_bg2);
+                        MusicUtil.stopMusic();
+                        break;
+//                    case 3:
+//                        bindView.contentBackground.setBackgroundResource(R.mipmap.station_bg3);
+//                        break;
                 }
             }
         });

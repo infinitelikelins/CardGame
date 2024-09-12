@@ -36,7 +36,7 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
         setContentView(bindView.getRoot());
 
         bindView.themeRoot.setBackgroundResource(LoadMgr.getInstance().getTheme().backgroundPath());
-        bindView.stations.setBackgroundResource(LoadMgr.getInstance().getTheme().stationEnterImage());
+        bindView.stations.setImageResource(LoadMgr.getInstance().getTheme().stationEnterImage());
 
         bindView.subjects.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 

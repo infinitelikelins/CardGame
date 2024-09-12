@@ -17,7 +17,7 @@ public class StationLib {
         this.soundLibs = soundLibs;
     }
 
-    public static StationLib getLibsFromJSON(String filePath) {
+    public static StationLib newInstance(String filePath) {
         try {
             String json = FileUtil.stringFromSDCard(filePath);
             JSONObject root = new JSONObject(json);
@@ -36,9 +36,8 @@ public class StationLib {
             }
             return new StationLib(imageLibs, soundLibs);
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     private static Lib parseImageLib(JSONObject json) throws JSONException {

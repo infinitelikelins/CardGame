@@ -53,7 +53,7 @@ public class StationSoundFragment extends Fragment {
         bindView.recyclerView.setAdapter(adapter);
 
         String filePath = FileResource.BASE_PATH + LoadMgr.getInstance().getTheme().theme().toLowerCase() + "/station/station_libs.json";
-        StationLib lib = StationLib.getLibsFromJSON(filePath);
+        StationLib lib = StationLib.newInstance(filePath);
         if (lib != null) {
             for (Lib soundlib : lib.soundLibs.libList) {
                 TabLayout.Tab tab = bindView.tabs.newTab().setText(soundlib.name);

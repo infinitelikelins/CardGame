@@ -55,7 +55,7 @@ public class StationImageFragment extends Fragment {
 
         String filePath = FileResource.BASE_PATH + LoadMgr.getInstance().getTheme().theme().toLowerCase() + "/station/station_libs.json";
 
-        StationLib lib = StationLib.getLibsFromJSON(filePath);
+        StationLib lib = StationLib.newInstance(filePath);
         if (lib != null) {
             for (Lib imageLib : lib.imageLibs.libList) {
                 TabLayout.Tab tab = bindView.tabs.newTab().setText(imageLib.name);
