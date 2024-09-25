@@ -22,7 +22,6 @@ import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.databinding.FragmentStationRecordBinding;
 import com.bearya.robot.fairystory.ui.res.FileResource;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
-import com.buihha.audiorecorder.Mp3Recorder;
 
 import java.io.File;
 import java.util.Locale;
@@ -60,33 +59,10 @@ public class StationRecordFragment extends Fragment {
 
         DebugUtil.error("filePath = %s , fileName = %s", filePath, fileName);
 
-        AudioRecorderManager.getInstance().init(new Mp3Recorder.OnRecordListener() {
-            @Override
-            public void onStart() {
-                times = 0;
-                if (timer != null) timer.start();
-            }
-
-            @Override
-            public void onStop() {
-                times = 0;
-                if (timer != null) timer.cancel();
-            }
-
-            @Override
-            public void onRecording(int sampleRate, double volume) {
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
         timer = new CountDownTimer(Long.MAX_VALUE, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                bindView.tvSecondRecord.setText(String.format(Locale.CHINA , "正在录音中... %d s" , ++times) );
+                bindView.tvSecondRecord.setText(String.format(Locale.CHINA, "正在录音中... %d s", ++times));
             }
 
             @Override
@@ -128,7 +104,7 @@ public class StationRecordFragment extends Fragment {
         bindView.ivPreView.setVisibility(View.VISIBLE);
         bindView.tvSecondRecord.setText("");
         stopRotate(bindView.ivSound);
-        AudioRecorderManager.getInstance().stop();
+        AudioRecorderManager.getInstance().stopRecord();
     }
 
     private void startRecord() {
@@ -137,11 +113,30 @@ public class StationRecordFragment extends Fragment {
         bindView.tvSecondRecord.setText("正在录音中...");
         startRotate(bindView.ivSound);
         filePath = FileResource.BASE_PATH + LoadMgr.getInstance().getTheme().theme() + "/record/";
-        fileName = System.currentTimeMillis() + ".mp3";
+        fileName = System.currentTimeMillis() + ".arm";
         KVManager.getInstance().put(key, filePath + "/" + fileName);
         File file = new File(filePath);
         if (!file.exists()) file.mkdirs();
-        AudioRecorderManager.getInstance().startRecord(filePath, fileName);
+
+        AudioRecorderManager.getInstance().startRecord(filePath, fileName, new AudioRecorderManager.OnRecordListener() {
+            @Override
+            public void onStart() {
+                times = 0;
+                if (timer != null) timer.start();
+            }
+
+            @Override
+            public void onStop() {
+                times = 0;
+                if (timer != null) timer.cancel();
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+
+        });
     }
 
     private void stopPlayRecord() {
@@ -156,7 +151,7 @@ public class StationRecordFragment extends Fragment {
      */
     private void playRecord() {
         if (AudioRecorderManager.getInstance().isRecording()) {
-            AudioRecorderManager.getInstance().stop();
+            AudioRecorderManager.getInstance().stopRecord();
         } else {
             bindView.tvSecondRecord.setText("正在播放音频中...");
             bindView.ivPreView.setVisibility(View.VISIBLE);
@@ -211,4 +206,9 @@ public class StationRecordFragment extends Fragment {
         if (timer != null) timer.cancel();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AudioRecorderManager.getInstance().release();
+    }
 }

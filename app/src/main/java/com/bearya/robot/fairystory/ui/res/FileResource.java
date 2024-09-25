@@ -4,12 +4,12 @@ import android.os.Environment;
 
 public interface FileResource {
 
-    String ROOT = Environment.getExternalStorageDirectory().getPath();
+    String BASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/fairy/";
 
-    String BASE_PATH = ROOT + "/fairy/";
+    String BASE_STORY_ENDING_PATH = BASE_PATH + "story/ending/";
+    String themeConfigPath = BASE_PATH + "main/launcher/theme.txt";
 
-    String BASE_STORY_ENDING_PATH = ROOT + "/fairy/story/ending/";
-    String themeConfigPath = BASE_PATH + "/main/launcher/theme.txt";
-
+    String BASE_EMOTION_CHENG = BASE_PATH + "main/emotion/cheng_jing_gu";
+    String BASE_EMOTION_SHE = BASE_PATH + "main/emotion/she_jing";
 
 }

@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.festival.WinterEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.WinterSolsticeStart;
 
-public class WinterSolsticeSubject implements AbsSubject {
+public class WinterSolsticeSubject extends AbsSubject {
 
     public static final String NAME = "冬至";
 
@@ -41,5 +41,4 @@ public class WinterSolsticeSubject implements AbsSubject {
     public EndLoad end() {
         return (EndLoad) LoadMgr.getInstance().getLoad(WinterEndLoad.NAME);
     }
-
 }

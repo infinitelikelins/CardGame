@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.festival.TombSweepEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.TombSweepStart;
 
-public class TombSweepSubject implements AbsSubject {
+public class TombSweepSubject extends AbsSubject {
 
     public static final String NAME = "清明节";
 

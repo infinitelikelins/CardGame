@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.universe.SpaceStationEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.SpaceStationStart;
 
-public class SpaceStationSubject implements AbsSubject{
+public class SpaceStationSubject extends AbsSubject{
 
     public static final String NAME = "有趣的空间站";
 
@@ -41,5 +41,4 @@ public class SpaceStationSubject implements AbsSubject{
     public EndLoad end() {
         return (EndLoad) LoadMgr.getInstance().getLoad(SpaceStationEndLoad.NAME);
     }
-
 }

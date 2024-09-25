@@ -7,7 +7,7 @@ import com.bearya.robot.fairystory.walk.load.story.IdeaEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.StoryDreamStart;
 
-public class StoryDreamSubject implements AbsSubject{
+public class StoryDreamSubject extends AbsSubject{
 
     public static final String NAME = "童话世界创想天地";
 
@@ -40,5 +40,4 @@ public class StoryDreamSubject implements AbsSubject{
     public EndLoad end() {
         return (EndLoad) LoadMgr.getInstance().getLoad(IdeaEndLoad.NAME);
     }
-
 }

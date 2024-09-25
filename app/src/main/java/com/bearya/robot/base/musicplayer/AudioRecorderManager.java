@@ -1,12 +1,12 @@
 package com.bearya.robot.base.musicplayer;
 
-import com.buihha.audiorecorder.Mp3Recorder;
-
-import java.io.IOException;
+import android.media.MediaRecorder;
 
 public class AudioRecorderManager {
 
-    private Mp3Recorder mp3Recorder;
+    private MediaRecorder recorder;
+    private OnRecordListener onRecordListener;
+    private boolean isRecording = false;
 
     private static AudioRecorderManager mInstance;
 
@@ -18,38 +18,62 @@ public class AudioRecorderManager {
     }
 
     private AudioRecorderManager() {
-        mp3Recorder = new Mp3Recorder();
-    }
 
-    public void init(Mp3Recorder.OnRecordListener onRecordListener) {
-        mp3Recorder.setOnRecordListener(onRecordListener);
     }
 
     public boolean isRecording() {
-        return mp3Recorder.isRecording();
+        return isRecording;
     }
 
-    public void startRecord(String filePath,String fileName) {
+    public void startRecord(String filePath, String fileName, OnRecordListener onRecordListener) {
+        this.onRecordListener = onRecordListener;
         try {
-            if (mp3Recorder.isRecording()) {
-                mp3Recorder.stopRecording();
-                return;
+            if (recorder == null) {
+                recorder = new MediaRecorder();
             }
-            mp3Recorder.startRecording(filePath, fileName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            recorder.setOutputFile(filePath + fileName);
+            recorder.setAudioSamplingRate(44100);
+            recorder.setAudioEncodingBitRate(192000);
+            recorder.prepare();
+            recorder.start();
+            isRecording = true;
+            if (onRecordListener != null) onRecordListener.onStart();
+        } catch (Exception e) {
+            recorder = null;
+            if (onRecordListener != null) onRecordListener.onError(e);
         }
     }
 
-    public void stop() {
-        mp3Recorder.stopRecording();
+    public void stopRecord() {
+        try {
+            if (recorder != null) {
+                recorder.stop();
+                recorder.release();
+            }
+        } catch (Exception e) {
+            if (recorder != null) {
+                recorder.reset();
+                recorder.release();
+            }
+        }
+        isRecording = false;
+        recorder = null;
+        if (onRecordListener != null) onRecordListener.onStop();
+        onRecordListener = null;
+    }
+
+    public interface OnRecordListener {
+        void onStart();
+
+        void onStop();
+
+        void onError(Exception e);
     }
 
     public void release() {
-        if (mp3Recorder.isRecording()) {
-            mp3Recorder.stopRecording();
-        }
-        mp3Recorder = null;
         mInstance = null;
     }
 

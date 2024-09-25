@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.story.CastleEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.DanceStart;
 
-public class CastleSubject implements AbsSubject {
+public class CastleSubject extends AbsSubject {
 
     public static final String NAME = "梦幻舞会";
 

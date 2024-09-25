@@ -11,6 +11,7 @@ import com.bearya.robot.base.ui.BaseActivity;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.databinding.ActivityThemesBinding;
 import com.bearya.robot.fairystory.ui.adapter.SubjectsAdapter;
+import com.bearya.robot.fairystory.ui.popup.impl.MutePopup;
 import com.bearya.robot.fairystory.ui.res.MusicResource;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
 
@@ -24,6 +25,8 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
     private ActivityThemesBinding bindView;
     private rx.Subscription subscribe;
     private boolean singleClickLock = false;
+
+    private SubjectsAdapter subjectsAdapter;
 
     public static void start(Context context) {
         context.startActivity(new Intent(context, ThemesActivity.class));
@@ -40,17 +43,25 @@ public class ThemesActivity extends BaseActivity implements View.OnClickListener
 
         bindView.subjects.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        SubjectsAdapter subjectsAdapter = new SubjectsAdapter(LoadMgr.getInstance().getSubjects());
+        subjectsAdapter = new SubjectsAdapter(LoadMgr.getInstance().getSubjects());
 
         subjectsAdapter.setOnItemClickListener((adapter, view, position) -> {
             LoadMgr.getInstance().setCurrentSubject(subjectsAdapter.getItem(position));
             singleClickLock = false;
             ThemeIntroduceActivity.start(this);
         });
+        subjectsAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            new MutePopup(ThemesActivity.this, subjectsAdapter.getItem(position)).showPopupWindow();
+            return true;
+        });
 
         bindView.subjects.setAdapter(subjectsAdapter);
 
         withClick(bindView.stations, this);
+        withLongClick(bindView.stations, v -> {
+            new MutePopup(ThemesActivity.this, LoadMgr.getInstance().getCurrentThemeDreamSubject()).showPopupWindow();
+            return true;
+        });
     }
 
     @Override

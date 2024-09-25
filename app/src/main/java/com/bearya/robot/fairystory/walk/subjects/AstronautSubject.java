@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.universe.AstronautEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.AstronautStart;
 
-public class AstronautSubject implements AbsSubject {
+public class AstronautSubject extends AbsSubject {
 
     public static final String NAME = "了不起的航天员";
 

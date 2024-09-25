@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.universe.RocketEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.SpaceshipStart;
 
-public class SpaceshipSubject implements AbsSubject {
+public class SpaceshipSubject extends AbsSubject {
 
     public static final String NAME = "飞天神舟";
 
@@ -41,4 +41,5 @@ public class SpaceshipSubject implements AbsSubject {
     public EndLoad end() {
         return (EndLoad) LoadMgr.getInstance().getLoad(RocketEndLoad.NAME);
     }
+
 }

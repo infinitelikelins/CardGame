@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.festival.DragonBoatEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.DragonBoatStart;
 
-public class DragonBoatSubject implements AbsSubject {
+public class DragonBoatSubject extends AbsSubject {
 
     public static final String NAME = "端午节";
 

@@ -1,16 +1,26 @@
 package com.bearya.robot.fairystory.ui.station;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Lib {
 
-    String name;
-    List<LibItem> items;
+    private String name;
+    private List<LibItem> items;
 
-    public Lib() {
-        items = new ArrayList<>();
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<LibItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<LibItem> items) {
+        this.items = items;
     }
 
 }

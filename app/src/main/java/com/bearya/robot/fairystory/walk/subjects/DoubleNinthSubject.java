@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.festival.DoubleNinthEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.DoubleNinthStart;
 
-public class DoubleNinthSubject implements AbsSubject {
+public class DoubleNinthSubject extends AbsSubject {
 
     public static final String NAME = "重阳节";
 

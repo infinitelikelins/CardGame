@@ -58,7 +58,7 @@ public class PlayData {
         if (facePlay != null) {
             if (facePlay.getFaceType() == FaceType.Video) {
                 completeCondition += ONLY_VIDEO;
-            } else if (facePlay.getFaceType() == FaceType.Image || facePlay.getFaceType() == FaceType.Lottie) {
+            } else if (facePlay.getFaceType() == FaceType.Image || facePlay.getFaceType() == FaceType.Lottie || facePlay.getFaceType() == FaceType.ANIMATION) {
                 completeCondition += ONLY_IMAGE;
             } else if (facePlay.getFaceType() == FaceType.Frame) {
                 completeCondition += ONLY_FRAME;

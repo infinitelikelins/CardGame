@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.festival.SpringEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.SpringStart;
 
-public class SpringSubject implements AbsSubject {
+public class SpringSubject extends AbsSubject {
 
     public static final String NAME = "春节";
 

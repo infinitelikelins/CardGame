@@ -116,5 +116,6 @@
     <string name="define_function">函数定义</string>
     <string name="define_function_num">函数%d定义</string>
     <string name="clean">清空</string>
+    <string name="moving_switcher">行走音乐开关</string>
 
 </resources>

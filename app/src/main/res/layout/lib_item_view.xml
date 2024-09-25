@@ -13,6 +13,7 @@
         app:border_color="@color/colorWhite"
         app:border_width="@dimen/dp_4"
         app:corner_radius="15dp"
+        app:is_cover_src="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

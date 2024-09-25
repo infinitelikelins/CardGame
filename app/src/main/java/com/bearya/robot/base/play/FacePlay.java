@@ -1,32 +1,37 @@
 package com.bearya.robot.base.play;
 
 public class FacePlay {
-    private final String face;
-    private final FaceType faceType;
-    private int time;
+    private int faceId;
+    private String face;
+    private FaceType faceType;
+    private int time = -1;
+    private boolean repeat = false;
 
-    private final int resId;
+    public FacePlay(int face, FaceType faceType) {
+        this.faceId = face;
+        this.faceType = faceType;
+    }
 
     public FacePlay(String face, FaceType faceType) {
         this.face = face;
         this.faceType = faceType;
-        time = -1;
-        resId = -1;
-    }
-
-    public FacePlay(int res, FaceType faceType) {
-        this.resId = res;
-        this.faceType = faceType;
-        time = 50;
-        face = null;
     }
 
     public FacePlay(String face, FaceType faceType, int time) {
         this.face = face;
         this.faceType = faceType;
         this.time = time;
+    }
 
-        resId = -1;
+    public FacePlay(String face, FaceType faceType, int time, boolean repeat) {
+        this.face = face;
+        this.faceType = faceType;
+        this.time = time;
+        this.repeat = repeat;
+    }
+
+    public int getFaceId() {
+        return faceId;
     }
 
     public String getFace() {
@@ -37,10 +42,11 @@ public class FacePlay {
         return faceType;
     }
 
-    public int getResource(){ return resId;}
-
     public int getTime() {
         return time;
     }
 
+    public boolean isRepeat() {
+        return repeat;
+    }
 }

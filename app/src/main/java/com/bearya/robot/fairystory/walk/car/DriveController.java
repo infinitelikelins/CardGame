@@ -975,7 +975,8 @@ public class DriveController {
         DebugUtil.error("moving");
         isMoving = true;
         Director.getInstance().playMovingEmotion();
-        MusicUtil.playBGM(LoadMgr.getInstance().getCurrentSubject().travel());
+        if (!LoadMgr.getInstance().getCurrentSubject().mute())
+            MusicUtil.playBGM(LoadMgr.getInstance().getCurrentSubject().travel());
         RobotActionManager.handShake(80);
     }
 

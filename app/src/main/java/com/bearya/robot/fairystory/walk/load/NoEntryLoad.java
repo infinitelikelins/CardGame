@@ -21,7 +21,7 @@ public abstract class NoEntryLoad extends XLoad {
     public void registerPlay() {
         LoadPlay unlockSuccessPlay = new LoadPlay();
         PlayData playData = new PlayData();
-        playData.facePlay = new FacePlay(loadFacePlay(), FaceType.Frame, loadPlayFaceTime());
+        playData.facePlay = new FacePlay(loadFacePlay(), FaceType.Frame, loadPlayFaceTime() ,false);
         playData.sound = loadPlaySound();
         unlockSuccessPlay.addLoad(playData);
         Director.getInstance().register(ON_NEW_LOAD, unlockSuccessPlay);

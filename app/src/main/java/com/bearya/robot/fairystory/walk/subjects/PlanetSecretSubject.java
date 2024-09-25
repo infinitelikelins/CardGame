@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.universe.PlanetSecretEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.PlanetSecretStart;
 
-public class PlanetSecretSubject implements AbsSubject {
+public class PlanetSecretSubject extends AbsSubject {
 
     public static final String NAME = "行星的秘密";
 

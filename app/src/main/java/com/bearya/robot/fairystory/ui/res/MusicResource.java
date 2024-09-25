@@ -4,15 +4,14 @@ import android.os.Environment;
 
 public interface MusicResource {
 
-    String ROOT = Environment.getExternalStorageDirectory().getPath();
+    String BASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/fairy/";
 
-    String BASE_PATH = ROOT + "/fairy/";
-    String BASE_MAIN_PATH = ROOT + "/fairy/main/music/";
-    String BASE_ENDING_MUSIC_PATH = ROOT + "/fairy/story/ending/music/";
-    String BASE_UNIVERSE_THEME_PATH = ROOT + "/fairy/universe/theme/";
-    String BASE_FESTIVAL_THEME_PATH = ROOT + "/fairy/festival/theme/";
-    String BASE_STATION_PATH = ROOT + "/fairy/station/";
-    String BASE_FESTIVAL_EQUIPMENT_PATH = "/fairy/festival/equipment/music/";
+    String BASE_MAIN_PATH = BASE_PATH + "main/music/";
+    String BASE_ENDING_MUSIC_PATH = BASE_PATH + "story/ending/music/";
+    String BASE_UNIVERSE_THEME_PATH = BASE_PATH + "universe/theme/";
+    String BASE_FESTIVAL_THEME_PATH = BASE_PATH + "festival/theme/";
+    String BASE_STATION_PATH = BASE_PATH + "station/";
+    String BASE_FESTIVAL_EQUIPMENT_PATH = BASE_PATH + "festival/equipment/music/";
 
     String BGM = BASE_MAIN_PATH + "bgm.mp3";
     String TOUCH = BASE_MAIN_PATH + "touch.mp3";

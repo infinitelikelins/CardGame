@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.festival.MidAutumnEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.MidAutumnStart;
 
-public class MidAutumnSubject implements AbsSubject {
+public class MidAutumnSubject extends AbsSubject {
 
     public static final String NAME = "中秋节";
 

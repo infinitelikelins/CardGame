@@ -18,7 +18,7 @@ public class ContentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ContentAdapter extends FragmentStatePagerAdapter {
             case 2: return StationSoundFragment.newInstance(type);
             case 3: return StationRecordFragment.newInstance(type);
             case 4: return StationPhotoFragment.newInstance(type);
-//            case 5: return StationVideoFragment.newInstance(type);
+            case 5: return StationVideoFragment.newInstance(type);
             default: return new Fragment();
         }
     }
@@ -43,7 +43,7 @@ public class ContentAdapter extends FragmentStatePagerAdapter {
             case 2: return "声音";
             case 3: return "录音";
             case 4: return "拍照";
-//            case 5: return "视频";
+            case 5: return "视频";
             default: return "";
         }
     }

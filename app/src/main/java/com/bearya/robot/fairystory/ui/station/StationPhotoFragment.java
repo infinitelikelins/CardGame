@@ -79,7 +79,7 @@ public class StationPhotoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         showFace();
         bindView.ivTakePhoto.setOnClickListener(v -> takePhoto());
-        bindView.ivPreView.setOnClickListener(v -> new ImagePreViewDialog(requireActivity(), photoPath).show());
+        bindView.ivPreView.setOnClickListener(v -> new ImagePreviewDialog(requireActivity(), photoPath).show());
         bindView.ivPreView.setOnLongClickListener(v -> {
             deleteFile();
             return true;

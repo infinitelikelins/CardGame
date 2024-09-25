@@ -1,23 +1,32 @@
 package com.bearya.robot.fairystory.walk.subjects;
 
+import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.fairystory.walk.load.EndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 
 /**
  * 游戏 正式 主题 （对应开始和终点）
  */
-public interface AbsSubject {
+public abstract class AbsSubject {
 
-    String name();
+    public abstract String name();
 
-    String type();
+    public abstract String type();
 
-    String tabImage();
+    public abstract String tabImage();
 
-    String travel();
+    public abstract String travel();
 
-    AbsStart start();
+    public abstract AbsStart start();
 
-    EndLoad end();
+    public abstract EndLoad end();
+
+    public boolean mute() {
+        return KVManager.getInstance().getBoolean("mute_" + type());
+    }
+
+    public void muteChange() {
+        KVManager.getInstance().put("mute_" + type(), !mute());
+    }
 
 }

@@ -28,7 +28,7 @@ public abstract class EquipmentLoad extends XLoad {
     }
 
     protected PlayData onNewLoadPlayData() {
-        return new PlayData(playSound(), new FacePlay(loadFacePlay(), defineType(), loadFacePlayTime()));
+        return new PlayData(playSound(), new FacePlay(loadFacePlay(), defineType(), loadFacePlayTime() ,false));
     }
 
     protected abstract String loadFacePlay();

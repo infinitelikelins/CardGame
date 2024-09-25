@@ -13,9 +13,9 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bearya.robot.R;
 import com.bearya.robot.base.util.ResourceUtil;
 
-public class ImagePreViewDialog extends Dialog {
+public class ImagePreviewDialog extends Dialog {
 
-    public ImagePreViewDialog(@NonNull Activity activity, String photo) {
+    public ImagePreviewDialog(@NonNull Activity activity, String photo) {
         super(activity, R.style.FullScreenDialog);
         setContentView(R.layout.dialog_image_preview);
         LottieAnimationView imageView = findViewById(R.id.iv_pre_view);

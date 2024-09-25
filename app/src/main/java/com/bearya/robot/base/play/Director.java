@@ -9,12 +9,15 @@ import android.text.TextUtils;
 import androidx.annotation.IdRes;
 import androidx.fragment.app.FragmentManager;
 
+import com.bearya.actionlib.utils.KVManager;
 import com.bearya.actionlib.utils.RobotActionManager;
+import com.bearya.robot.R;
 import com.bearya.robot.base.BaseApplication;
 import com.bearya.robot.base.ui.view.FrameSurfaceView;
 import com.bearya.robot.base.util.CodeUtils;
 import com.bearya.robot.base.util.DebugUtil;
 import com.bearya.robot.base.util.MusicUtil;
+import com.bearya.robot.fairystory.ui.stage.AnimationFragment;
 import com.bearya.robot.fairystory.ui.stage.FrameFragment;
 import com.bearya.robot.fairystory.ui.stage.LottieFragment;
 import com.bearya.robot.fairystory.ui.stage.PictureFragment;
@@ -25,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Director  {
+public class Director {
     private Handler handler;
     private FragmentManager supportFragmentManager;
     private LoadPlay loadPlay;
@@ -93,7 +96,7 @@ public class Director  {
         }
     }
 
-    public void setContainer(FragmentManager supportFragmentManager , @IdRes int containerId) {
+    public void setContainer(FragmentManager supportFragmentManager, @IdRes int containerId) {
         this.supportFragmentManager = supportFragmentManager;
         this.containerId = containerId;
     }
@@ -101,6 +104,16 @@ public class Director  {
     private void playLottie(String fileName) {
 
         LottieFragment fragment = LottieFragment.newInstance(fileName);
+
+        supportFragmentManager.beginTransaction()
+                .replace(containerId, fragment)
+                .commitNowAllowingStateLoss();
+
+        handler.postDelayed(() -> complete(PlayData.ONLY_IMAGE), 3000);
+    }
+
+    private void playAnimation(int fileName) {
+        AnimationFragment fragment = AnimationFragment.newInstance(fileName);
 
         supportFragmentManager.beginTransaction()
                 .replace(containerId, fragment)
@@ -131,7 +144,7 @@ public class Director  {
     }
 
     private void playFace(final FacePlay facePlay) {
-        if (facePlay != null && (!TextUtils.isEmpty(facePlay.getFace()) || facePlay.getResource() > 0)) {
+        if (facePlay != null && (!TextUtils.isEmpty(facePlay.getFace()) || facePlay.getFaceId() > 0)) {
             DebugUtil.debug("playFace type=%s,file=%s", facePlay.getFaceType().name(), facePlay.getFace());
             BaseApplication.getInstance().getHandler().post(() -> {
                 switch (facePlay.getFaceType()) {
@@ -145,7 +158,10 @@ public class Director  {
                         playVideo(facePlay.getFace());
                         break;
                     case Frame:
-                        playFrame(facePlay.getFace(), facePlay.getTime());
+                        playFrame(facePlay.getFace(), facePlay.getTime(), facePlay.isRepeat());
+                        break;
+                    case ANIMATION:
+                        playAnimation(facePlay.getFaceId());
                         break;
                 }
             });
@@ -166,8 +182,8 @@ public class Director  {
         }
     }
 
-    private void playFrame(String fileName, int gapTime) {
-        FrameFragment fragment = FrameFragment.newInstance(fileName, gapTime);
+    private void playFrame(String fileName, int gapTime, boolean repeat) {
+        FrameFragment fragment = FrameFragment.newInstance(fileName, gapTime, repeat);
 
         fragment.setOnFrameFinishedListener(new FrameSurfaceView.OnFrameFinishedListener() {
             @Override
@@ -185,6 +201,8 @@ public class Director  {
                 .replace(containerId, fragment)
                 .commitNowAllowingStateLoss();
     }
+
+
 
     private void playAction(TimeAction[] actions) {
         removeActionRunnable();
@@ -285,8 +303,16 @@ public class Director  {
     }
 
     public void playMovingEmotion() {
-        String emotion = CodeUtils.oneOf("sq", "ja", "axy", "kx", "hs");
-        playFace(new FacePlay(emotion, FaceType.Lottie));
+        String emotion = KVManager.getInstance().getString("emotion");
+        if (TextUtils.equals(emotion, "cheng")) {
+            playFace(new FacePlay(R.drawable.frame_cheng, FaceType.ANIMATION));
+        } else if (TextUtils.equals(emotion, "she")) {
+            playFace(new FacePlay(R.drawable.frame_she, FaceType.ANIMATION));
+        } else if (CodeUtils.containEmotion(emotion)) {
+            playFace(new FacePlay(emotion, FaceType.Lottie));
+        } else {
+            playFace(new FacePlay(CodeUtils.oneOf("sq", "ja", "axy", "hg", "hs"), FaceType.Lottie));
+        }
     }
 
 }

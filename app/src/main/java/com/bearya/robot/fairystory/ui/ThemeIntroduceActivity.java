@@ -71,7 +71,7 @@ public class ThemeIntroduceActivity extends BaseActivity {
                 });
                 return PictureFragment.newInstance(start.facePath());
             case Frame:
-                FrameFragment frameFragment = FrameFragment.newInstance(start.facePath(), start.gapTime());
+                FrameFragment frameFragment = FrameFragment.newInstance(start.facePath(), start.gapTime() , false);
                 frameFragment.setOnFrameFinishedListener(new FrameSurfaceView.OnFrameFinishedListener() {
                     private boolean isMusicFinishedFlag = false;
                     private boolean isFrameFinishedFlag = false;

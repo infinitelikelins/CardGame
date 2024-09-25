@@ -92,6 +92,8 @@ public abstract class BaseApplication extends Application {
         BaseActivity.finishAllActivity();
         MusicUtil.stopMusic();
         MusicUtil.stopBGM();
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
 }

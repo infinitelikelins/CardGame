@@ -14,6 +14,7 @@ public class MusicUtil {
 
     private static LocalMusicPlayer localMusicPlayer = null;
     private static LocalMusicPlayer localMusicPlayerBg = null;
+    private static String currentBGM =  null;
 
     public static void init() {
         localMusicPlayer = new LocalMusicPlayer(BaseApplication.getInstance());
@@ -64,7 +65,7 @@ public class MusicUtil {
     }
 
     public static void playBGM(String name) {
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name) || TextUtils.equals(currentBGM , name)) {
             return;
         }
         try {
@@ -77,6 +78,7 @@ public class MusicUtil {
     }
 
     public static void stopBGM() {
+        currentBGM = null;
         localMusicPlayerBg.stop();
     }
 

@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.festival.LanternEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.LanternStart;
 
-public class LanternSubject implements AbsSubject {
+public class LanternSubject extends AbsSubject {
 
     public static final String NAME = "元宵节";
 

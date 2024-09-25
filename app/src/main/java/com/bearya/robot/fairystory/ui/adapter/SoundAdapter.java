@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.R;
 import com.bearya.robot.base.ui.view.NiceImageView;
-import com.bearya.robot.base.util.DebugUtil;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.fairystory.ui.station.LibItem;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
@@ -20,6 +19,7 @@ import java.util.Objects;
 public class SoundAdapter extends BaseQuickAdapter<LibItem, BaseViewHolder> {
 
     private final String type;
+    private int selectedIndex = -1;
 
     public SoundAdapter(String type) {
         super(R.layout.lib_item_view);
@@ -27,14 +27,18 @@ public class SoundAdapter extends BaseQuickAdapter<LibItem, BaseViewHolder> {
     }
 
     public void setSelectedIndex(int index) {
-        String mp3 = Objects.requireNonNull(getItem(index)).getMp3();
         String key = LoadMgr.getInstance().getTheme().theme() + "_sound_" + type;
-
-        DebugUtil.debug("key = " + key + " , mp3 = " + mp3);
-        KVManager.getInstance().put(key, mp3);
-        MusicUtil.playMusic(mp3);
-
-        notifyItemRangeChanged(0, getItemCount());
+        if (index == selectedIndex) {
+            selectedIndex = -1;
+            KVManager.getInstance().remove(key);
+            MusicUtil.stopMusic();
+        } else {
+            String mp3 = Objects.requireNonNull(getItem(index)).getSound();
+            KVManager.getInstance().put(key, mp3);
+            MusicUtil.playMusic(mp3);
+            notifyItemChanged(selectedIndex);
+        }
+        notifyItemChanged(index);
     }
 
     @Override
@@ -48,10 +52,12 @@ public class SoundAdapter extends BaseQuickAdapter<LibItem, BaseViewHolder> {
         ).load(item.getImage()).thumbnail(0.8f).into(view);
         helper.setText(R.id.nameView, item.getName());
 
-        boolean isSelected = TextUtils.equals(KVManager.getInstance().getString(LoadMgr.getInstance().getTheme().theme() + "_sound_" + type), item.getMp3());
+        String value = KVManager.getInstance().getString(LoadMgr.getInstance().getTheme().theme() + "_sound_" + type);
+        boolean isSelected = TextUtils.equals(value, item.getSound());
+        if (isSelected)
+            selectedIndex = helper.getBindingAdapterPosition();
         view.setBorderColor(view.getContext().getResources().getColor(R.color.colorRed));
         view.setBorderWidth(isSelected ? 6 : 0);
-
     }
 
 }

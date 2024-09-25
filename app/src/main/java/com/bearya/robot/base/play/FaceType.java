@@ -8,4 +8,6 @@ public enum  FaceType {
     Video,
 
     Frame,
+
+    ANIMATION,
 }

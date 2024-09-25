@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.story.DragonEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.HeroStart;
 
-public class DragonSubject implements AbsSubject{
+public class DragonSubject extends AbsSubject{
 
     public static final String NAME = "英雄无敌";
 

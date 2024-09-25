@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bearya.actionlib.utils.KVManager;
 import com.bearya.robot.R;
-import com.bearya.robot.base.musicplayer.AudioRecorderManager;
 import com.bearya.robot.base.ui.BaseActivity;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.databinding.ActivityStationBinding;
@@ -169,12 +168,6 @@ public class StationActivity extends BaseActivity implements View.OnClickListene
             stationClear(StationPurpleLoad.NAME, bindView.stationPurple);
         }
         return true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AudioRecorderManager.getInstance().release();
     }
 
 }

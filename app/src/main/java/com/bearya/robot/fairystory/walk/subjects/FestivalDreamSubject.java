@@ -7,7 +7,7 @@ import com.bearya.robot.fairystory.walk.load.festival.FestivalEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.FestivalDreamStart;
 
-public class FestivalDreamSubject  implements AbsSubject{
+public class FestivalDreamSubject  extends AbsSubject{
 
     public static final String NAME = "传统节日创想天地";
 

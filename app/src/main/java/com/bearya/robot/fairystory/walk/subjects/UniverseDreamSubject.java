@@ -7,9 +7,9 @@ import com.bearya.robot.fairystory.walk.load.universe.FreeEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.UniverseDreamStart;
 
-public class UniverseDreamSubject implements AbsSubject{
+public class UniverseDreamSubject extends AbsSubject{
 
-    public static final String NAME = "童话世界创想天地";
+    public static final String NAME = "航天航空创想天地";
 
     @Override
     public String name() {

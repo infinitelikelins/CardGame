@@ -15,11 +15,13 @@ import com.bearya.robot.databinding.StageFrameBinding;
 public class FrameFragment extends Fragment {
 
     private FrameSurfaceView.OnFrameFinishedListener onFrameFinishedListener;
+    private Bundle arguments;
 
-    public static FrameFragment newInstance(String fileName, int gapTime) {
+    public static FrameFragment newInstance(String fileName, int gapTime, boolean repeat) {
         Bundle args = new Bundle();
         args.putString("framePath", fileName);
         args.putInt("gapTime", gapTime);
+        args.putBoolean("repeat", repeat);
         FrameFragment fragment = new FrameFragment();
         fragment.setArguments(args);
         return fragment;
@@ -30,7 +32,7 @@ public class FrameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        arguments = getArguments();
     }
 
     @Nullable
@@ -42,11 +44,11 @@ public class FrameFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        if (getArguments() != null) {
-            bindView.frameSurface.setBitmapPaths(getArguments().getString("framePath", null));
-            bindView.frameSurface.setGapTime(getArguments().getInt("gapTime", 10));
+        if (arguments != null) {
+            bindView.frameSurface.setBitmapPaths(arguments.getString("framePath", null));
+            bindView.frameSurface.setGapTime(arguments.getInt("gapTime", 10));
+            bindView.frameSurface.setIsRepeat(arguments.getBoolean("repeat", false));
         }
-        bindView.frameSurface.setIsRepeat(false);
         if (onFrameFinishedListener != null) {
             bindView.frameSurface.setOnFrameFinishedListener(onFrameFinishedListener);
         }

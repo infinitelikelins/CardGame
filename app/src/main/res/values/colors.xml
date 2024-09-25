@@ -29,6 +29,9 @@
     <color name="colorMasking">#77000000</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorGrayText">#707070</color>
+    <color name="colorPopupTextDark">#81511C</color>
+    <color name="colorPopupText">#8F664D</color>
+    <color name="colorPopupBackground">#D1A462</color>
     <color name="colorOrange">#F9BF1A</color>
     <color name="colorViolet">#5F52A0</color>
 

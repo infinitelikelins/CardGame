@@ -8,7 +8,7 @@ import com.bearya.robot.fairystory.walk.load.story.MineEndLoad;
 import com.bearya.robot.fairystory.walk.start.AbsStart;
 import com.bearya.robot.fairystory.walk.start.SeafloorStart;
 
-public class TreasureSubject implements AbsSubject {
+public class TreasureSubject extends AbsSubject {
 
     public static final String NAME = "奇幻寻宝";
 

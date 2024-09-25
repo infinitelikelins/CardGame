@@ -12,6 +12,7 @@ import com.bearya.robot.base.util.FileUtil;
 import com.bearya.robot.base.util.MusicUtil;
 import com.bearya.robot.databinding.ActivityLaunchBinding;
 import com.bearya.robot.fairystory.ui.adapter.ThemeAdapter;
+import com.bearya.robot.fairystory.ui.popup.impl.LottieMotionPopup;
 import com.bearya.robot.fairystory.ui.res.FileResource;
 import com.bearya.robot.fairystory.ui.res.MusicResource;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
@@ -67,6 +68,8 @@ public class LauncherActivity extends BaseActivity {
         bindView.tvVersion.setText(String.format("版本号: %s", DeviceUtil.getVersionName(getApplicationContext())));
 
         bindView.btnBack.setOnClickListener(v -> BaseApplication.getInstance().release());
+
+        bindView.lottieMotion.setOnClickListener(v -> new LottieMotionPopup(LauncherActivity.this).showPopupWindow());
 
     }
 

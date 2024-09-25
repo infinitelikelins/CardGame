@@ -2,6 +2,7 @@ package com.bearya.actionlib.utils;
 
 import com.tencent.mmkv.MMKV;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,6 +27,11 @@ public class KVManager {
         for (String key : set) {
             mmkv.encode(key, map.get(key));
         }
+        return this;
+    }
+
+    public KVManager put(String key, Set<String> value) {
+        mmkv.encode(key, value);
         return this;
     }
 
@@ -54,16 +60,31 @@ public class KVManager {
     }
 
     public String getString(String key) {
-        if (mmkv != null) {
-            return mmkv.decodeString(key, "");
-        }
-        return "";
+        return mmkv.decodeString(key, "");
+    }
+
+    public String getString(String key, String defaultValue) {
+        return mmkv.decodeString(key, defaultValue);
     }
 
     public int getInt(String key, int defaultValue) {
-        if (mmkv != null) {
-            return mmkv.decodeInt(key, defaultValue);
-        }
-        return 0;
+        return mmkv.decodeInt(key, defaultValue);
     }
+
+    public boolean getBoolean(String key) {
+        return mmkv.decodeBool(key, false);
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return mmkv.decodeBool(key, defaultValue);
+    }
+
+    public long getLong(String key) {
+        return mmkv.getLong(key, 0L);
+    }
+
+    public Set<String> getStringSet(String key) {
+        return mmkv.decodeStringSet(key, new HashSet<>());
+    }
+
 }

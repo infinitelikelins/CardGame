@@ -28,7 +28,7 @@ public abstract class ObstacleLoad extends XLoad {
     private void registerUnlockSuccessPlay() {
         LoadPlay unlockSuccessPlay = new LoadPlay();
         PlayData playData = new PlayData();
-        playData.facePlay = new FacePlay(loadFaceSuccessPlay(), FaceType.Frame, loadFacePlaySuccessTime());
+        playData.facePlay = new FacePlay(loadFaceSuccessPlay(), FaceType.Frame, loadFacePlaySuccessTime(), false);
         playData.sound = loadPlaySuccessSound();
         unlockSuccessPlay.addLoad(playData);
         Director.getInstance().register(ON_UNLOCK_SUCCESS, unlockSuccessPlay);
@@ -40,7 +40,7 @@ public abstract class ObstacleLoad extends XLoad {
     private void registerUnlockFailPlay() {
         LoadPlay unlockFailPlay = new LoadPlay();
         PlayData playData = new PlayData();
-        playData.facePlay = new FacePlay(loadFaceFailPlay(), FaceType.Frame, loadFacePlayFailTime());
+        playData.facePlay = new FacePlay(loadFaceFailPlay(), FaceType.Frame, loadFacePlayFailTime() ,false);
         playData.sound = loadPlayFailSound();
         unlockFailPlay.addLoad(playData);
         Director.getInstance().register(ON_UNLOCK_FAIL, unlockFailPlay);

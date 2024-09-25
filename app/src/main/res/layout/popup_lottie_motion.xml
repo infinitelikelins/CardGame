@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="512dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/pop_border"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:onClick="onBackClicked"
+            app:srcCompat="@mipmap/btn_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="36dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="请选择行走表情"
+            android:textAlignment="center"
+            android:textColor="#81511C"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="系统表情"
+        android:layout_marginTop="6dp"
+        android:textAlignment="center"
+        android:textColor="#81511C"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_ja"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="ja"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_ja"
+            tools:border_width="4dp" />
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_hg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="hg"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_hg"
+            tools:border_width="4dp" />
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_sq"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="sq"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_sq"
+            tools:border_width="4dp" />
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_axy"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="axy"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_axy"
+            tools:border_width="4dp" />
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_hs"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/shape_gray_round"
+            android:src="@drawable/emotion_hs"
+            android:tag="hs"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            tools:border_width="4dp" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="扩展表情"
+        android:textAlignment="center"
+        android:textColor="#81511C"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_cheng"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="cheng"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_cheng"
+            tools:border_width="4dp" />
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_she"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="she"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_she"
+            tools:border_width="4dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

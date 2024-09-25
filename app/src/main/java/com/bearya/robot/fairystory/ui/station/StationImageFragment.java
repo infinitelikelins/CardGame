@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bearya.robot.databinding.FragmentStationImageBinding;
 import com.bearya.robot.fairystory.ui.adapter.ImageAdapter;
-import com.bearya.robot.fairystory.ui.res.FileResource;
-import com.bearya.robot.fairystory.walk.car.LoadMgr;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
+import java.util.Objects;
 
 public class StationImageFragment extends Fragment {
 
     private FragmentStationImageBinding bindView;
+    private List<Lib> libs;
     private String type;
     private ImageAdapter adapter;
 
@@ -35,6 +37,7 @@ public class StationImageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = requireArguments().getString("type", "station_");
+        libs = LibRepository.getImageLibs();
     }
 
     @Nullable
@@ -51,26 +54,28 @@ public class StationImageFragment extends Fragment {
 
         adapter = new ImageAdapter(type);
         adapter.setOnItemClickListener((adapter1, view1, position) -> adapter.setSelectedIndex(position));
+        adapter.setOnItemLongClickListener((baseQuickAdapter, view12, position) -> {
+            String image = Objects.requireNonNull(adapter.getItem(position)).getImage();
+            new ImagePreviewDialog(requireActivity(), image).show();
+            return true;
+        });
         bindView.recyclerView.setAdapter(adapter);
 
-        String filePath = FileResource.BASE_PATH + LoadMgr.getInstance().getTheme().theme().toLowerCase() + "/station/station_libs.json";
-
-        StationLib lib = StationLib.newInstance(filePath);
-        if (lib != null) {
-            for (Lib imageLib : lib.imageLibs.libList) {
-                TabLayout.Tab tab = bindView.tabs.newTab().setText(imageLib.name);
+        if (libs != null) {
+            for (Lib imageLib : libs) {
+                TabLayout.Tab tab = bindView.tabs.newTab().setText(imageLib.getName());
                 bindView.tabs.addTab(tab);
                 if (tab.isSelected()) {
-                    adapter.setNewData(imageLib.items);
+                    adapter.setNewData(imageLib.getItems());
                 }
             }
 
             bindView.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    for (Lib imageLibs : lib.imageLibs.libList) {
-                        if (TextUtils.equals(tab.getText(), imageLibs.name)) {
-                            adapter.setNewData(imageLibs.items);
+                    for (Lib imageLibs : libs) {
+                        if (TextUtils.equals(tab.getText(), imageLibs.getName())) {
+                            adapter.setNewData(imageLibs.getItems());
                             break;
                         }
                     }
