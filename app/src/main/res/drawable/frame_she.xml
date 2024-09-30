@@ -2,12 +2,12 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
     <item
-        android:drawable="@drawable/she_1"
+        android:drawable="@drawable/she_4"
         android:duration="500" />
     <item
-        android:drawable="@drawable/she_2"
+        android:drawable="@drawable/she_5"
         android:duration="500" />
     <item
-        android:drawable="@drawable/she_3"
+        android:drawable="@drawable/she_6"
         android:duration="500" />
 </animation-list>

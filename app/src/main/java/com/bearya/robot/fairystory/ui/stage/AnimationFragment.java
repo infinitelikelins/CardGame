@@ -15,7 +15,7 @@ import com.bearya.robot.databinding.StageAnimationBinding;
 public class AnimationFragment extends Fragment {
 
     private StageAnimationBinding bindView;
-
+    private AnimationDrawable drawable;
     public static AnimationFragment newInstance(int fileName) {
         Bundle args = new Bundle();
         args.putInt("pictureRes", fileName);
@@ -38,8 +38,13 @@ public class AnimationFragment extends Fragment {
         int pictureRes = getArguments().getInt("pictureRes", 0);
         bindView.picture.setBackgroundResource(pictureRes);
 
-        AnimationDrawable drawable = (AnimationDrawable) bindView.picture.getBackground();
+        drawable = (AnimationDrawable) bindView.picture.getBackground();
         drawable.start();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        drawable.stop();
+    }
 }
