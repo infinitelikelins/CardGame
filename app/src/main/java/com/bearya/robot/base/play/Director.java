@@ -254,7 +254,7 @@ public class Director {
         } else if (CodeUtils.containEmotion(emotion)) {
             playFace(new FacePlay(emotion, FaceType.Lottie));
         } else {
-            playFace(new FacePlay(CodeUtils.oneOf("sq", "ja", "axy", "hg", "hs"), FaceType.Lottie));
+            playFace(new FacePlay(CodeUtils.oneOf("sq", "smq", "zc", "zm", "my", "sh"), FaceType.Lottie));
         }
     }
 

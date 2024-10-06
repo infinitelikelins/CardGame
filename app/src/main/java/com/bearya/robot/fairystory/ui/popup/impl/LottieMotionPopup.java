@@ -10,13 +10,14 @@ import com.bearya.robot.fairystory.ui.popup.AbsBasePopup;
 
 public class LottieMotionPopup extends AbsBasePopup {
 
-    private NiceImageView emotionAxy;
+    private NiceImageView emotionSh;
     private NiceImageView emotionCheng;
-    private NiceImageView emotionHs;
-    private NiceImageView emotionHg;
-    private NiceImageView emotionJa;
+    private NiceImageView emotionZm;
+    private NiceImageView emotionMy;
+    private NiceImageView emotionSmq;
     private NiceImageView emotionShe;
     private NiceImageView emotionSq;
+    private NiceImageView emotionZc;
 
     public LottieMotionPopup(Context context) {
         super(context);
@@ -30,18 +31,18 @@ public class LottieMotionPopup extends AbsBasePopup {
     @Override
     protected void onViewInflated() {
 
-
-        emotionAxy = findViewById(R.id.emotion_axy);
+        emotionSh = findViewById(R.id.emotion_sh);
         emotionCheng = findViewById(R.id.emotion_cheng);
-        emotionHg = findViewById(R.id.emotion_hg);
-        emotionHs = findViewById(R.id.emotion_hs);
-        emotionJa = findViewById(R.id.emotion_ja);
+        emotionMy = findViewById(R.id.emotion_my);
+        emotionZm = findViewById(R.id.emotion_zm);
+        emotionSmq = findViewById(R.id.emotion_smq);
         emotionShe = findViewById(R.id.emotion_she);
         emotionSq = findViewById(R.id.emotion_sq);
+        emotionZc = findViewById(R.id.emotion_zc);
 
-        withExtClicks(emotionCheng, emotionShe, emotionAxy, emotionHg, emotionJa, emotionSq, emotionHs);
+        withExtClicks(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc);
 
-        updateEmotion(emotionCheng, emotionShe, emotionAxy, emotionHg, emotionJa, emotionSq, emotionHs);
+        updateEmotion(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc);
 
         withClick(R.id.btnBack, v -> dismiss(true));
 
@@ -50,7 +51,6 @@ public class LottieMotionPopup extends AbsBasePopup {
     }
 
     private void exclusive(NiceImageView imageView) {
-
         // 1. 获取点击的图标
         String tag = (String) imageView.getTag();
         // 2. 获取存储的表情（上一次）
@@ -60,7 +60,7 @@ public class LottieMotionPopup extends AbsBasePopup {
         // 4. 将3的结果放入存储
         KVManager.getInstance().put("emotion", selected ? tag : null);
         // 5. 更新图标
-        updateEmotion(emotionCheng, emotionShe, emotionAxy, emotionHg, emotionJa, emotionSq, emotionHs);
+        updateEmotion(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc);
 
     }
 
