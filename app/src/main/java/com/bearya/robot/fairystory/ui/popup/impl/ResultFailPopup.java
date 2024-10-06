@@ -30,13 +30,14 @@ public class ResultFailPopup extends AbsBasePopup {
     protected void onPopupShow() {
         super.onPopupShow();
         if (!TextUtils.isEmpty(errorMp3) && errorMp3.endsWith(".mp3")) {
-            MusicUtil.playMusic(errorMp3, mp -> MusicUtil.playBGM(MusicResource.BASE_MAIN_PATH + "game_fail.mp3"));
+            MusicUtil.playMusic(errorMp3, mp -> MusicUtil.playBGM(MusicResource.GAME_FAIL));
         }
     }
 
-    public void withEvent(final View.OnClickListener updateCardController, final View.OnClickListener backHome) {
+    public ResultFailPopup withEvent(final View.OnClickListener updateCardController, final View.OnClickListener backHome) {
         withClick(R.id.update_card_controller, updateCardController);
         withClick(R.id.back_home, backHome);
+        return this;
     }
 
 }

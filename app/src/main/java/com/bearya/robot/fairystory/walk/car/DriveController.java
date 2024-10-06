@@ -29,6 +29,7 @@ import com.bearya.robot.fairystory.walk.car.drive.IState;
 import com.bearya.robot.fairystory.walk.car.travel.TWheelController;
 import com.bearya.robot.fairystory.walk.car.travel.WheelControllerListener;
 import com.bearya.robot.fairystory.walk.load.EndLoad;
+import com.bearya.robot.fairystory.walk.load.NoEntryLoad;
 import com.bearya.robot.fairystory.walk.load.StartLoad;
 import com.bearya.robot.fairystory.walk.load.XLoad;
 import com.bearya.robot.fairystory.walk.load.lock.AdditionalLock;
@@ -791,7 +792,11 @@ public class DriveController {
             load.registerPlay();
             Director.getInstance().director(BaseLoad.ON_NEW_LOAD, () -> {
                 Director.getInstance().reset();
-                setComputeExitPathState();
+                if (load instanceof NoEntryLoad) {
+                    onGameOver(GameOverReason.NoEntry);
+                } else {
+                    setComputeExitPathState();
+                }
                 reset();
             });
             return null;
@@ -856,7 +861,6 @@ public class DriveController {
             }
             setExitLoadState();
         }
-
     }
 
     class BaseExitLoadState extends BaseDriveState {

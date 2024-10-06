@@ -54,8 +54,9 @@ public class ActionSetDialog extends Dialog implements View.OnClickListener {
         dismiss();
     }
 
-    public void setListener(ActionSelectListener listener) {
+    public ActionSetDialog setListener(ActionSelectListener listener) {
         this.listener = listener;
+        return this;
     }
 
     public interface ActionSelectListener {

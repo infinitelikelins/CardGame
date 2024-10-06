@@ -24,6 +24,7 @@ import com.bearya.robot.base.walk.action.LeftAction;
 import com.bearya.robot.base.walk.action.RightAction;
 import com.bearya.robot.fairystory.ui.popup.impl.ResultFailPopup;
 import com.bearya.robot.fairystory.ui.popup.impl.ResultSuccessPopup;
+import com.bearya.robot.fairystory.ui.popup.impl.TransparentPopup;
 import com.bearya.robot.fairystory.ui.res.CardChildAction;
 import com.bearya.robot.fairystory.ui.res.CardParentAction;
 import com.bearya.robot.fairystory.ui.res.CardResource;
@@ -326,39 +327,40 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
      * 结果页面，显示错误结果
      */
     private void showResultErrorPopup() {
-        // 先取消Lottie动画置空
-        ResultFailPopup popup = new ResultFailPopup(this, "真遗憾，\n\n我没有完成任务。", MusicResource.THEME_END_FAIL);
-        popup.withEvent(v -> {
-            CardControllerActivity.start(RuntimeActivity.this, new Gson().toJson(data));
-            MusicUtil.stopMusic();
-            MusicUtil.stopBGM();
-            // 返回刷卡指令页面需清除本次记录的信息
-            LoadMgr.getInstance().clear();
-            finish();
-        }, v -> {
-            // 返回主页需清除本次记录的信息
-            ThemesActivity.start(getApplicationContext());
-            LoadMgr.getInstance().clear();
-            finish();
-        });
-        popup.showPopupWindow();
+        new TransparentPopup(this).withEvent(view -> {
+            // 先取消Lottie动画置空
+            new ResultFailPopup(RuntimeActivity.this, "真遗憾，\n\n我没有完成任务。", MusicResource.THEME_END_FAIL)
+                    .withEvent(v -> {
+                        CardControllerActivity.start(RuntimeActivity.this, new Gson().toJson(data));
+                        MusicUtil.stopMusic();
+                        MusicUtil.stopBGM();
+                        // 返回刷卡指令页面需清除本次记录的信息
+                        LoadMgr.getInstance().clear();
+                        finish();
+                    }, v -> {
+                        // 返回主页需清除本次记录的信息
+                        ThemesActivity.start(getApplicationContext());
+                        LoadMgr.getInstance().clear();
+                        finish();
+                    }).showPopupWindow();
+        }).setBlurBackgroundEnable(false).setBackground(R.color.colorTransparent).showPopupWindow();
     }
 
     /**
      * 正确到达终点时显示成功完成游戏的数据统计
      */
     private void showResultSuccessPopup(final Context context) {
-        // 先取消Lottie动画置空
-        ResultSuccessPopup popup = new ResultSuccessPopup(this);
-        popup.withEvent(v -> {
-            LoadMgr.getInstance().clear();
-            BaseApplication.getInstance().release();
-        }, v -> {
-            CardControllerActivity.start(context, new Gson().toJson(data));
-            LoadMgr.getInstance().clear();
-            finish();
-        });
-        popup.showPopupWindow();
+        new TransparentPopup(this).withEvent(view -> {
+            // 先取消Lottie动画置空
+            new ResultSuccessPopup(this).withEvent(v -> {
+                LoadMgr.getInstance().clear();
+                BaseApplication.getInstance().release();
+            }, v -> {
+                CardControllerActivity.start(context, new Gson().toJson(data));
+                LoadMgr.getInstance().clear();
+                finish();
+            }).showPopupWindow();
+        }).setBlurBackgroundEnable(false).setBackground(R.color.colorTransparent).showPopupWindow();
     }
 
     @Override

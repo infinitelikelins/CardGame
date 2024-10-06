@@ -32,7 +32,7 @@ public class ResultSuccessPopup extends AbsBasePopup {
     protected void onPopupShow() {
         super.onPopupShow();
         MusicUtil.playMusic(MusicResource.GOLD_EFFECT, mediaPlayer -> {
-            MusicUtil.playBGM(MusicResource.BASE_MAIN_PATH + "game_success.mp3");
+            MusicUtil.playBGM(MusicResource.GAME_SUCCESS);
             showResultData();
             setPerformMode();
         });
@@ -93,11 +93,12 @@ public class ResultSuccessPopup extends AbsBasePopup {
         set2.applyTo(constraintLayout);
     }
 
-    public void withEvent(final View.OnClickListener exitGame, final View.OnClickListener updateController) {
+    public ResultSuccessPopup withEvent(final View.OnClickListener exitGame, final View.OnClickListener updateController) {
         // 退出游戏
         withClick(R.id.exit_game, exitGame);
         // 优化指令
         withClick(R.id.update_controller, updateController);
+        return this;
     }
 
 }
