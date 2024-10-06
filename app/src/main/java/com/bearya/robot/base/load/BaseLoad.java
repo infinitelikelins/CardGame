@@ -24,8 +24,6 @@ public abstract class BaseLoad extends IntMap implements ILoad {
     public static final int ROW = 30;
     public static final int BORDER = 2; // 设置避障区的宽度
 
-    public static final String ON_START_LOAD = "on_start_load_";
-
     public static final String ON_END_LOAD_SUCCESS = "on_end_load_success";
     public static final String ON_END_LOAD_FAIL = "on_end_load_fail";
     public static final String ON_NEW_LOAD = "on_new_load";

@@ -1,9 +1,8 @@
 package com.bearya.robot.base.play;
 
 import android.text.TextUtils;
-import android.util.ArrayMap;
 
-import com.bearya.actionlib.utils.RobotActionManager;
+import java.util.List;
 
 public class PlayData {
     public static final int ONLY_SOUND = 1;
@@ -11,46 +10,40 @@ public class PlayData {
     public static final int ONLY_ACTION = 4;
     public static final int ONLY_IMAGE = 8;
     public static final int ONLY_FRAME = 16;
-    public String sound;
 
-    public long soundLongTime;
-
-    public FacePlay facePlay;
-    public RobotActionManager.LightMode mode;
-    public RobotActionManager.LightColor color;
-    public ArrayMap<Integer, TimeAction> actions = null;
+    private final String sound;
+    private final FacePlay facePlay;
+    private final List<TimeAction> actions;
 
     private int completeCondition;
     private int alreadyCompleteCondition;
 
     public PlayData() {
+        this(null, null);
     }
 
     public PlayData(String sound) {
-        this.sound = sound;
+        this(sound, null);
     }
 
     public PlayData(FacePlay facePlay) {
-        this.facePlay = facePlay;
+        this(null, facePlay);
     }
 
     public PlayData(String sound, FacePlay facePlay) {
+        this(sound, facePlay, null);
+    }
+
+    public PlayData(String sound, FacePlay facePlay, List<TimeAction> actions) {
         this.sound = sound;
         this.facePlay = facePlay;
+        this.actions = actions;
+
+        countCompleteCondition();
     }
 
-    public PlayData(PlayData playData) {
-        sound = playData.sound;
-        soundLongTime = playData.soundLongTime;
-        facePlay = playData.facePlay;
-        mode = playData.mode;
-        color = playData.color;
-        actions = playData.actions;
-        completeCondition = playData.completeCondition;
-        alreadyCompleteCondition = playData.alreadyCompleteCondition;
-    }
-
-    public void countCompleteCondition() {
+    private void countCompleteCondition() {
+        alreadyCompleteCondition = 0;
         completeCondition = 0;
         if (!TextUtils.isEmpty(sound)) {
             completeCondition += ONLY_SOUND;
@@ -64,13 +57,13 @@ public class PlayData {
                 completeCondition += ONLY_FRAME;
             }
         }
-        if (actions != null && actions.size() > 0) {
+        if (actions != null && !actions.isEmpty()) {
             completeCondition += ONLY_ACTION;
         }
     }
 
     public void complete(int condition) {
-        alreadyCompleteCondition = alreadyCompleteCondition | condition;
+        alreadyCompleteCondition += condition;
     }
 
     public boolean isComplete() {
@@ -85,27 +78,8 @@ public class PlayData {
         return facePlay;
     }
 
-    public RobotActionManager.LightMode getMode() {
-        return mode;
-    }
-
-    public RobotActionManager.LightColor getColor() {
-        return color;
-    }
-
-    public TimeAction[] getRobotAction() {
-        TimeAction[] acs = null;
-        if (actions != null && actions.size() > 0) {
-            acs = new TimeAction[actions.size()];
-            int index = 0;
-            for (int i = 0; i < 3; i++) {
-                TimeAction value = actions.valueAt(i);
-                if (value != null) {
-                    acs[index++] = value;
-                }
-            }
-        }
-        return acs;
+    public List<TimeAction> getTimeActions() {
+        return actions;
     }
 
     public boolean containFace() {
@@ -117,7 +91,7 @@ public class PlayData {
     }
 
     public boolean containAction() {
-        return actions != null && actions.size() > 0;
+        return actions != null && !actions.isEmpty();
     }
 
     public boolean isEmpty() {

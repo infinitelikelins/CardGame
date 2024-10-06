@@ -327,8 +327,7 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
      */
     private void showResultErrorPopup() {
         // 先取消Lottie动画置空
-        ResultFailPopup popup = new ResultFailPopup(this, "真遗憾，\n\n我没有完成任务。", MusicResource.THEME_END_FAIL);
-        popup.withEvent(v -> {
+        new ResultFailPopup(this, "真遗憾，\n\n我没有完成任务。", MusicResource.THEME_END_FAIL).withEvent(v -> {
             CardControllerActivity.start(RuntimeActivity.this, new Gson().toJson(data));
             MusicUtil.stopMusic();
             MusicUtil.stopBGM();
@@ -340,8 +339,7 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
             ThemesActivity.start(getApplicationContext());
             LoadMgr.getInstance().clear();
             finish();
-        });
-        popup.showPopupWindow();
+        }).showPopupWindow();
     }
 
     /**
@@ -349,16 +347,14 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
      */
     private void showResultSuccessPopup(final Context context) {
         // 先取消Lottie动画置空
-        ResultSuccessPopup popup = new ResultSuccessPopup(this);
-        popup.withEvent(v -> {
+        new ResultSuccessPopup(this).withEvent(v -> {
             LoadMgr.getInstance().clear();
             BaseApplication.getInstance().release();
         }, v -> {
             CardControllerActivity.start(context, new Gson().toJson(data));
             LoadMgr.getInstance().clear();
             finish();
-        });
-        popup.showPopupWindow();
+        }).showPopupWindow();
     }
 
     @Override

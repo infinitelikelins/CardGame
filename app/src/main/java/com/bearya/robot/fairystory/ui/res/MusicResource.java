@@ -20,6 +20,8 @@ public interface MusicResource {
     String TRAVEL = BASE_MAIN_PATH + "travel_bg.mp3";
     String GOLD_EFFECT = BASE_MAIN_PATH + "gold_effect.mp3";
     String THEME_END_FAIL = BASE_MAIN_PATH + "ThemeEndFail.mp3";
+    String GAME_FAIL = BASE_MAIN_PATH + "game_fail.mp3";
+    String GAME_SUCCESS = BASE_MAIN_PATH + "game_success.mp3";
 
     String FAIRY_STORY = BASE_MAIN_PATH + "Story.mp3";
     String UNIVERSE = BASE_MAIN_PATH + "Universe.mp3";

@@ -148,7 +148,9 @@ public class StationActivity extends BaseActivity implements View.OnClickListene
         KVManager.getInstance().remove(theme + "_action_" + type + "1");
         KVManager.getInstance().remove(theme + "_action_" + type + "2");
         KVManager.getInstance().remove(theme + "_action_" + type + "3");
-
+        KVManager.getInstance().remove(theme + "_time_" + type + "1");
+        KVManager.getInstance().remove(theme + "_time_" + type + "2");
+        KVManager.getInstance().remove(theme + "_time_" + type + "3");
         imageView.setSelected(false);
     }
 

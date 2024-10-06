@@ -45,8 +45,9 @@ public class ActionTimeDialog extends Dialog implements View.OnClickListener {
         dismiss();
     }
 
-    public void setListener(ActionTimeListener listener) {
+    public ActionTimeDialog setListener(ActionTimeListener listener) {
         this.listener = listener;
+        return this;
     }
 
     public interface ActionTimeListener {

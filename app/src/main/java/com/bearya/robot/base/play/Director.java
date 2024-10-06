@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager;
 import com.bearya.actionlib.utils.KVManager;
 import com.bearya.actionlib.utils.RobotActionManager;
 import com.bearya.robot.R;
-import com.bearya.robot.base.BaseApplication;
 import com.bearya.robot.base.ui.view.FrameSurfaceView;
 import com.bearya.robot.base.util.CodeUtils;
 import com.bearya.robot.base.util.DebugUtil;
@@ -23,7 +22,6 @@ import com.bearya.robot.fairystory.ui.stage.LottieFragment;
 import com.bearya.robot.fairystory.ui.stage.PictureFragment;
 import com.bearya.robot.fairystory.ui.stage.VideoFragment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +33,6 @@ public class Director {
     private PlayData playData;
     private PlayListener listener;
     private final Map<String, LoadPlay> loadPlayMap = new HashMap<>();
-
-    private final List<Runnable> actionRunnable = new ArrayList<>();
 
     private static Director instance;
     private String soundParam;
@@ -54,9 +50,8 @@ public class Director {
     }
 
     public void register(String key, LoadPlay play) {
-        if (!loadPlayMap.containsKey(key)) {
+        if (!loadPlayMap.containsKey(key))
             loadPlayMap.put(key, play);
-        }
     }
 
     public void director(String key, PlayListener listener) {
@@ -66,7 +61,6 @@ public class Director {
     public void director(String key, String soundParam, PlayListener listener) {
         this.listener = listener;
         this.soundParam = soundParam;
-        DebugUtil.debug("获取key=%s ,数据", key);
         this.loadPlay = loadPlayMap.remove(key);
         if (loadPlay != null) {
             directNext();
@@ -88,11 +82,9 @@ public class Director {
 
     private void directPlay(PlayData playData) {
         if (playData != null) {
-            playData.countCompleteCondition();
             playFace(playData.getFacePlay());
             playSound(playData.getSound());
-            playLight(playData.getColor(), playData.getMode());
-            playAction(playData.getRobotAction());
+            playAction(playData.getTimeActions());
         }
     }
 
@@ -143,10 +135,10 @@ public class Director {
                 .commitNowAllowingStateLoss();
     }
 
-    private void playFace(final FacePlay facePlay) {
+    private void playFace(FacePlay facePlay) {
         if (facePlay != null && (!TextUtils.isEmpty(facePlay.getFace()) || facePlay.getFaceId() > 0)) {
             DebugUtil.debug("playFace type=%s,file=%s", facePlay.getFaceType().name(), facePlay.getFace());
-            BaseApplication.getInstance().getHandler().post(() -> {
+            handler.post(() -> {
                 switch (facePlay.getFaceType()) {
                     case Lottie:
                         playLottie(facePlay.getFace());
@@ -202,40 +194,20 @@ public class Director {
                 .commitNowAllowingStateLoss();
     }
 
-
-
-    private void playAction(TimeAction[] actions) {
-        removeActionRunnable();
-        if (actions != null && actions.length > 0) {
-            int during = 0;
-            for (TimeAction action : actions) {
-                if (action == null) {
-                    continue;
-                }
-                ActionRunnable runnable = new ActionRunnable(action.getAction());
-                actionRunnable.add(runnable);
-                BaseApplication.getInstance().getHandler().postDelayed(runnable, during);
-                during += (action.getTime() * 1000);
-            }
-            Runnable stopActionRunnable = () -> {
-                RobotActionManager.reset();
-                complete(ONLY_ACTION);
-            };
-            actionRunnable.add(stopActionRunnable);
-            BaseApplication.getInstance().getHandler().postDelayed(stopActionRunnable, during);
-        }
-
-    }
-
-    private void playLight(RobotActionManager.LightColor color, RobotActionManager.LightMode mode) {
-        if (color != null) {
-            DebugUtil.debug("颜色:%s,模式:%s", color.name(), mode.name());
+    private void playAction(List<TimeAction> actions) {
+        RobotActionManager.reset();
+        if (actions != null && !actions.isEmpty()) {
+            TimeAction action = actions.remove(0);
+            handler.postDelayed(() -> doAction(action.getAction()), 1000L);
+            handler.postDelayed(() -> playAction(actions), action.getTime() + 1000L);
+        } else {
+            handler.post(() -> complete(ONLY_ACTION));
         }
     }
 
-    private void complete(int contidion) {
+    private void complete(int condition) {
         if (playData != null) {
-            playData.complete(contidion);
+            playData.complete(condition);
             if (playData.isComplete()) {
                 directNext();
             }
@@ -257,48 +229,19 @@ public class Director {
         supportFragmentManager = null;
     }
 
-    public void stop() {
-        MusicUtil.stopMusic();
-        RobotActionManager.reset();
-        removeActionRunnable();
-    }
-
-    private void removeActionRunnable() {
-        if (!CodeUtils.isEmpty(actionRunnable)) {
-            for (Runnable runnable : actionRunnable) {
-                BaseApplication.getInstance().getHandler().removeCallbacks(runnable);
-            }
-        }
-        actionRunnable.clear();
-    }
-
-    private static class ActionRunnable implements Runnable {
-        private final int action;
-
-        ActionRunnable(int action) {
-            this.action = action;
-        }
-
-        @Override
-        public void run() {
-            RobotActionManager.reset();
-            BaseApplication.getInstance().getHandler().postDelayed(this::doAction, 1000);
-        }
-
-        private void doAction() {
-            if (action == 1) {
-                RobotActionManager.handShake(50);
-            } else if (action == 2) {
-                RobotActionManager.ctrlLeftHand(0, 50, 10);
-            } else if (action == 3) {
-                RobotActionManager.ctrlRighttHand(0, 50, 10);
-            } else if (action == 4) {
-                RobotActionManager.headerShake((byte) 10);
-            } else if (action == 5) {
-                RobotActionManager.turnHead(8, 50, 10);
-            } else if (action == 6) {
-                RobotActionManager.turnHead(0, 50, 10);
-            }
+    private void doAction(int action) {
+        if (action == 1) {
+            RobotActionManager.handShake(50);
+        } else if (action == 2) {
+            RobotActionManager.ctrlLeftHand(0, 50, 10);
+        } else if (action == 3) {
+            RobotActionManager.ctrlRighttHand(0, 50, 10);
+        } else if (action == 4) {
+            RobotActionManager.headerShake((byte) 10);
+        } else if (action == 5) {
+            RobotActionManager.turnHead(8, 50, 10);
+        } else if (action == 6) {
+            RobotActionManager.turnHead(0, 50, 10);
         }
     }
 
@@ -311,7 +254,7 @@ public class Director {
         } else if (CodeUtils.containEmotion(emotion)) {
             playFace(new FacePlay(emotion, FaceType.Lottie));
         } else {
-            playFace(new FacePlay(CodeUtils.oneOf("sq", "ja", "axy", "hg", "hs"), FaceType.Lottie));
+            playFace(new FacePlay(CodeUtils.oneOf("sq", "smq", "zc", "zm", "my", "sh"), FaceType.Lottie));
         }
     }
 
