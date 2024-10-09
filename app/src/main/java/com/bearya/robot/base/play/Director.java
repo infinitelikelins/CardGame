@@ -200,7 +200,7 @@ public class Director {
             TimeAction action = actions.remove(0);
             handler.postDelayed(() -> doAction(action.getAction()), 1000L);
             handler.postDelayed(() -> playAction(actions), action.getTime() + 1000L);
-        } else {
+        } else if (actions != null) {
             handler.post(() -> complete(ONLY_ACTION));
         }
     }
