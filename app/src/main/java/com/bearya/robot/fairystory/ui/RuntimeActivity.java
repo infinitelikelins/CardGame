@@ -196,12 +196,9 @@ public class RuntimeActivity extends BaseActivity implements ICar.DriveListener 
      * @param param     异常信息
      */
     @Override
-    public void onException(final ICar.DriveException exception, Object param) {
-        runOnUiThread(() -> {
-            if (exception == ICar.DriveException.OutOfLoad) { // 小贝不在地垫上,可能是行走过程中走出去的或者是人为的抱离地垫
-                showResultErrorPopup();
-            }
-        });
+    public void onException(ICar.DriveException exception, Object param) {
+        DebugUtil.error("Runtime onException : " + exception.name());
+        runOnUiThread(this::showResultErrorPopup);
     }
 
     /**

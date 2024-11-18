@@ -154,7 +154,7 @@
             android:id="@+id/emotion_cheng"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginEnd="48dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/shape_gray_round"
             android:tag="cheng"
             app:border_color="@color/sunset_orange_6"
@@ -168,9 +168,33 @@
             android:layout_height="70dp"
             android:background="@drawable/shape_gray_round"
             android:tag="she"
+            android:layout_marginEnd="24dp"
             app:border_color="@color/sunset_orange_6"
             app:corner_radius="16dp"
             app:srcCompat="@drawable/emotion_she"
+            tools:border_width="4dp" />
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_chou"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="chou"
+            android:layout_marginEnd="24dp"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_chou"
+            tools:border_width="4dp" />
+
+        <com.bearya.robot.base.ui.view.NiceImageView
+            android:id="@+id/emotion_hua"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/shape_gray_round"
+            android:tag="hua"
+            app:border_color="@color/sunset_orange_6"
+            app:corner_radius="16dp"
+            app:srcCompat="@drawable/emotion_hua"
             tools:border_width="4dp" />
 
     </LinearLayout>

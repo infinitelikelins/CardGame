@@ -35,7 +35,6 @@ public class Director {
     private final Map<String, LoadPlay> loadPlayMap = new HashMap<>();
 
     private static Director instance;
-    private String soundParam;
     private int containerId;
 
     private Director() {
@@ -55,12 +54,7 @@ public class Director {
     }
 
     public void director(String key, PlayListener listener) {
-        director(key, null, listener);
-    }
-
-    public void director(String key, String soundParam, PlayListener listener) {
         this.listener = listener;
-        this.soundParam = soundParam;
         this.loadPlay = loadPlayMap.remove(key);
         if (loadPlay != null) {
             directNext();
@@ -163,9 +157,6 @@ public class Director {
     private void playSound(String file) {
         if (!TextUtils.isEmpty(file)) {
             MusicUtil.stopMusic();
-            if (!TextUtils.isEmpty(soundParam) && file.contains("%s")) {
-                file = String.format(file, soundParam);
-            }
             DebugUtil.debug("playSound=%s", file);
 
             if (!TextUtils.isEmpty(file)) {
@@ -251,6 +242,10 @@ public class Director {
             playFace(new FacePlay(R.drawable.frame_cheng, FaceType.ANIMATION));
         } else if (TextUtils.equals(emotion, "she")) {
             playFace(new FacePlay(R.drawable.frame_she, FaceType.ANIMATION));
+        } else if (TextUtils.equals(emotion, "chou")) {
+            playFace(new FacePlay(R.drawable.frame_chou, FaceType.ANIMATION));
+        } else if (TextUtils.equals(emotion, "hua")) {
+            playFace(new FacePlay(R.drawable.frame_hua, FaceType.ANIMATION));
         } else if (CodeUtils.containEmotion(emotion)) {
             playFace(new FacePlay(emotion, FaceType.Lottie));
         } else {

@@ -7,10 +7,6 @@ public interface ICar {
 
     enum DriveException{
         /**
-         * 走出道路(小贝未检测到OID)
-         */
-        OutOfLoad,
-        /**
          * 走到马路牙子(避障区)
          */
         InObstacle,

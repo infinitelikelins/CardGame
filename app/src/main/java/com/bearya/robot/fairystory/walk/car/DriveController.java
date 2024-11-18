@@ -941,7 +941,6 @@ public class DriveController {
     class InObstacleState extends BaseDriveState {
         private InObstacleReason reason;
 
-
         @Override
         public void inObstacle() {
             if (!isPerform() && mListener != null) {
@@ -949,7 +948,6 @@ public class DriveController {
             }
             doPerform();
         }
-
 
         public void setInObstacleReason(InObstacleReason reason) {
             this.reason = reason;
