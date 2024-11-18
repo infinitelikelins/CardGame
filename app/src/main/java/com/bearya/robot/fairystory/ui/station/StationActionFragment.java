@@ -23,6 +23,8 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
     private final SparseIntArray actions = new SparseIntArray(6);
     private String type;
 
+    private FragmentStationActionBinding bindView;
+
     public static StationActionFragment newInstance(String type) {
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
@@ -43,8 +45,6 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
         actions.put(ActionSetDialog.ACTION_SHAKE_HEADER_TO_LEFT, R.mipmap.ic_shake_head_to_left_select);
         actions.put(ActionSetDialog.ACTION_SHAKE_HEADER_TO_RIGHT, R.mipmap.ic_shake_head_to_right_select);
     }
-
-    private FragmentStationActionBinding bindView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

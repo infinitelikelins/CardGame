@@ -251,6 +251,10 @@ public class Director {
             playFace(new FacePlay(R.drawable.frame_cheng, FaceType.ANIMATION));
         } else if (TextUtils.equals(emotion, "she")) {
             playFace(new FacePlay(R.drawable.frame_she, FaceType.ANIMATION));
+        } else if (TextUtils.equals(emotion, "chou")) {
+            playFace(new FacePlay(R.drawable.frame_chou, FaceType.ANIMATION));
+        } else if (TextUtils.equals(emotion, "hua")) {
+            playFace(new FacePlay(R.drawable.frame_hua, FaceType.ANIMATION));
         } else if (CodeUtils.containEmotion(emotion)) {
             playFace(new FacePlay(emotion, FaceType.Lottie));
         } else {
