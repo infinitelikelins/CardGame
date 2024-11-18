@@ -1,7 +1,7 @@
 package com.bearya.robot.fairystory.ui.station;
 
 import android.os.Bundle;
-import android.util.ArrayMap;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +18,9 @@ import com.bearya.robot.base.play.TimeAction;
 import com.bearya.robot.databinding.FragmentStationActionBinding;
 import com.bearya.robot.fairystory.walk.car.LoadMgr;
 
-import java.util.Map;
-
 public class StationActionFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
-    private final Map<Integer, Integer> actionMap = new ArrayMap<>();
+    private final SparseIntArray actions = new SparseIntArray(6);
     private String type;
 
     public static StationActionFragment newInstance(String type) {
@@ -38,12 +36,12 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
         super.onCreate(savedInstanceState);
         type = requireArguments().getString("type", "station_");
 
-        actionMap.put(ActionSetDialog.ACTION_DOUBLE_HAND, R.mipmap.ic_shake_hand_select);
-        actionMap.put(ActionSetDialog.ACTION_LEFT_HAND, R.mipmap.ic_shake_left_hand_select);
-        actionMap.put(ActionSetDialog.ACTION_RIGHT_HAND, R.mipmap.ic_shake_right_hand_select);
-        actionMap.put(ActionSetDialog.ACTION_SHAKE_HEADER, R.mipmap.ic_shake_head_select);
-        actionMap.put(ActionSetDialog.ACTION_SHAKE_HEADER_TO_LEFT, R.mipmap.ic_shake_head_to_left_select);
-        actionMap.put(ActionSetDialog.ACTION_SHAKE_HEADER_TO_RIGHT, R.mipmap.ic_shake_head_to_right_select);
+        actions.put(ActionSetDialog.ACTION_DOUBLE_HAND, R.mipmap.ic_shake_hand_select);
+        actions.put(ActionSetDialog.ACTION_LEFT_HAND, R.mipmap.ic_shake_left_hand_select);
+        actions.put(ActionSetDialog.ACTION_RIGHT_HAND, R.mipmap.ic_shake_right_hand_select);
+        actions.put(ActionSetDialog.ACTION_SHAKE_HEADER, R.mipmap.ic_shake_head_select);
+        actions.put(ActionSetDialog.ACTION_SHAKE_HEADER_TO_LEFT, R.mipmap.ic_shake_head_to_left_select);
+        actions.put(ActionSetDialog.ACTION_SHAKE_HEADER_TO_RIGHT, R.mipmap.ic_shake_head_to_right_select);
     }
 
     private FragmentStationActionBinding bindView;
@@ -99,7 +97,7 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
                 }
             }).show();
         } else if (id == R.id.tvSecond1 || id == R.id.tvSecond2 || id == R.id.tvSecond3) {
-            new ActionTimeDialog(requireActivity(), 0).setListener(time -> {
+            new ActionTimeDialog(requireActivity()).setListener(time -> {
                 if (view.getId() == R.id.tvSecond1) {
                     KVManager.getInstance().put(LoadMgr.getInstance().getTheme().theme() + "_time_" + type + "1", time * 1000L);
                     bindView.tvSecond1.setText(String.format(getString(R.string.some_second), time));
@@ -116,7 +114,7 @@ public class StationActionFragment extends Fragment implements View.OnClickListe
 
     private void setActionToView(TimeAction action, ImageView view, TextView textView) {
         if (action.getAction() == 0) return;
-        view.setImageResource(actionMap.get(action.getAction()));
+        view.setImageResource(actions.get(action.getAction()));
         textView.setVisibility(View.VISIBLE);
         textView.setText(String.format(getString(R.string.some_second), action.getTime() / 1000));
     }

@@ -18,6 +18,8 @@ public class LottieMotionPopup extends AbsBasePopup {
     private NiceImageView emotionShe;
     private NiceImageView emotionSq;
     private NiceImageView emotionZc;
+    private NiceImageView emotionChou;
+    private NiceImageView emotionHua;
 
     public LottieMotionPopup(Context context) {
         super(context);
@@ -39,10 +41,12 @@ public class LottieMotionPopup extends AbsBasePopup {
         emotionShe = findViewById(R.id.emotion_she);
         emotionSq = findViewById(R.id.emotion_sq);
         emotionZc = findViewById(R.id.emotion_zc);
+        emotionChou = findViewById(R.id.emotion_chou);
+        emotionHua = findViewById(R.id.emotion_hua);
 
-        withExtClicks(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc);
+        withExtClicks(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc, emotionChou, emotionHua);
 
-        updateEmotion(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc);
+        updateEmotion(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc, emotionChou, emotionHua);
 
         withClick(R.id.btnBack, v -> dismiss(true));
 
@@ -60,7 +64,7 @@ public class LottieMotionPopup extends AbsBasePopup {
         // 4. 将3的结果放入存储
         KVManager.getInstance().put("emotion", selected ? tag : null);
         // 5. 更新图标
-        updateEmotion(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc);
+        updateEmotion(emotionCheng, emotionShe, emotionSh, emotionMy, emotionSmq, emotionSq, emotionZm, emotionZc,emotionChou , emotionHua);
 
     }
 
