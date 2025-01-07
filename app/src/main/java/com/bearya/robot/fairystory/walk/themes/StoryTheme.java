@@ -42,14 +42,11 @@ import com.bearya.robot.fairystory.walk.subjects.TreasureSubject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StoryTheme implements AbsTheme {
-
-    public static final String STORY = "Story";
-    public static final String KEY = "U2FsdGVkX19BD8MgacfpgAQPbsoSKMbiFD/AW0T4VLE=";
+public class StoryTheme extends AbsTheme {
 
     @Override
     public String theme() {
-        return STORY;
+        return "Story";
     }
 
     @Override
@@ -132,11 +129,6 @@ public class StoryTheme implements AbsTheme {
     @Override
     public String themeNameSound() {
         return MusicResource.FAIRY_STORY;
-    }
-
-    @Override
-    public String key() {
-        return KEY;
     }
 
 }

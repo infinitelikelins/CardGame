@@ -56,14 +56,11 @@ import com.bearya.robot.fairystory.walk.subjects.WinterSolsticeSubject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FestivalTheme implements AbsTheme {
-
-    public static final String FESTIVAL = "Festival";
-    public static final String KEY = "U2FsdGVkX18TEmRYklrNGUoUxio407CIEYLxCM+p7CU=";
+public class FestivalTheme extends AbsTheme {
 
     @Override
     public String theme() {
-        return FESTIVAL;
+        return "Festival";
     }
 
     @Override
@@ -164,11 +161,6 @@ public class FestivalTheme implements AbsTheme {
     @Override
     public String themeNameSound() {
         return MusicResource.FESTIVAL;
-    }
-
-    @Override
-    public String key() {
-        return KEY;
     }
 
 }

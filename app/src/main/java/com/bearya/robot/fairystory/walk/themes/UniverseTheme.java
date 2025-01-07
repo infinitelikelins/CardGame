@@ -38,17 +38,11 @@ import com.bearya.robot.fairystory.walk.subjects.UniverseDreamSubject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UniverseTheme implements AbsTheme {
-
-    /**
-     * 太空宇宙主题
-     */
-    public static final String UNIVERSE = "Universe";
-    public static final String KEY = "U2FsdGVkX19coTMOQkyOjOGejk4LSQGO+WFSuK+uADE=";
+public class UniverseTheme extends AbsTheme {
 
     @Override
     public String theme() {
-        return UNIVERSE;
+        return "Universe";
     }
 
     @Override
@@ -125,11 +119,6 @@ public class UniverseTheme implements AbsTheme {
     @Override
     public String themeNameSound() {
         return MusicResource.UNIVERSE;
-    }
-
-    @Override
-    public String key() {
-        return KEY;
     }
 
 }

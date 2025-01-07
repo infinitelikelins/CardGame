@@ -5,26 +5,24 @@ import com.bearya.robot.fairystory.walk.subjects.AbsSubject;
 
 import java.util.Map;
 
-public interface AbsTheme {
+public abstract class AbsTheme {
 
-    String theme();
+    public abstract String theme();
 
-    int res();
+    public abstract int res();
 
-    AbsSubject[] subjects();
+    public abstract AbsSubject[] subjects();
 
-    Map<String, BaseLoad> loads();
+    public abstract Map<String, BaseLoad> loads();
 
-    AbsSubject dreamSubject();
+    public abstract AbsSubject dreamSubject();
 
-    int backgroundPath();
+    public abstract int backgroundPath();
 
-    int stationEnterImage();
+    public abstract int stationEnterImage();
 
-    String welcomeSound();
+    public abstract String welcomeSound();
 
-    String themeNameSound();
-
-    String key();
+    public abstract String themeNameSound();
 
 }
