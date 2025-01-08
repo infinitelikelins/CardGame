@@ -17,6 +17,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Universe"
+rootProject.name = "CardGame"
 include(":app")
 include(":actionlib")
